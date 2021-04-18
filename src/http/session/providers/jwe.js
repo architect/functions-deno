@@ -1,6 +1,6 @@
 import getIdx from './_get-idx.js'
 import cookie from 'https://cdn.skypack.dev/pin/cookie@v0.4.1-guhSEbcHMyyU68A3z2sB/mode=imports,min/optimized/cookie.js'
-import { create, verify } from 'https://deno.land/x/djwt@v2.2'
+import { create, verify } from 'https://deno.land/x/djwt@v2.2/mod.ts'
 let alg = 'dir'
 let enc = 'A128GCM'
 
