@@ -1,7 +1,7 @@
 import getIdx from './_get-idx.js'
 import cookie from 'https://cdn.skypack.dev/pin/cookie@v0.4.1-guhSEbcHMyyU68A3z2sB/mode=imports,min/optimized/cookie.js'
 import jwt from 'https://cdn.skypack.dev/node-webtokens'
-import { create, getNumericDate } from 'https://deno.land/x/djwt@v2.2/mod.ts'
+import { create as djwtCreate, getNumericDate } from 'https://deno.land/x/djwt@v2.2/mod.ts'
 let alg = 'dir'
 let enc = 'HS256'
 
@@ -14,9 +14,10 @@ let fallback = encoder.encode('1234567890123456').toString('base64')
 // need to STRONGLY encourage setting ARC_APP_SECRET in the docs
 let key = env.ARC_APP_SECRET || fallback
 
-// wrapper for jwe.create/jwe.parse
 let jwe = {
-  
+  async create (payload) {
+    return await djwtCreate({ alg: enc, typ: "JWT" }, payload, key)
+  },
   parse (token) {
     const WEEK = 604800
     return jwt.parse(token).setTokenLifetime(WEEK).verify(key)
@@ -61,7 +62,7 @@ async function write (payload, callback) {
     })
   }
   let key = '_idx'
-  let val = await create({ alg: enc, typ: "JWT" }, payload, key)
+  let val = jwe.create(payload)
   let maxAge = env.SESSION_TTL || 7.884e+8
   let sameSite = env.ARC_SESSION_SAME_SITE || 'lax'
   let options = {
