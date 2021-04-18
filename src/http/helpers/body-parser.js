@@ -1,5 +1,5 @@
 import qs from 'https://deno.land/std@0.93.0/node/querystring.ts'
-const encoder = new TextEncoder();
+
 /**
  * Arc 6 bodies are always base64 encoded strings with req.isBase64Encoded = true (or null, which we interpolate into `{}`)
  * <Arc 6 bodies are always objects
