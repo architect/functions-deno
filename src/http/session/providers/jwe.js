@@ -15,18 +15,18 @@ let key = env.ARC_APP_SECRET || fallback
 
 let jwe = {
   async create (payload) {
-    return await djwtCreate({ alg: enc, typ: "JWT" }, payload, key)
-  },
-  parse (token) {
     const WEEK = 604800
-    return jwt.parse(token).setTokenLifetime(WEEK).verify(key)
+    return await djwtCreate({ alg: enc, typ: "JWT" }, { exp: getNumericDate(WEEK), ...payload }, key)
+  },
+  async parse (token) {
+    return await verify(token, key, enc)
   }
 }
 
 /**
  * reads req cookie and returns token payload or an empty object
  */
-function read (req, callback) {
+async function read (req, callback) {
   let promise
   if (!callback) {
     promise = new Promise(function argh (res, rej) {
@@ -43,7 +43,7 @@ function read (req, callback) {
 
   let idx = getIdx(rawCookie)
   let sesh = cookie.parse(idx)._idx
-  let token = jwe.parse(sesh)
+  let token = await jwe.parse(sesh)
   callback(null, token.valid ? token.payload : {})
   return promise
 }
