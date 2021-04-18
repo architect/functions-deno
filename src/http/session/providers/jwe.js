@@ -13,21 +13,11 @@ let fallback = encoder.encode('1234567890123456').toString('base64')
 // need to STRONGLY encourage setting ARC_APP_SECRET in the docs
 let key = env.ARC_APP_SECRET || fallback
 
-// wrapper for jwe.create/jwe.parse
-let jwe = {
-  create (payload) {
-    return await create({ alg: enc, typ: "JWT" }, {exp: getNumericDate(WEEK), ...payload}, key)
-  },
-  parse (token) {
-    const WEEK = 604800
-    return await verify(token, key, enc)
-  }
-}
 
 /**
  * reads req cookie and returns token payload or an empty object
  */
-function read (req, callback) {
+async function read (req, callback) {
   let promise
   if (!callback) {
     promise = new Promise(function argh (res, rej) {
@@ -44,7 +34,7 @@ function read (req, callback) {
 
   let idx = getIdx(rawCookie)
   let sesh = cookie.parse(idx)._idx
-  let token = jwe.parse(sesh)
+  let token = await verify(sesh, key, enc)
   callback(null, token.valid ? token.payload : {})
   return promise
 }
@@ -52,7 +42,7 @@ function read (req, callback) {
 /**
  * creates a Set-Cookie header with token payload encrypted
  */
-function write (payload, callback) {
+async function write (payload, callback) {
   let promise
   if (!callback) {
     promise = new Promise(function ugh (res, rej) {
@@ -62,7 +52,7 @@ function write (payload, callback) {
     })
   }
   let key = '_idx'
-  let val = jwe.create(payload)
+  let val = await create({ alg: enc, typ: "JWT" }, {exp: getNumericDate(WEEK), ...payload}, key)
   let maxAge = env.SESSION_TTL || 7.884e+8
   let sameSite = env.ARC_SESSION_SAME_SITE || 'lax'
   let options = {
