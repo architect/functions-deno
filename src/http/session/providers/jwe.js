@@ -61,6 +61,7 @@ async function write (payload, callback) {
     })
   }
   let key = '_idx'
+  const WEEK = 604800
   let val = await create({ alg: enc, typ: "JWT" }, {exp: getNumericDate(WEEK), ...payload}, key)
   let maxAge = env.SESSION_TTL || 7.884e+8
   let sameSite = env.ARC_SESSION_SAME_SITE || 'lax'
