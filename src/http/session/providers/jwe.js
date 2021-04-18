@@ -1,6 +1,7 @@
 import getIdx from './_get-idx.js'
 import cookie from 'https://cdn.skypack.dev/pin/cookie@v0.4.1-guhSEbcHMyyU68A3z2sB/mode=imports,min/optimized/cookie.js'
-import { create, verify } from 'https://deno.land/x/djwt@v2.2/mod.ts'
+import jwt from 'https://cdn.skypack.dev/node-webtokens'
+import { create } from 'https://deno.land/x/djwt@v2.2/mod.ts'
 let alg = 'dir'
 let enc = 'A128GCM'
 
@@ -13,11 +14,19 @@ let fallback = encoder.encode('1234567890123456').toString('base64')
 // need to STRONGLY encourage setting ARC_APP_SECRET in the docs
 let key = env.ARC_APP_SECRET || fallback
 
+// wrapper for jwe.create/jwe.parse
+let jwe = {
+  
+  parse (token) {
+    const WEEK = 604800
+    return jwt.parse(token).setTokenLifetime(WEEK).verify(key)
+  }
+}
 
 /**
  * reads req cookie and returns token payload or an empty object
  */
-async function read (req, callback) {
+function read (req, callback) {
   let promise
   if (!callback) {
     promise = new Promise(function argh (res, rej) {
@@ -34,7 +43,7 @@ async function read (req, callback) {
 
   let idx = getIdx(rawCookie)
   let sesh = cookie.parse(idx)._idx
-  let token = await verify(sesh, key, enc)
+  let token = jwe.parse(sesh)
   callback(null, token.valid ? token.payload : {})
   return promise
 }
@@ -42,7 +51,7 @@ async function read (req, callback) {
 /**
  * creates a Set-Cookie header with token payload encrypted
  */
-async function write (payload, callback) {
+function write (payload, callback) {
   let promise
   if (!callback) {
     promise = new Promise(function ugh (res, rej) {
