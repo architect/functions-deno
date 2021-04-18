@@ -61,7 +61,7 @@ async function write (payload, callback) {
     })
   }
   let key = '_idx'
-  let val = jwe.create(payload)
+  let val = await jwe.create(payload)
   let maxAge = env.SESSION_TTL || 7.884e+8
   let sameSite = env.ARC_SESSION_SAME_SITE || 'lax'
   let options = {
