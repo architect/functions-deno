@@ -9,7 +9,7 @@ const env = Deno.env.toObject();
 const encoder = new TextEncoder();
 
 // 128bit key size
-let fallback = encoder.encode('1234567890123456').toString('base64')
+let fallback = btoa('1234567890123456')
 
 // need to STRONGLY encourage setting ARC_APP_SECRET in the docs
 let key = env.ARC_APP_SECRET || fallback
