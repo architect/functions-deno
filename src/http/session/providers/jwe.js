@@ -43,8 +43,14 @@ async function read (req, callback) {
 
   let idx = getIdx(rawCookie)
   let sesh = cookie.parse(idx)._idx
-  let payload = await jwe.parse(sesh) || {}
-  callback(null, payload)
+  try {
+    let payload = await jwe.parse(sesh)
+    callback(null, payload)
+  } catch(e) {
+    callback(null, {})
+  }
+  
+ 
   
   return promise
 }
