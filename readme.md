@@ -19,8 +19,7 @@
 
 # Http async
 
-```
-
+```javascript
 import arcHttpAsync from 'https://raw.githubusercontent.com/hicksy/functions/architect-functions-deno/src/http/async/index.js'
 
 export const handler = arcHttpAsync( (event: Record<string, unknown>) => {
