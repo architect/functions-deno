@@ -39,7 +39,7 @@ export default function parseBody (req) {
     }
 
     if (isFormURLEncoded) {
-      let data = encoder.encode(request.body)
+      let data = encoder.encode(request.body).toString()
       request.body = qs.parse(data)
     }
 
