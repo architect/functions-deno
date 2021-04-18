@@ -51,7 +51,7 @@ function read (req, callback) {
 /**
  * creates a Set-Cookie header with token payload encrypted
  */
-function write (payload, callback) {
+async function write (payload, callback) {
   let promise
   if (!callback) {
     promise = new Promise(function ugh (res, rej) {
