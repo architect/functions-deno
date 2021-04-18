@@ -1,4 +1,4 @@
-let parallel = require('run-parallel')
+import * as parallel from "https://deno.land/x/run_exclusive/mod.ts";
 
 let fallback = {
   Records: [
@@ -18,7 +18,7 @@ let fallback = {
  *
  * exports.handler = arc.events.subscribe(signup)
  */
-module.exports = function _subscribe (fn) {
+export default function _subscribe (fn) {
   if (fn.constructor.name === 'AsyncFunction') {
     return async function lambda (event) {
       event = event && Object.keys(event).length ? event : fallback
@@ -41,7 +41,7 @@ module.exports = function _subscribe (fn) {
       // sns triggers send batches of records
       // so we're going to create a handler for each one
       // and execute them in parallel
-      parallel(event.Records.map(function _iterator (record) {
+      parallel.build(event.Records.map(function _iterator (record) {
         // for each record we construct a handler function
         return function _actualHandler (callback) {
           try {

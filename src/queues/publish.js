@@ -1,10 +1,12 @@
-let sandbox = require('./publish-sandbox')
-let queue = require('./publish-queue')
+import sandbox from './publish-sandbox.js'
+import queue from './publish-queue.js'
+
+const env = Deno.env.toObject();
 
 /**
  * invoke a queue lambda by sqs queue name
  */
-module.exports = function publish (params, callback) {
+export default function publish (params, callback) {
 
   if (!params.name)
     throw ReferenceError('missing params.name')
@@ -21,7 +23,7 @@ module.exports = function publish (params, callback) {
     })
   }
 
-  let isLocal = process.env.NODE_ENV === 'testing' || process.env.ARC_LOCAL
+  let isLocal = env.NODE_ENV === 'testing' || env.ARC_LOCAL
   let exec = isLocal ? sandbox : queue
   exec(params, callback)
   return promise

@@ -1,22 +1,23 @@
 // HTTP
-let http = require('./http')
+import http from './http.js'
 
 // HTTP helpers
-let bodyParser = require('./helpers/body-parser')
-let interpolate = require('./helpers/params')
-let _static = require('../static')
-let url = require('./helpers/url')
+import bodyParser from './helpers/body-parser.js'
+import interpolate from './helpers/params.js'
+import _static from '../static/index.js'
+import url from './helpers/url.js'
 
 // Session
-let read = require('./session/read')
-let write = require('./session/write')
+import read from './session/read.js'
+import write from './session/write.js'
 
 // Middleware
-let _async = require('./async')
-let express = require('./express')
+import _async from './async/index.js'
+import express from './express/index.js'
 
 // Proxy
-let proxy = require('./proxy')
+import proxy from './proxy/index.js'
+
 
 http.helpers = {
   bodyParser,
@@ -34,4 +35,4 @@ http.proxy.public = proxy.proxy
 http.proxy.read = proxy.read
 http.middleware = _async
 
-module.exports = http
+export default http

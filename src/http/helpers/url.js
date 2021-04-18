@@ -7,10 +7,13 @@
  * - /staging if NODE_ENV === staging
  * - /production if NODE_ENV === production
  */
-module.exports = function url (url) {
-  let staging = process.env.NODE_ENV === 'staging'
-  let production = process.env.NODE_ENV === 'production'
-  if (!process.env.ARC_LOCAL && (staging || production))
-    return `/${process.env.NODE_ENV}${url}`
+
+const env = Deno.env.toObject();
+
+export default function url (url) {
+  let staging = env.NODE_ENV === 'staging'
+  let production = env.NODE_ENV === 'production'
+  if (!env.ARC_LOCAL && (staging || production))
+    return `/${env.NODE_ENV}${url}`
   return url // fallthru for NODE_ENV=testing
 }

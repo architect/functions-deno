@@ -1,9 +1,11 @@
-let jwe = require('./providers/jwe')
-let ddb = require('./providers/ddb')
+import jwe from './providers/jwe.js'
+import ddb from './providers/ddb/index.js'
 
-module.exports = function write (params, callback) {
+const env = Deno.env.toObject();
 
-  if (process.env.SESSION_TABLE_NAME === 'jwe')
+export default function write (params, callback) {
+
+  if (env.SESSION_TABLE_NAME === 'jwe')
     return jwe.write(params, callback)
 
   return ddb.write(params, callback)

@@ -1,15 +1,17 @@
 /* eslint global-require: "off" */
-let http = require('http')
-let aws = require('aws-sdk')
-let sns = new aws.SNS
+import { ServerRequest } from "https://deno.land/std@0.93.0/http/server.ts";
+import { SNS } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-sns/mod.ts'
+
+let snsClient = new SNS
 let ledger = {}
+const decoder = new TextDecoder();
 
 // priv publish
 // blindly publishes to sns topic json stringified record
 // throws if fails so lambda errors are noticible
 function __publish (arn, payload, callback) {
   console.log('Publishing SNS', JSON.stringify({ arn, payload }))
-  sns.publish({
+  snsClient.publish({
     TopicArn: arn,
     Message: JSON.stringify(payload)
   },
@@ -24,7 +26,7 @@ function __publish (arn, payload, callback) {
  *
  * usage
  *
- *   let arc = require('@smallwins/arc-prototype')
+ *   import arc from '@smallwins/arc-prototype'
  *
  *   arc.events.publish({
  *     name: 'eventname',
@@ -41,7 +43,7 @@ function __publish (arn, payload, callback) {
  *     payload: {hello: 'world2'},
  *   }, console.log)
  */
-module.exports = function _publish (params, callback) {
+export default function _publish (params, callback) {
   if (!params.name)
     throw ReferenceError('missing params.name')
 
@@ -57,7 +59,7 @@ module.exports = function _publish (params, callback) {
     })
   }
 
-  let isLocal = process.env.NODE_ENV === 'testing' || process.env.ARC_LOCAL
+  let isLocal = env.NODE_ENV === 'testing' || env.ARC_LOCAL
   let exec = isLocal ? _local : _live
   exec(params, callback)
   return promise
@@ -72,7 +74,7 @@ function _live (params, callback) {
   }
   else {
     let override = params.app
-    let eventName = `${override ? params.app : process.env.ARC_APP_NAME}-${process.env.NODE_ENV}-${name}`
+    let eventName = `${override ? params.app : env.ARC_APP_NAME}-${env.NODE_ENV}-${name}`
     _scan({ eventName }, function _scan (err, found) {
       if (err) throw err
       // cache the arn here
@@ -84,8 +86,8 @@ function _live (params, callback) {
 }
 
 function _local (params, callback) {
-  let port = process.env.ARC_EVENTS_PORT || 3334
-  let req = http.request({
+  let port = env.ARC_EVENTS_PORT || 3334
+  let req = new ServerRequest({
     method: 'POST',
     port,
     path: '/events',
@@ -95,20 +97,20 @@ function _local (params, callback) {
     res.resume()
     res.on('data', chunk => data.push(chunk))
     res.on('end', () => {
-      let body = Buffer.concat(data).toString()
+      let body = decoder.decode(data)
       let code = `${res.statusCode}`
       if (!code.startsWith(2)) callback(Error(`${body} (${code})`))
       else callback(null, body)
     })
-  })
+  }); 
   req.write(JSON.stringify(params))
   req.end('\n')
 }
 
 function _scan ({ eventName }, callback) {
-  let sns = new aws.SNS()
+  let snsClient = new SNS()
   ;(function __scanner (params = {}, callback) {
-    sns.listTopics(params, function _listTopics (err, results) {
+    snsClient.listTopics(params, function _listTopics (err, results) {
       if (err) throw err
       let found = results.Topics.find(t => {
         let bits = t.TopicArn.split(':')

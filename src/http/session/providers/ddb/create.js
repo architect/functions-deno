@@ -1,22 +1,22 @@
-let uid = require('uid-safe')
-let week = require('./_week-from-now')
-let dynamo = require('../../../../tables/dynamo').session
-let crsf = require('csrf')
-let parallel = require('run-parallel')
+import ShortUniqueId from 'https://cdn.jsdelivr.net/npm/short-unique-id@latest/short_uuid/mod.ts';
+import week from './_week-from-now.js'
+import dynamo from '../../../../tables/dynamo.js'
+import { CSRF } from "https://deno.land/x/drash_middleware@v0.7.6/csrf/mod.ts";
+const csrf = CSRF();
+import * as parallel from "https://deno.land/x/run_exclusive/mod.ts"
 
-module.exports = function _create (name, payload, callback) {
-  parallel([
+export default function _create (name, payload, callback) {
+  parallel.build([
     function _key (callback) {
-      uid(18, function _uid (err, val) {
-        if (err) callback(err)
-        else callback(null, { _idx: val })
-      })
+
+      const uid = new ShortUniqueId()
+      const val = uid(18)
+      callback(null, { _idx: val })
+       
     },
     function _secret (callback) {
-      (new crsf).secret(function _uid (err, val) {
-        if (err) callback(err)
-        else callback(null, { _secret: val })
-      })
+      callback(null, { _secret:  csrf.token })
+      
     }
   ],
   function _put (err, results) {
@@ -24,7 +24,7 @@ module.exports = function _create (name, payload, callback) {
     results.push({ _ttl: week() })
     let keys = results.reduce((a, b) => Object.assign(a, b))
     let session = Object.assign(payload, keys)
-    dynamo(function _gotDB (err, db) {
+    dynamo.session(function _gotDB (err, db) {
       if (err) callback(err)
       else {
         db.put({

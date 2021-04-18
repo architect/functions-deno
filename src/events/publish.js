@@ -1,10 +1,11 @@
-let sandbox = require('./publish-sandbox')
-let topic = require('./publish-topic')
+import sandbox from './publish-sandbox.js'
+import topic from './publish-topic.js'
 
+const env = Deno.env.toObject();
 /**
  * invoke an event lambda by sns topic name
  */
-module.exports = function publish (params, callback) {
+export default function publish (params, callback) {
 
   if (!params.name)
     throw ReferenceError('missing params.name')
@@ -21,7 +22,7 @@ module.exports = function publish (params, callback) {
     })
   }
 
-  let isLocal = process.env.NODE_ENV === 'testing' || process.env.ARC_LOCAL
+  let isLocal = env.NODE_ENV === 'testing' || env.ARC_LOCAL
   let exec = isLocal ? sandbox : topic
   exec(params, callback)
   return promise

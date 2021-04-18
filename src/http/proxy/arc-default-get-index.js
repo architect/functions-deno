@@ -1,3 +1,3 @@
 // Bundler index + defaults
-const GetIndexDefaultHandler = require('./index.js')
-exports.handler = GetIndexDefaultHandler.proxy({ spa: true })
+import GetIndexDefaultHandler from './index.js'
+export default GetIndexDefaultHandler.proxy({ spa: true })

@@ -6,7 +6,7 @@
  * @param args.config - the entire arc.proxy.public config obj
  * @param args.defaults - the default {headers, body} in the transform pipeline
  */
-module.exports = function transform ({ Key, config, isBinary, defaults }) {
+export default function transform ({ Key, config, isBinary, defaults }) {
   let filetype = Key.split('.').pop()
   let plugins = config.plugins ? config.plugins[filetype] || [] : []
   // early return if there's no processing to do

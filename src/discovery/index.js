@@ -1,19 +1,20 @@
-let aws = require('aws-sdk')
+import { SSM } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-ssm/mod.ts'
 
+const env = Deno.env.toObject();
 /**
  * @param {string} type - events, queues, or tables
  * @returns {object} {name: value}
  */
 function lookup (type, callback) {
 
-  let Path = `/${process.env.ARC_CLOUDFORMATION}`
+  let Path = `/${env.ARC_CLOUDFORMATION}`
   let Recursive = true
   let values = []
 
   function getParams (params) {
     let isType = p => p.Name.split('/')[2] === type
-    let ssm = new aws.SSM
-    ssm.getParametersByPath(params, function done (err, result) {
+    let ssmClient = new SSM
+    ssmClient.getParametersByPath(params, function done (err, result) {
       if (err) {
         callback(err)
       }
@@ -34,7 +35,7 @@ function lookup (type, callback) {
   getParams({ Path, Recursive })
 }
 
-module.exports = {
+export default {
   events: lookup.bind({}, 'events'),
   queues: lookup.bind({}, 'queues'),
   tables: lookup.bind({}, 'tables')

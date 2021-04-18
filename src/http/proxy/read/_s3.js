@@ -1,15 +1,15 @@
-let { existsSync, readFileSync } = require('fs')
-let { extname, join } = require('path')
-let mime = require('mime-types')
-let aws = require('aws-sdk')
+import { existsSync } from 'https://deno.land/std@0.93.0/fs/mod.ts'
+import { extname, join } from 'https://deno.land/std@0.93.0/path/mod.ts'
+import {mime} from 'https://deno.land/x/mimetypes@v1.0.0/mod.ts'
+import { S3 } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-s3/mod.ts'
 
-let binaryTypes = require('../../helpers/binary-types')
-let { httpError } = require('../../errors')
-let transform = require('../format/transform') // Soon to be deprecated
-let templatizeResponse = require('../format/templatize')
-let normalizeResponse = require('../format/response')
-let pretty = require('./_pretty')
-let { decompress } = require('../format/compress')
+import binaryTypes from '../../helpers/binary-types.js'
+import { httpError } from '../../errors/index.js'
+import transform from '../format/transform.js' // Soon to be deprecated
+import templatizeResponse from '../format/templatize.js'
+import normalizeResponse from '../format/response.js'
+import pretty from './_pretty.js'
+import { decompress } from '../format/compress.js'
 
 /**
  * arc.http.proxy.read
@@ -25,10 +25,10 @@ let { decompress } = require('../format/compress')
  * @param {Object} params.config
  * @returns {Object} {statusCode, headers, body}
  */
-module.exports = async function readS3 (params) {
+export default async function readS3 (params) {
 
   let { Bucket, Key, IfNoneMatch, isFolder, isProxy, config, rootPath } = params
-  let { ARC_STATIC_PREFIX, ARC_STATIC_FOLDER } = process.env
+  let { ARC_STATIC_PREFIX, ARC_STATIC_FOLDER } = Deno.env.toObject()
   let prefix = ARC_STATIC_PREFIX || ARC_STATIC_FOLDER || config.bucket && config.bucket.folder
   let assets = config.assets || staticAssets
   let headers = {}
@@ -37,7 +37,7 @@ module.exports = async function readS3 (params) {
   try {
     // If client sends If-None-Match, use it in S3 getObject params
     let matchedETag = false
-    let s3 = new aws.S3
+    let s3Client = new S3
 
     // Try to interpolate HTML/JSON requests to fingerprinted filenames
     let contentType = mime.contentType(extname(Key))
@@ -78,7 +78,7 @@ module.exports = async function readS3 (params) {
       options.IfNoneMatch = IfNoneMatch
     }
 
-    let result = await s3.getObject(options).promise().catch(err => {
+    let result = await s3Client.getObject(options).promise().catch(err => {
       // ETag matches (getObject error code of NotModified), so don't transit the whole file
       if (err.code === 'NotModified') {
         matchedETag = true
@@ -159,12 +159,12 @@ module.exports = async function readS3 (params) {
  *   Load the manifest, try to hit the disk as infrequently as possible across invocations
  */
 let staticAssets
-let staticManifest = join(process.cwd(), 'node_modules', '@architect', 'shared', 'static.json')
+let staticManifest = join(Deno.cwd(), 'node_modules', '@architect', 'shared', 'static.json')
 if (staticAssets === false) {
   null /* noop*/
 }
 else if (existsSync(staticManifest) && !staticAssets) {
-  staticAssets = JSON.parse(readFileSync(staticManifest))
+  staticAssets = JSON.parse(Deno.readFileSync(staticManifest))
 }
 else {
   staticAssets = false

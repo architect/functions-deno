@@ -1,5 +1,7 @@
-let sandbox = require('./send-sandbox')
-let run = require('./send')
+import sandbox from './send-sandbox.js'
+import run from './send.js'
+
+const env = Deno.env.toObject();
 
 /**
  * arc.ws.send
@@ -12,7 +14,7 @@ let run = require('./send')
  * @param {Function} callback - a node style errback (optional)
  * @returns {Promise} - returned if no callback is supplied
  */
-module.exports = function send ({ id, payload }, callback) {
+export default function send ({ id, payload }, callback) {
 
   // create a promise if no callback is defined
   let promise
@@ -24,7 +26,7 @@ module.exports = function send ({ id, payload }, callback) {
     })
   }
 
-  let local = process.env.NODE_ENV === 'testing' || process.env.ARC_LOCAL
+  let local = env.NODE_ENV === 'testing' || env.ARC_LOCAL
   let exec = local ? sandbox : run
 
   exec({

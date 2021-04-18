@@ -1,13 +1,13 @@
-let aws = require('aws-sdk')
-let lookup = require('../discovery')
+import { SNS } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-sns/mod.ts'
+import lookup from '../discovery/index.js'
 let ledger = {}
 
-module.exports = function live ({ name, payload }, callback) {
+export default function live ({ name, payload }, callback) {
 
   function publish (arn, payload, callback) {
     console.log('sns.publish', JSON.stringify({ arn, payload }))
-    let sns = new aws.SNS
-    sns.publish({
+    let snsClient = new SNS
+    snsClient.publish({
       TopicArn: arn,
       Message: JSON.stringify(payload)
     }, callback)

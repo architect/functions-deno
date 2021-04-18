@@ -1,14 +1,17 @@
-let getIdx = require('./_get-idx')
-let cookie = require('cookie')
-let jwt = require('node-webtokens')
+import getIdx from './_get-idx.js'
+import cookie from 'https://cdn.skypack.dev/pin/cookie@v0.4.1-guhSEbcHMyyU68A3z2sB/mode=imports,min/optimized/cookie.js'
+import jwt from 'https://cdn.skypack.dev/node-webtokens'
 let alg = 'dir'
 let enc = 'A128GCM'
 
+const env = Deno.env.toObject();
+const encoder = new TextEncoder();
+
 // 128bit key size
-let fallback = Buffer.from('1234567890123456').toString('base64')
+let fallback = encoder.encode('1234567890123456')
 
 // need to STRONGLY encourage setting ARC_APP_SECRET in the docs
-let key = process.env.ARC_APP_SECRET || fallback
+let key = env.ARC_APP_SECRET || fallback
 
 // wrapper for jwe.create/jwe.parse
 let jwe = {
@@ -60,8 +63,8 @@ function write (payload, callback) {
   }
   let key = '_idx'
   let val = jwe.create(payload)
-  let maxAge = process.env.SESSION_TTL || 7.884e+8
-  let sameSite = process.env.ARC_SESSION_SAME_SITE || 'lax'
+  let maxAge = env.SESSION_TTL || 7.884e+8
+  let sameSite = env.ARC_SESSION_SAME_SITE || 'lax'
   let options = {
     maxAge,
     expires: new Date(Date.now() + maxAge * 1000),
@@ -70,14 +73,14 @@ function write (payload, callback) {
     path: '/',
     sameSite,
   }
-  if (process.env.SESSION_DOMAIN) {
-    options.domain = process.env.SESSION_DOMAIN
+  if (env.SESSION_DOMAIN) {
+    options.domain = env.SESSION_DOMAIN
   }
-  if (process.env.NODE_ENV === 'testing') {
+  if (env.NODE_ENV === 'testing') {
     delete options.secure
   }
   callback(null, cookie.serialize(key, val, options))
   return promise
 }
 
-module.exports = { read, write }
+export default { read, write }

@@ -1,8 +1,10 @@
-let oldPublish = require('./publish-old')
-let publish = require('./publish')
-let subscribe = require('./subscribe')
+import oldPublish from './publish-old.js'
+import publish from './publish.js'
+import subscribe from './subscribe.js'
 
-module.exports = {
+const env = Deno.env.toObject();
+
+export default {
 
   /**
    * arc.queues.publish
@@ -16,7 +18,7 @@ module.exports = {
    * @returns {Promise} - returned if no callback is supplied
    */
   publish (params, callback) {
-    if (process.env.ARC_CLOUDFORMATION) {
+    if (env.ARC_CLOUDFORMATION) {
       return publish(params, callback)
     }
     else {

@@ -1,8 +1,8 @@
-let dynamo = require('../../../../tables/dynamo').session
-let create = require('./create')
+import dynamo from '../../../../tables/dynamo.js'
+import create from './create.js'
 
-module.exports = function _find (name, _idx, callback) {
-  dynamo(function _gotDB (err, db) {
+export default function _find (name, _idx, callback) {
+  dynamo.session(function _gotDB (err, db) {
     if (err) callback(err)
     else {
       db.get({

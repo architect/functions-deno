@@ -1,6 +1,7 @@
-let aws = require('aws-sdk')
-let https = require('https')
+import { DynamoDB } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-dynamodb/mod.ts'
 
+
+const env = Deno.env.toObject();
 /**
  * Instantiates Dynamo service interfaces
  * - Internal APIs should use `db` + `doc` to instantiate DynamoDB interfaces
@@ -9,15 +10,15 @@ let https = require('https')
 function getDynamo (type, callback) {
   if (!type) throw ReferenceError('Must supply Dynamo service interface type')
 
-  let testing = process.env.NODE_ENV === 'testing'
-  let arcLocal = process.env.ARC_LOCAL
-  let port = process.env.ARC_TABLES_PORT || 5000
+  let testing = env.NODE_ENV === 'testing'
+  let arcLocal = env.ARC_LOCAL
+  let port = env.ARC_TABLES_PORT || 5000
   let local = {
-    endpoint: new aws.Endpoint(`http://localhost:${port}`),
-    region: process.env.AWS_REGION || 'us-west-2' // Do not assume region is set!
+    endpoint:`http://localhost:${port}`,
+    region: env.AWS_REGION || 'us-west-2' // Do not assume region is set!
   }
-  let DB = aws.DynamoDB
-  let Doc = aws.DynamoDB.DocumentClient
+  let DB = DynamoDB
+  let Doc = DynamoDB.DocumentClient
   let dynamo // Assigned below
 
   /**
@@ -27,7 +28,10 @@ function getDynamo (type, callback) {
    * - Also: some test harnesses (ahem) will automatically populate NODE_ENV with their own values, unbidden
    * - *Why this matters*: using https.Agent (and not http.Agent) will stall the Sandbox
    */
-  if (!testing && !arcLocal) {
+
+
+  /* DENO - unsure how to refactor this? */
+  /* if (!testing && !arcLocal) {
     let agent = new https.Agent({
       keepAlive: true,
       maxSockets: 50, // Node can set to Infinity; AWS maxes at 50; check back on this every once in a while
@@ -37,7 +41,7 @@ function getDynamo (type, callback) {
       httpOptions: { agent }
     })
     // TODO? migrate to using `AWS_NODEJS_CONNECTION_REUSE_ENABLED`?
-  }
+  } */
 
   if (type === 'db') {
     dynamo = testing
@@ -45,15 +49,16 @@ function getDynamo (type, callback) {
       : new DB
   }
 
-  if (type === 'doc') {
+  /*Deno - unsure of equivelant? in v3 */
+ /*  if (type === 'doc') {
     dynamo = testing
       ? new Doc(local)
       : new Doc
-  }
+  } */
 
   if (type === 'session') {
     // if SESSION_TABLE_NAME isn't defined we mock the client and just pass session thru
-    let passthru = !process.env.SESSION_TABLE_NAME
+    let passthru = !env.SESSION_TABLE_NAME
     let mock = {
       get (params, callback) {
         callback()
@@ -71,7 +76,7 @@ function getDynamo (type, callback) {
   else callback(null, dynamo)
 }
 
-module.exports = {
+export default {
   db: getDynamo.bind({}, 'db'),
   doc: getDynamo.bind({}, 'doc'),
   session: getDynamo.bind({}, 'session'),

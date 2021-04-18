@@ -1,13 +1,13 @@
-let dynamo = require('./dynamo')
-let promisify = require('./promisify-object')
-let parallel = require('run-parallel')
+import dynamo from './dynamo.js'
+import promisify from './promisify-object.js'
+import * as parallel from "https://deno.land/x/run_exclusive/mod.ts";
 
 /**
  * returns a data client
  */
-module.exports = function reflectFactory (tables, callback) {
+export default function reflectFactory (tables, callback) {
   let { db, doc } = dynamo
-  parallel({ db, doc }, function done (err, { db, doc }) {
+  parallel.build({ db, doc }, function done (err, { db, doc }) {
     if (err) throw err
     else {
 

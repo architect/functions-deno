@@ -1,5 +1,7 @@
-const { readFileSync, existsSync } = require('fs')
-const { join } = require('path')
+import { existsSync } from 'https://deno.land/std@0.93.0/fs/mod.ts'
+import { join } from 'https://deno.land/std@0.93.0/path/mod.ts'
+
+const env = Deno.env.toObject();
 
 /**
  * Architect static asset helper
@@ -11,16 +13,16 @@ const { join } = require('path')
  * @param {string} path - the path to the asset (eg. /index.js)
  * @returns {string} path - the resolved asset path (eg. /_static/index-xxx.js)
  */
-module.exports = function _static (asset, options = {}) {
+export default function _static (asset, options = {}) {
   let key = asset[0] === '/' ? asset.substring(1) : asset
   let isIndex = asset === '/'
   let manifest = join(process.cwd(), 'node_modules', '@architect', 'shared', 'static.json')
   let exists = existsSync(manifest)
-  let local = process.env.NODE_ENV === 'testing' || process.env.ARC_LOCAL
-  let stagePath = options.stagePath && !local ? '/' + process.env.NODE_ENV : ''
+  let local = env.NODE_ENV === 'testing' || env.ARC_LOCAL
+  let stagePath = options.stagePath && !local ? '/' + env.NODE_ENV : ''
   let path = `${stagePath}/_static`
   if (!local && exists && !isIndex) {
-    let read = p => readFileSync(p).toString()
+    let read = p => Deno.readFileSync(p).toString()
     let pkg = JSON.parse(read(manifest))
     let asset = pkg[key]
     if (!asset)

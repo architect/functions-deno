@@ -1,5 +1,5 @@
 // Takes a client cookie string and finds the last _idx key/value
-module.exports = function getIdx (cookie = '') {
+export default function getIdx (cookie = '') {
   let cookies = cookie
     .split(';')
     .map(c => c.trim())

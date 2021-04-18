@@ -1,4 +1,4 @@
-var parallel = require('run-parallel')
+import * as parallel from "https://deno.land/x/run_exclusive/mod.ts";
 /**
  * var trigger = require('aws-dynamodb-lambda-trigger/lambda')
  *
@@ -27,7 +27,7 @@ function __trigger (types, handler) {
       }
     })
     // executes the handlers in parallel
-    parallel(handlers, function __processedRecords (err, results) {
+    parallel.build(handlers, function __processedRecords (err, results) {
       if (err) {
         ctx.fail(err)
       }
@@ -39,7 +39,7 @@ function __trigger (types, handler) {
 }
 
 /* eslint indent: 0 */
-module.exports = {
+export default {
   insert: __trigger.bind({}, [ 'INSERT' ]),
   modify: __trigger.bind({}, [ 'MODIFY' ]),
   update: __trigger.bind({}, [ 'MODIFY' ]),

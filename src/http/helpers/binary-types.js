@@ -1,7 +1,7 @@
 /**
  * Common binary MIME types
  */
-module.exports = [
+export default [
   'application/octet-stream',
   // Docs
   'application/epub+zip',

@@ -1,4 +1,4 @@
-module.exports = function interpolateParams (req) {
+export default function interpolateParams (req) {
   // Handle HTTP API v2.0 payload scenarios, which omit params instead of passing them as null
   if (req.version && req.version === '2.0') {
     let { requestContext: context } = req

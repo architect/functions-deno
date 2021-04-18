@@ -1,11 +1,13 @@
-let mime = require('mime-types')
-let path = require('path')
-let { compress } = require('./compress')
+import { mime } from "https://deno.land/x/mimetypes@v1.0.0/mod.ts"
+import * as path from "https://deno.land/std@0.93.0/path/mod.ts";
+import { compress } from './compress.js'
 
+const env = Deno.env.toObject();
+const encoder = new TextEncoder();
 /**
  * Normalizes response shape
  */
-module.exports = function normalizeResponse (params) {
+export default function normalizeResponse (params) {
   let { response, result, Key, isProxy, contentEncoding, config } = params
 
   let noCache = [
@@ -56,14 +58,14 @@ module.exports = function normalizeResponse (params) {
     delete response.headers['cache-control']
   }
 
-  let notArcSix = !process.env.ARC_CLOUDFORMATION
-  let notArcProxy = !process.env.ARC_HTTP || process.env.ARC_HTTP === 'aws'
+  let notArcSix = !env.ARC_CLOUDFORMATION
+  let notArcProxy = !env.ARC_HTTP || env.ARC_HTTP === 'aws'
   let isArcFive = notArcSix && notArcProxy
   let isHTML = response.headers['Content-Type'].includes('text/html')
   if (isArcFive && isHTML && !isProxy) {
     // This is a deprecated code path that may be removed when Arc 5 exits LTS status
     // Only return string bodies for certain types, and ONLY in Arc 5
-    response.body = Buffer.from(response.body).toString()
+    response.body = encoder.encode(request.body)
     response.type = response.headers['Content-Type'] // Re-set type or it will fall back to JSON
   }
   else {
@@ -72,7 +74,7 @@ module.exports = function normalizeResponse (params) {
       response.headers['Content-Encoding'] = contentEncoding
     }
     // Base64 everything else on the way out to enable text + binary support
-    response.body = Buffer.from(response.body).toString('base64')
+    response.body = encoder.encode(request.body)
     response.isBase64Encoded = true
   }
 

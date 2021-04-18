@@ -1,14 +1,14 @@
-let { existsSync, readFileSync } = require('fs')
-let { extname, join, sep } = require('path')
-let mime = require('mime-types')
-let crypto = require('crypto')
+import { existsSync } from 'https://deno.land/std@0.93.0/fs/mod.ts'
+import { extname, join, sep } from "https://deno.land/std@0.93.0/path/mod.ts"
+import {mime} from "https://deno.land/x/mimetypes@v1.0.0/mod.ts"
+import crypto from "https://deno.land/std@0.89.0/node/crypto.ts";
 
-let binaryTypes = require('../../helpers/binary-types')
-let { httpError } = require('../../errors')
-let transform = require('../format/transform') // Soon to be deprecated
-let templatizeResponse = require('../format/templatize')
-let normalizeResponse = require('../format/response')
-let pretty = require('./_pretty')
+import binaryTypes from '../../helpers/binary-types.js'
+import { httpError } from '../../errors/index.js'
+import transform from '../format/transform.js' // Soon to be deprecated
+import templatizeResponse from '../format/templatize.js'
+import normalizeResponse from '../format/response.js'
+import pretty from './_pretty.js'
 
 /**
  * arc.http.proxy.read
@@ -23,9 +23,10 @@ let pretty = require('./_pretty')
  * @param {Object} params.config
  * @returns {Object} {statusCode, headers, body}
  */
-module.exports = async function readLocal (params) {
 
-  let { ARC_SANDBOX_PATH_TO_STATIC, ARC_STATIC_PREFIX, ARC_STATIC_FOLDER } = process.env
+export default async function readLocal (params) {
+
+  let { ARC_SANDBOX_PATH_TO_STATIC, ARC_STATIC_PREFIX, ARC_STATIC_FOLDER } = Deno.env.toObject()
   let { Key, IfNoneMatch, isFolder, isProxy, config } = params
   let headers = {}
   let response = {}
@@ -36,7 +37,7 @@ module.exports = async function readLocal (params) {
   let basePath = ARC_SANDBOX_PATH_TO_STATIC || join(process.cwd(), '..', '..', '..', 'public')
   let staticManifest = join(basePath, 'static.json')
   if (existsSync(staticManifest)) {
-    staticAssets = JSON.parse(readFileSync(staticManifest))
+    staticAssets = JSON.parse(Deno.readFileSync(staticManifest))
   }
   let assets = config.assets || staticAssets
 
@@ -60,7 +61,7 @@ module.exports = async function readLocal (params) {
       return await pretty({ Key: filePath, config, isFolder })
     }
 
-    let body = readFileSync(filePath)
+    let body = Deno.readFileSync(filePath)
     let ETag = crypto.createHash('sha256').update(body).digest('hex')
     let result = {
       ContentType: contentType,

@@ -1,10 +1,10 @@
-let readLocal = require('./_local')
-let readS3 = require('./_s3')
+import readLocal from './_local.js'
+import readS3 from './_s3.js'
 
-function read () {
-  let { ARC_LOCAL, NODE_ENV } = process.env
+export default function read () {
+  let { ARC_LOCAL, NODE_ENV } = Deno.env.toObject()
   let local = NODE_ENV === 'testing' || ARC_LOCAL
   return local ? readLocal : readS3
 }
 
-module.exports = read()
+

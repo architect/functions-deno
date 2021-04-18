@@ -1,5 +1,5 @@
 // accepts an object and promisifies all keys
-module.exports = function pfy (obj) {
+export default function pfy (obj) {
   var copy = {}
   Object.keys(obj).forEach(k => {
     copy[k] = promised(obj[k])

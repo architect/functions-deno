@@ -1,15 +1,18 @@
-let http = require('http')
+import { ServerRequest } from "https://deno.land/std@0.93.0/http/server.ts";
 
-module.exports = function send ({ id, payload }, callback) {
-  let port = process.env.PORT || 3333
+const env = Deno.env.toObject();
+const decoder = new TextDecoder();
+
+export default function send ({ id, payload }, callback) {
+  let port = env.PORT || 3333
   let body = JSON.stringify({ id, payload })
-  let req = http.request({
+  let req = new ServerRequest({
     method: 'POST',
     port,
     path: '/__arc',
     headers: {
       'Content-Type': 'application/json',
-      'Content-Length': Buffer.byteLength(body)
+      'Content-Length': decoder.decode(body).length
     }
   })
   req.on('error', callback)

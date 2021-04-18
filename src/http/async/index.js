@@ -1,8 +1,8 @@
-let read = require('../session/read')
-let write = require('../session/write')
-let bodyParser = require('../helpers/body-parser')
-let interpolate = require('../helpers/params')
-let responseFormatter = require('../_res-fmt')
+import read from '../session/read.js'
+import write from '../session/write.js'
+import bodyParser from '../helpers/body-parser.js'
+import interpolate from '../helpers/params.js'
+import responseFormatter from '../_res-fmt.js'
 
 /**
  * `arc.http.async` accepts one or more async functions
@@ -12,7 +12,7 @@ let responseFormatter = require('../_res-fmt')
  * - A modified `request` ... move onto the next function, passing the mutated `request` on to any subsequent functions
  * - A `response` ........... end execution and respond to the client
  */
-module.exports = function httpAsync (...fns) {
+export default function httpAsync (...fns) {
 
   // Ensure we've been passed only functions
   fns.forEach(f => {

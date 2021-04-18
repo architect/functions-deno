@@ -1,13 +1,15 @@
-let http = require('http')
-let waterfall = require('run-waterfall')
-let aws = require('aws-sdk')
+import { ServerRequest } from "https://deno.land/std@0.93.0/http/server.ts";
+import waterfall from 'https://cdn.skypack.dev/pin/run-waterfall@v1.1.7-6lUADtad6KJAms9NUvQ5/mode=imports,min/optimized/run-waterfall.js'
+import { SQS } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-sqs/mod.ts'
 
+const env = Deno.env.toObject();
+const decoder = new TextDecoder();
 /**
  * invoke an sqs lambda by name
  *
  * usage
  *
- *   let arc = require('@architect/functions')
+ *   import arc from '@architect/functions'
  *
  *   arc.queues.publish({
  *     name: 'queue-name-here',
@@ -15,7 +17,7 @@ let aws = require('aws-sdk')
  *   }, console.log)
  *
  */
-module.exports = function _publish (params, callback) {
+export default function _publish (params, callback) {
 
   // ensure required input
   if (!params.name)
@@ -24,7 +26,7 @@ module.exports = function _publish (params, callback) {
     throw ReferenceError('missing params.payload')
 
   // queue name normalized with appname and env
-  let name = `${process.env.ARC_APP_NAME}-${process.env.NODE_ENV}-${params.name}`
+  let name = `${env.ARC_APP_NAME}-${env.NODE_ENV}-${params.name}`
   let payload = params.payload
 
   let promise
@@ -37,12 +39,12 @@ module.exports = function _publish (params, callback) {
   }
 
   // check if we're running locally
-  let local = process.env.NODE_ENV === 'testing' || process.env.ARC_LOCAL
+  let local = env.NODE_ENV === 'testing' || env.ARC_LOCAL
   if (local) {
-    let port = process.env.ARC_EVENTS_PORT || 3334
+    let port = env.ARC_EVENTS_PORT || 3334
 
     // if so send the mock request
-    let req = http.request({
+    let req = new ServerRequest({
       method: 'POST',
       port,
       path: '/queues',
@@ -52,7 +54,7 @@ module.exports = function _publish (params, callback) {
       res.resume()
       res.on('data', chunk => data.push(chunk))
       res.on('end', () => {
-        let body = Buffer.concat(data).toString()
+        let body = decoder.decode(data)
         let code = `${res.statusCode}`
         if (!code.startsWith(2)) callback(Error(`${body} (${code})`))
         else callback(null, body)
@@ -63,7 +65,7 @@ module.exports = function _publish (params, callback) {
   }
   else {
     // otherwise attempt to sqs.sendMessage
-    let sqs = new aws.SQS
+    let sqsClient = new SQS
     waterfall([
       function reads (callback) {
         sqs.getQueueUrl({
@@ -74,7 +76,7 @@ module.exports = function _publish (params, callback) {
         let QueueUrl = result.QueueUrl
         let DelaySeconds = params.delaySeconds || 0
         console.log('sqs.sendMessage', JSON.stringify({ QueueUrl, DelaySeconds, payload }))
-        sqs.sendMessage({
+        sqsClient.sendMessage({
           QueueUrl,
           DelaySeconds,
           MessageBody: JSON.stringify(payload)

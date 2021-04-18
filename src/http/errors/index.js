@@ -1,7 +1,7 @@
 /**
  * HTTP error response generator and template
  */
-module.exports = {
+export default {
   httpError,
   proxyConfig: proxyConfig()
 }
@@ -19,7 +19,7 @@ function proxyConfig () {
   return httpError({ title, message })
 }
 
-function httpError ({ statusCode = 502, title = 'Unknown error', message = '' }) {
+export function httpError ({ statusCode = 502, title = 'Unknown error', message = '' }) {
   title = title === 'Error'
     ? `${statusCode} error`
     : `${statusCode} error: ${title}`

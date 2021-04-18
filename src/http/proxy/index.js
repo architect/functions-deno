@@ -1,5 +1,5 @@
-let read = require('./read')
-let errors = require('../errors')
+import read from './read/index.js'
+import errors from '../errors/index.js'
 
 /**
  * arc.http.proxy
@@ -21,7 +21,7 @@ let errors = require('../errors')
  */
 function proxy (config = {}) {
   return async function httpProxy (req) {
-    let { ARC_STATIC_BUCKET, ARC_STATIC_SPA, NODE_ENV } = process.env
+    let { ARC_STATIC_BUCKET, ARC_STATIC_SPA, NODE_ENV } = Deno.env.toObject()
     let deprecated = req.version === undefined || req.version === '1.0'
 
     let isProduction = NODE_ENV === 'production'
@@ -105,7 +105,7 @@ function proxy (config = {}) {
   }
 }
 
-module.exports = {
+export default {
   proxy,  // Default
   read    // Read a specific file
 }

@@ -1,12 +1,14 @@
-let cookie = require('cookie')
-let getIdx = require('../_get-idx')
-let { unsign, sign } = require('cookie-signature')
+import cookie from 'https://cdn.skypack.dev/pin/cookie@v0.4.1-guhSEbcHMyyU68A3z2sB/mode=imports,min/optimized/cookie.js'
+import getIdx from '../_get-idx.js'
+import { unsign, sign } from 'https://cdn.skypack.dev/cookie-signature'
 
-let find = require('./find')
-let create = require('./create')
-let update = require('./update')
+import find from './find.js'
+import create from './create.js'
+import update from './update.js'
 
-module.exports = { read, write }
+const env = Deno.env.toObject();
+
+export default { read, write }
 
 /**
  * reads request for session cookie and looks it up in dynamo
@@ -24,8 +26,8 @@ function read (request, callback) {
   }
 
   // read dynamo session table
-  let name = process.env.SESSION_TABLE_NAME || tableLogicalId('arc-sessions')
-  let secret = process.env.ARC_APP_SECRET || process.env.ARC_APP_NAME || 'fallback'
+  let name = env.SESSION_TABLE_NAME || tableLogicalId('arc-sessions')
+  let secret = env.ARC_APP_SECRET || env.ARC_APP_NAME || 'fallback'
   // TODO: uppercase 'Cookie' is not the header name on AWS Lambda; it's
   // lowercase 'cookie' on lambda...
   let rawCookie = request.headers && (request.headers.Cookie || request.headers.cookie)
@@ -63,15 +65,15 @@ function write (params, callback) {
   }
 
   // read dynamo session table
-  let name = process.env.SESSION_TABLE_NAME || tableLogicalId('arc-sessions')
-  let secret = process.env.ARC_APP_SECRET || process.env.ARC_APP_NAME || 'fallback'
+  let name = env.SESSION_TABLE_NAME || tableLogicalId('arc-sessions')
+  let secret = env.ARC_APP_SECRET || env.ARC_APP_NAME || 'fallback'
 
   update(name, params, function _update (err) {
     if (err) {
       callback(err)
     }
     else {
-      let maxAge = process.env.SESSION_TTL || 7.884e+8
+      let maxAge = env.SESSION_TTL || 7.884e+8
       let options = {
         maxAge,
         expires: new Date(Date.now() + maxAge * 1000),
@@ -80,10 +82,10 @@ function write (params, callback) {
         path: '/',
         sameSite: 'lax',
       }
-      if (process.env.SESSION_DOMAIN) {
-        options.domain = process.env.SESSION_DOMAIN
+      if (env.SESSION_DOMAIN) {
+        options.domain = env.SESSION_DOMAIN
       }
-      if (process.env.NODE_ENV === 'testing')
+      if (env.NODE_ENV === 'testing')
         delete options.secure
       let result = cookie.serialize('_idx', sign(params._idx, secret), options)
       callback(null, result)
@@ -94,6 +96,6 @@ function write (params, callback) {
 }
 
 function tableLogicalId (name) {
-  let env = process.env.NODE_ENV === 'production' ? 'production' : 'staging'
-  return `${process.env.ARC_APP_NAME}-${env}-${name}`
+  let env = env.NODE_ENV === 'production' ? 'production' : 'staging'
+  return `${env.ARC_APP_NAME}-${env}-${name}`
 }

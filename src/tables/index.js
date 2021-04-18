@@ -1,16 +1,18 @@
-let waterfall = require('run-waterfall')
-let old = require('./old')
-let lookup = require('../discovery')
-let factory = require('./factory')
-let sandbox = require('./sandbox')
-let dynamo = require('./dynamo')
+import waterfall from 'https://cdn.skypack.dev/pin/run-waterfall@v1.1.7-6lUADtad6KJAms9NUvQ5/mode=imports,min/optimized/run-waterfall.js'
+import old from './old.js'
+import lookup from '../discovery/index.js'
+import factory from './factory.js'
+import sandbox from './sandbox.js'
+import dynamo from './dynamo.js'
+
+const env = Deno.env.toObject();
 
 // cheap client cache
 let client = false
 
 /**
  * // example usage:
- * let arc = require('architect/functions')
+ * import arc from 'architect/functions'
  *
  * exports.handler = async function http(req) {
  *  let data = await arc.tables()
@@ -31,7 +33,7 @@ function tables (callback) {
   /**
    * Read Architect manifest if local / sandbox, otherwise use service reflection
    */
-  let runningLocally = process.env.NODE_ENV === 'testing'
+  let runningLocally = env.NODE_ENV === 'testing'
   if (runningLocally) {
     sandbox(callback)
   }
@@ -65,4 +67,4 @@ tables.all = old.all
 tables.save = old.save
 tables.change = old.change
 
-module.exports = tables
+export default tables

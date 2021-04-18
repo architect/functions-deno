@@ -1,10 +1,10 @@
-let qs = require('querystring')
-
+import qs from 'https://deno.land/std@0.93.0/node/querystring.ts'
+const encoder = new TextEncoder();
 /**
  * Arc 6 bodies are always base64 encoded strings with req.isBase64Encoded = true (or null, which we interpolate into `{}`)
  * <Arc 6 bodies are always objects
  */
-module.exports = function parseBody (req) {
+export default function parseBody (req) {
   let ctype = req.headers['Content-Type'] || req.headers['content-type']
   let passthru = !req.body || !req.headers || !ctype || !Object.getOwnPropertyNames(req.body).length
   if (passthru) {
@@ -28,7 +28,7 @@ module.exports = function parseBody (req) {
       try {
         let data = isBase64
           // Base64 + JSON-encoded payloads (>Arc 6 REST)
-          ? Buffer.from(request.body, 'base64').toString()
+          ? encoder.encode(request.body)
           // Raw JSON (HTTP API + Lambda v2.0 payload)
           : request.body
         request.body = JSON.parse(data) || {}
@@ -39,7 +39,7 @@ module.exports = function parseBody (req) {
     }
 
     if (isFormURLEncoded) {
-      let data = new Buffer.from(request.body, 'base64').toString()
+      let data = encoder.encode(request.body)
       request.body = qs.parse(data)
     }
 

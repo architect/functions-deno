@@ -1,7 +1,10 @@
-let { httpError } = require('./errors')
-let binaryTypes = require('./helpers/binary-types')
+import { httpError } from './errors/index.js'
+import binaryTypes from './helpers/binary-types.js'
 
-module.exports = function responseFormatter (req, params) {
+const env = Deno.env.toObject();
+const encoder = new TextEncoder();
+
+export default function responseFormatter (req, params) {
   // Handle HTTP API v2.0 payload scenarios, which have some very strange edges
   if (req.version && req.version === '2.0') {
     // New school AWS
@@ -30,7 +33,7 @@ module.exports = function responseFormatter (req, params) {
              (is('object') && params !== null) ||
              (is('string') && params) ||
              Array.isArray(params) ||
-             params instanceof Buffer) {
+             params instanceof ArrayBuffer ) {
       params = { body: JSON.stringify(params) }
     }
     // Not returning is actually valid now lolnothingmatters
@@ -39,7 +42,7 @@ module.exports = function responseFormatter (req, params) {
 
   let isError = params instanceof Error // Doesn't really pertain to async
   let buffer
-  let bodyIsBuffer = params.body && params.body instanceof Buffer
+  let bodyIsBuffer = params.body && params.body instanceof ArrayBuffer 
   if (bodyIsBuffer) buffer = params.body // Back up buffer
   if (!isError) params = JSON.parse(JSON.stringify(params)) // Deep copy to aid testing mutation
   if (bodyIsBuffer) params.body = buffer // Restore non-JSON-encoded buffer
@@ -135,8 +138,8 @@ module.exports = function responseFormatter (req, params) {
    * - !ARC_CLOUDFORMATION
    * - !ARC_HTTP || ARC_HTTP === 'aws'
    */
-  let notArcSix = !process.env.ARC_CLOUDFORMATION
-  let notArcProxy = !process.env.ARC_HTTP || process.env.ARC_HTTP === 'aws'
+  let notArcSix = !env.ARC_CLOUDFORMATION
+  let notArcProxy = !env.ARC_HTTP || env.ARC_HTTP === 'aws'
   let isArcFive = notArcSix && notArcProxy
   let notProxyReq = !req.resource || req.resource && req.resource !== '/{proxy+}'
   if (isArcFive && notProxyReq) {
@@ -167,7 +170,7 @@ module.exports = function responseFormatter (req, params) {
   // Handle body encoding (if necessary)
   let isBinary = binaryTypes.some(t => res.headers['Content-Type'].includes(t))
   let bodyIsString = typeof res.body === 'string'
-  let b64enc = i => new Buffer.from(i).toString('base64')
+  let b64enc = i => encoder.encode(i)
   // Encode (and flag) outbound buffers
   if (bodyIsBuffer) {
     res.body = b64enc(res.body)

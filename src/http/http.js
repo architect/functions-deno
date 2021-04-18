@@ -1,13 +1,13 @@
-let read = require('./session/read')
-let write = require('./session/write')
-let bodyParser = require('./helpers/body-parser')
-let interpolate = require('./helpers/params')
-let responseFormatter = require('./_res-fmt')
+import read from './session/read.js'
+import write from './session/write.js'
+import bodyParser from './helpers/body-parser.js'
+import interpolate from './helpers/params.js'
+import responseFormatter from './_res-fmt.js'
 
 /**
  * `arc.http` accepts one or more functions with an express-style sig
  */
-module.exports = function http (...fns) {
+export default function http (...fns) {
 
   // Ensure we've been passed only functions
   fns.forEach(f => {

@@ -1,11 +1,11 @@
-let aws = require('aws-sdk')
-let lookup = require('../discovery')
+import { SQSClient } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-sqs/mod.ts'
+import lookup from '../discovery/index.js'
 let ledger = {}
 
-module.exports = function live ({ name, payload, delaySeconds, groupID }, callback) {
+export default function live ({ name, payload, delaySeconds, groupID }, callback) {
 
   function publish (QueueUrl, payload, callback) {
-    let sqs = new aws.SQS
+    let sqsClient = new SQSClient
     let params = {
       QueueUrl,
       DelaySeconds: delaySeconds || 0,
@@ -14,7 +14,7 @@ module.exports = function live ({ name, payload, delaySeconds, groupID }, callba
     if (QueueUrl.endsWith('.fifo')) {
       params.MessageGroupId = groupID || name
     }
-    sqs.sendMessage(params, callback)
+    sqsClient.sendMessage(params, callback)
   }
 
   let arn = ledger[name]
