@@ -31,3 +31,7 @@ export const handler = arcHttpAsync( (event: Record<string, unknown>) => {
 });
 
 ```
+# Auth
+- I've updated the arc-example-login-flow example to the Deno runtime, making use of this WIP module. 
+- Provides example demonstrating `jwt` tokens etc
+https://github.com/hicksy/functions/tree/architect-functions-deno
