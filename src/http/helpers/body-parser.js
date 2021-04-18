@@ -28,7 +28,7 @@ export default function parseBody (req) {
       try {
         let data = isBase64
           // Base64 + JSON-encoded payloads (>Arc 6 REST)
-          ? encoder.encode(request.body)
+          ? atob(request.body)
           // Raw JSON (HTTP API + Lambda v2.0 payload)
           : request.body
         request.body = JSON.parse(data) || {}
@@ -39,7 +39,7 @@ export default function parseBody (req) {
     }
 
     if (isFormURLEncoded) {
-      let data = encoder.encode(request.body).toString()
+      let data = atob(request.body)
       request.body = qs.parse(data)
     }
 
