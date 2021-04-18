@@ -6,7 +6,6 @@ let alg = 'dir'
 let enc = 'HS256'
 
 const env = Deno.env.toObject();
-const encoder = new TextEncoder();
 
 // 128bit key size
 let fallback = btoa('1234567890123456')
