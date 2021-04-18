@@ -1,6 +1,6 @@
 import getIdx from './_get-idx.js'
 import cookie from 'https://cdn.skypack.dev/pin/cookie@v0.4.1-guhSEbcHMyyU68A3z2sB/mode=imports,min/optimized/cookie.js'
-import jwt from 'https://cdn.skypack.dev/node-webtokens'
+import { create, verify } from 'https://deno.land/x/djwt@v2.2'
 let alg = 'dir'
 let enc = 'A128GCM'
 
@@ -8,7 +8,7 @@ const env = Deno.env.toObject();
 const encoder = new TextEncoder();
 
 // 128bit key size
-let fallback = encoder.encode('1234567890123456')
+let fallback = encoder.encode('1234567890123456').toString('base64')
 
 // need to STRONGLY encourage setting ARC_APP_SECRET in the docs
 let key = env.ARC_APP_SECRET || fallback
@@ -16,11 +16,11 @@ let key = env.ARC_APP_SECRET || fallback
 // wrapper for jwe.create/jwe.parse
 let jwe = {
   create (payload) {
-    return jwt.generate(alg, enc, payload, key)
+    return await create({ alg: enc, typ: "JWT" }, {exp: getNumericDate(WEEK), ...payload}, key)
   },
   parse (token) {
     const WEEK = 604800
-    return jwt.parse(token).setTokenLifetime(WEEK).verify(key)
+    return await verify(token, key, enc)
   }
 }
 
