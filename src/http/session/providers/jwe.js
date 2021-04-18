@@ -3,7 +3,7 @@ import cookie from 'https://cdn.skypack.dev/pin/cookie@v0.4.1-guhSEbcHMyyU68A3z2
 import jwt from 'https://cdn.skypack.dev/node-webtokens'
 import { create, getNumericDate } from 'https://deno.land/x/djwt@v2.2/mod.ts'
 let alg = 'dir'
-let enc = 'A128GCM'
+let enc = 'HS256'
 
 const env = Deno.env.toObject();
 const encoder = new TextEncoder();
