@@ -12,10 +12,12 @@
   "type": "module",
   "scripts": {
     "lint": "eslint --fix ./src",
-    "test:unit": "cross-env PORT=6666 NODE_ENV=testing AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar AWS_REGION=us-west-1 deno test --allow-run --allow-env --allow-read --unstable --coverage test/unit/ ",
-    "test:integration": "cross-env PORT=6666 NODE_ENV=testing AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar AWS_REGION=us-west-1 deno test --allow-run --allow-env --allow-read --unstable  test/integration/ ",
+    "test:unit": "cross-env PORT=3366 NODE_ENV=testing AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar AWS_REGION=us-west-1 deno test --allow-net --allow-run --allow-env --allow-read --unstable --coverage test/unit/ ",
+    "test:integration": "cross-env PORT=3366 NODE_ENV=testing AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar AWS_REGION=us-west-1 deno test --allow-net --allow-run --allow-env --allow-read --unstable  test/integration/ ",
     "coverage": "npm run test:unit",
-    "test": "npm run lint && npm run test:integration " 
+    "mock:sandbox": "npm run --prefix ./test/mock/project start",
+    "test": "npm run lint && npm run mock:sandbox & npm run test:start",
+    "test:start": "wait-on tcp:3366 && npm run test:integration"
   },
   "engines": {
     "node": ">=10"
@@ -66,7 +68,8 @@
     "tape": "^5.0.1",
     "tape-es": "^1.2.11",
     "tiny-json-http": "^7.3.0",
-    "typescript": "^4.2.4"
+    "typescript": "^4.2.4",
+    "wait-on": "^5.3.0"
   },
   "eslintConfig": {
     "root": true,

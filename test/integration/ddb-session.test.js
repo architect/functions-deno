@@ -1,6 +1,7 @@
 
 import * as path from "https://deno.land/std@0.93.0/path/mod.ts"
 import {
+  assertExists,
   assertArrayIncludes,
   assertEquals,
 } from "https://deno.land/std@0.93.0/testing/asserts.ts"
@@ -40,7 +41,7 @@ async function read(stdout) {
   }
 }
 
-
+/*
 Deno.test({
   name: "Set up env", 
   fn: async () => {
@@ -70,7 +71,15 @@ Deno.test({
   },
   sanitizeResources: false,
   sanitizeOps: false,
-});
+}); 
 
 //having to use the object syntax to pass in sanitizeResources: false,  sanitizeOps: false, as I can't figure out how to prevent "Make sure to close all open resource handles returned from Deno APIs before" error?
+*/
 
+Deno.test('Create an initial session', async t => {
+  
+  const response = await fetch(url('/http-session'))
+  const result = await response.text()
+  cookie = response.headers.get('set-cookie')
+  assertExists(cookie, `Got cookie to use in sessions: ${cookie.substr(0, 50)}...`)
+})

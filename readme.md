@@ -15,6 +15,21 @@
 
 - Feels slower than the Node version - maybe I've not approached this in the correct way?
 
+# Test
+
+- Testing out writing tests using Deno's test runner. 
+- Problem with how we can launch the sandbox. Direct call to `await sandbox.start({quiet: true})` wont work here. Initially had it running as a Deno sub proccess. While this works, the process is killed between each test - so not ideal. 
+
+- Currenty the sandbox is started by the `npm run test` command 
+
+```
+npm run test
+```
+
+Will output the Deno test runner. 
+
+_NB until this [pull-request](https://github.com/architect/sandbox/pull/566) or similar is merged, you'll also get all the Deno diagnostic output (eg. showing each deno package being installed)_
+
 ## Example
 
 # Http async
