@@ -23,11 +23,11 @@
 import arcHttpAsync from 'https://raw.githubusercontent.com/hicksy/functions/architect-functions-deno/src/http/async/index.js'
 
 export const handler = arcHttpAsync( (event: Record<string, unknown>) => {
-	console.log(JSON.stringify(event, null, 2));
+    console.log(JSON.stringify(event, null, 2));
 
     return {
-		location: "/"
-	}
+        location: "/"
+    }
 });
 
 ```
