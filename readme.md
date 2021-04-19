@@ -30,6 +30,13 @@ Will output the Deno test runner.
 
 _NB until this [pull-request](https://github.com/architect/sandbox/pull/566) or similar is merged, you'll also get all the Deno diagnostic output (eg. showing each deno package being installed)_
 
+_downside of this is the port seems to get stuck_
+
+```
+sudo lsof -i :3368
+kill -9 <pid>
+```
+
 ## Example
 
 # Http async
