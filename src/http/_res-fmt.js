@@ -1,8 +1,8 @@
 import { httpError } from './errors/index.js'
 import binaryTypes from './helpers/binary-types.js'
 
-const env = Deno.env.toObject();
-const encoder = new TextEncoder();
+const env = Deno.env.toObject()
+const encoder = new TextEncoder()
 
 export default function responseFormatter (req, params) {
   // Handle HTTP API v2.0 payload scenarios, which have some very strange edges
@@ -42,7 +42,7 @@ export default function responseFormatter (req, params) {
 
   let isError = params instanceof Error // Doesn't really pertain to async
   let buffer
-  let bodyIsBuffer = params.body && params.body instanceof ArrayBuffer 
+  let bodyIsBuffer = params.body && params.body instanceof ArrayBuffer
   if (bodyIsBuffer) buffer = params.body // Back up buffer
   if (!isError) params = JSON.parse(JSON.stringify(params)) // Deep copy to aid testing mutation
   if (bodyIsBuffer) params.body = buffer // Restore non-JSON-encoded buffer

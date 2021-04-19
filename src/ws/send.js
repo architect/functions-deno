@@ -1,6 +1,6 @@
 import { ApiGatewayManagementApi } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-apigatewaymanagementapi/mod.ts'
 
-const env = Deno.env.toObject();
+const env = Deno.env.toObject()
 
 export default function send ({ id, payload }, callback) {
   let endpoint

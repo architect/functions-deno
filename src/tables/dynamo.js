@@ -1,7 +1,7 @@
 import { DynamoDB } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-dynamodb/mod.ts'
 
 
-const env = Deno.env.toObject();
+const env = Deno.env.toObject()
 /**
  * Instantiates Dynamo service interfaces
  * - Internal APIs should use `db` + `doc` to instantiate DynamoDB interfaces
@@ -14,7 +14,7 @@ function getDynamo (type, callback) {
   let arcLocal = env.ARC_LOCAL
   let port = env.ARC_TABLES_PORT || 5000
   let local = {
-    endpoint:`http://localhost:${port}`,
+    endpoint: `http://localhost:${port}`,
     region: env.AWS_REGION || 'us-west-2' // Do not assume region is set!
   }
   let DB = DynamoDB
@@ -31,7 +31,8 @@ function getDynamo (type, callback) {
 
 
   /* DENO - unsure how to refactor this? */
-  /* if (!testing && !arcLocal) {
+  if (!testing && !arcLocal) {
+    /*
     let agent = new https.Agent({
       keepAlive: true,
       maxSockets: 50, // Node can set to Infinity; AWS maxes at 50; check back on this every once in a while
@@ -41,7 +42,8 @@ function getDynamo (type, callback) {
       httpOptions: { agent }
     })
     // TODO? migrate to using `AWS_NODEJS_CONNECTION_REUSE_ENABLED`?
-  } */
+    */
+  }
 
   if (type === 'db') {
     dynamo = testing
@@ -49,8 +51,8 @@ function getDynamo (type, callback) {
       : new DB
   }
 
-  /*Deno - unsure of equivelant? in v3 */
- /*  if (type === 'doc') {
+  /* Deno - unsure of equivelant? in v3 */
+  /*  if (type === 'doc') {
     dynamo = testing
       ? new Doc(local)
       : new Doc

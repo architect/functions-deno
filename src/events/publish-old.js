@@ -1,10 +1,10 @@
 /* eslint global-require: "off" */
-import { ServerRequest } from "https://deno.land/std@0.93.0/http/server.ts";
+import { ServerRequest } from 'https://deno.land/std@0.93.0/http/server.ts'
 import { SNS } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-sns/mod.ts'
 
 let snsClient = new SNS
 let ledger = {}
-const decoder = new TextDecoder();
+const decoder = new TextDecoder()
 
 // priv publish
 // blindly publishes to sns topic json stringified record
@@ -102,7 +102,7 @@ function _local (params, callback) {
       if (!code.startsWith(2)) callback(Error(`${body} (${code})`))
       else callback(null, body)
     })
-  }); 
+  })
   req.write(JSON.stringify(params))
   req.end('\n')
 }

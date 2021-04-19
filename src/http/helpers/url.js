@@ -8,7 +8,7 @@
  * - /production if NODE_ENV === production
  */
 
-const env = Deno.env.toObject();
+const env = Deno.env.toObject()
 
 export default function url (url) {
   let staging = env.NODE_ENV === 'staging'

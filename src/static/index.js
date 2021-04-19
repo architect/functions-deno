@@ -1,7 +1,7 @@
 import { existsSync } from 'https://deno.land/std@0.93.0/fs/mod.ts'
 import { join } from 'https://deno.land/std@0.93.0/path/mod.ts'
 
-const env = Deno.env.toObject();
+const env = Deno.env.toObject()
 
 /**
  * Architect static asset helper

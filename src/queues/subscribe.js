@@ -1,4 +1,4 @@
-import * as parallel from "https://deno.land/x/run_exclusive/mod.ts";
+import * as parallel from 'https://deno.land/x/run_exclusive/mod.ts'
 /**
  * // Exmaple usage:
  *

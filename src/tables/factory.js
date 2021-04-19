@@ -1,6 +1,6 @@
 import dynamo from './dynamo.js'
 import promisify from './promisify-object.js'
-import * as parallel from "https://deno.land/x/run_exclusive/mod.ts";
+import * as parallel from 'https://deno.land/x/run_exclusive/mod.ts'
 
 /**
  * returns a data client

@@ -1,4 +1,4 @@
-const decoder = new TextDecoder();
+const decoder = new TextDecoder()
 
 export default function templatizeResponse (params) {
   let { isBinary, assets, response, isLocal = false } = params

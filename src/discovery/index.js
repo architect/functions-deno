@@ -1,6 +1,6 @@
 import { SSM } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-ssm/mod.ts'
 
-const env = Deno.env.toObject();
+const env = Deno.env.toObject()
 /**
  * @param {string} type - events, queues, or tables
  * @returns {object} {name: value}

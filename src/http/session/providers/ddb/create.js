@@ -1,9 +1,9 @@
-import ShortUniqueId from 'https://cdn.jsdelivr.net/npm/short-unique-id@latest/short_uuid/mod.ts';
+import ShortUniqueId from 'https://cdn.jsdelivr.net/npm/short-unique-id@latest/short_uuid/mod.ts'
 import week from './_week-from-now.js'
 import dynamo from '../../../../tables/dynamo.js'
-import { CSRF } from "https://deno.land/x/drash_middleware@v0.7.6/csrf/mod.ts";
-const csrf = CSRF();
-import * as parallel from "https://deno.land/x/run_exclusive/mod.ts"
+import { CSRF } from 'https://deno.land/x/drash_middleware@v0.7.6/csrf/mod.ts'
+const csrf = CSRF()
+import * as parallel from 'https://deno.land/x/run_exclusive/mod.ts'
 
 export default function _create (name, payload, callback) {
   parallel.build([
@@ -12,11 +12,11 @@ export default function _create (name, payload, callback) {
       const uid = new ShortUniqueId()
       const val = uid(18)
       callback(null, { _idx: val })
-       
+
     },
     function _secret (callback) {
       callback(null, { _secret:  csrf.token })
-      
+
     }
   ],
   function _put (err, results) {

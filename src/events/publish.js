@@ -1,7 +1,7 @@
 import sandbox from './publish-sandbox.js'
 import topic from './publish-topic.js'
 
-const env = Deno.env.toObject();
+const env = Deno.env.toObject()
 /**
  * invoke an event lambda by sns topic name
  */

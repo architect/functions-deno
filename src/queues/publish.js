@@ -1,7 +1,7 @@
 import sandbox from './publish-sandbox.js'
 import queue from './publish-queue.js'
 
-const env = Deno.env.toObject();
+const env = Deno.env.toObject()
 
 /**
  * invoke a queue lambda by sqs queue name

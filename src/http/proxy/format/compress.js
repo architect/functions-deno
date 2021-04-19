@@ -1,13 +1,13 @@
-import { compress as brotliCompress } from "https://deno.land/x/brotli/mod.ts"
-import { decompress as brotliDecompress } from "https://deno.land/x/brotli/mod.ts"
+import { compress as brotliCompress } from 'https://deno.land/x/brotli/mod.ts'
+import { decompress as brotliDecompress } from 'https://deno.land/x/brotli/mod.ts'
 import {
   gzipDecode,
   gzipEncode,
-} from "https://github.com/manyuanrong/wasm_gzip/raw/master/mod.ts"
-import { 
-  deflate, 
-  inflate, 
-} from "https://deno.land/x/compress@v0.3.8/mod.ts";
+} from 'https://github.com/manyuanrong/wasm_gzip/raw/master/mod.ts'
+import {
+  deflate,
+  inflate,
+} from 'https://deno.land/x/compress@v0.3.8/mod.ts'
 
 function compressor (direction, type, data) {
   let compress = direction === 'compress'

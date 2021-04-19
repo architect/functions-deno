@@ -1,7 +1,7 @@
 import sandbox from './send-sandbox.js'
 import run from './send.js'
 
-const env = Deno.env.toObject();
+const env = Deno.env.toObject()
 
 /**
  * arc.ws.send

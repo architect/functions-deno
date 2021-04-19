@@ -5,7 +5,7 @@ import factory from './factory.js'
 import sandbox from './sandbox.js'
 import dynamo from './dynamo.js'
 
-const env = Deno.env.toObject();
+const env = Deno.env.toObject()
 
 // cheap client cache
 let client = false

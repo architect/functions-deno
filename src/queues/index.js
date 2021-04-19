@@ -2,7 +2,7 @@ import oldPublish from './publish-old.js'
 import publish from './publish.js'
 import subscribe from './subscribe.js'
 
-const env = Deno.env.toObject();
+const env = Deno.env.toObject()
 
 export default {
 

@@ -1,9 +1,9 @@
-import { mime } from "https://deno.land/x/mimetypes@v1.0.0/mod.ts"
-import * as path from "https://deno.land/std@0.93.0/path/mod.ts";
+import { mime } from 'https://deno.land/x/mimetypes@v1.0.0/mod.ts'
+import * as path from 'https://deno.land/std@0.93.0/path/mod.ts'
 import { compress } from './compress.js'
 
-const env = Deno.env.toObject();
-const encoder = new TextEncoder();
+const env = Deno.env.toObject()
+const encoder = new TextEncoder()
 /**
  * Normalizes response shape
  */

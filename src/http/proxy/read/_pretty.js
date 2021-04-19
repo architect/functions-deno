@@ -1,6 +1,6 @@
 import { S3 } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-s3/mod.ts'
-import { existsSync } from "https://deno.land/std@0.93.0/fs/mod.ts"
-import { join } from "https://deno.land/std@0.93.0/path/mod.ts"
+import { existsSync } from 'https://deno.land/std@0.93.0/fs/mod.ts'
+import { join } from 'https://deno.land/std@0.93.0/path/mod.ts'
 import { httpError } from '../../errors/index.js'
 
 /**

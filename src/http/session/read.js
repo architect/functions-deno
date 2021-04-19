@@ -1,7 +1,7 @@
 import jwe from './providers/jwe.js'
 import ddb from './providers/ddb/index.js'
 
-const env = Deno.env.toObject();
+const env = Deno.env.toObject()
 
 export default function read (request, callback) {
 

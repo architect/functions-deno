@@ -6,7 +6,7 @@ import find from './find.js'
 import create from './create.js'
 import update from './update.js'
 
-const env = Deno.env.toObject();
+const env = Deno.env.toObject()
 
 export default { read, write }
 

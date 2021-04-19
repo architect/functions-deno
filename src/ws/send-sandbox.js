@@ -1,7 +1,7 @@
-import { ServerRequest } from "https://deno.land/std@0.93.0/http/server.ts";
+import { ServerRequest } from 'https://deno.land/std@0.93.0/http/server.ts'
 
-const env = Deno.env.toObject();
-const decoder = new TextDecoder();
+const env = Deno.env.toObject()
+const decoder = new TextDecoder()
 
 export default function send ({ id, payload }, callback) {
   let port = env.PORT || 3333

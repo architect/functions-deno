@@ -1,11 +1,10 @@
 import getIdx from './_get-idx.js'
 import cookie from 'https://cdn.skypack.dev/pin/cookie@v0.4.1-guhSEbcHMyyU68A3z2sB/mode=imports,min/optimized/cookie.js'
-import jwt from 'https://cdn.skypack.dev/node-webtokens'
 import { create as djwtCreate, getNumericDate, verify } from 'https://deno.land/x/djwt@v2.2/mod.ts'
-let alg = 'dir'
+// let alg = 'dir'
 let enc = 'HS256'
 
-const env = Deno.env.toObject();
+const env = Deno.env.toObject()
 
 // 128bit key size
 let fallback = btoa('1234567890123456')
@@ -16,7 +15,7 @@ let key = env.ARC_APP_SECRET || fallback
 let jwe = {
   async create (payload) {
     const WEEK = 604800
-    return await djwtCreate({ alg: enc, typ: "JWT" }, { exp: getNumericDate(WEEK), ...payload }, key)
+    return await djwtCreate({ alg: enc, typ: 'JWT' }, { exp: getNumericDate(WEEK), ...payload }, key)
   },
   async parse (token) {
     return await verify(token, key, enc)
@@ -46,12 +45,13 @@ async function read (req, callback) {
   try {
     let payload = await jwe.parse(sesh)
     callback(null, payload)
-  } catch(e) {
+  }
+  catch (e) {
     callback(null, {})
   }
-  
- 
-  
+
+
+
   return promise
 }
 
