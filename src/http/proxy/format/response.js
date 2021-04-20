@@ -1,9 +1,9 @@
 import { mime } from 'https://deno.land/x/mimetypes@v1.0.0/mod.ts'
 import * as path from 'https://deno.land/std@0.93.0/path/mod.ts'
 import { compress } from './compress.js'
+import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
 
 const env = Deno.env.toObject()
-const encoder = new TextEncoder()
 /**
  * Normalizes response shape
  */
@@ -65,7 +65,7 @@ export default function normalizeResponse (params) {
   if (isArcFive && isHTML && !isProxy) {
     // This is a deprecated code path that may be removed when Arc 5 exits LTS status
     // Only return string bodies for certain types, and ONLY in Arc 5
-    response.body = encoder.encode(request.body)
+    response.body = Buffer.from(response.body).toString()
     response.type = response.headers['Content-Type'] // Re-set type or it will fall back to JSON
   }
   else {
@@ -74,7 +74,7 @@ export default function normalizeResponse (params) {
       response.headers['Content-Encoding'] = contentEncoding
     }
     // Base64 everything else on the way out to enable text + binary support
-    response.body = encoder.encode(request.body)
+    response.body = Buffer.from(response.body).toString('base64')
     response.isBase64Encoded = true
   }
 

@@ -1,10 +1,10 @@
 /* eslint global-require: "off" */
 import { ServerRequest } from 'https://deno.land/std@0.93.0/http/server.ts'
 import { SNS } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-sns/mod.ts'
+import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
 
 let snsClient = new SNS
 let ledger = {}
-const decoder = new TextDecoder()
 
 // priv publish
 // blindly publishes to sns topic json stringified record
@@ -97,7 +97,7 @@ function _local (params, callback) {
     res.resume()
     res.on('data', chunk => data.push(chunk))
     res.on('end', () => {
-      let body = decoder.decode(data)
+      let body = Buffer.concat(data).toString()
       let code = `${res.statusCode}`
       if (!code.startsWith(2)) callback(Error(`${body} (${code})`))
       else callback(null, body)

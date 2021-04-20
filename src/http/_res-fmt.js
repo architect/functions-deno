@@ -1,8 +1,8 @@
 import { httpError } from './errors/index.js'
 import binaryTypes from './helpers/binary-types.js'
+import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
 
 const env = Deno.env.toObject()
-const encoder = new TextEncoder()
 
 export default function responseFormatter (req, params) {
   // Handle HTTP API v2.0 payload scenarios, which have some very strange edges
@@ -33,7 +33,7 @@ export default function responseFormatter (req, params) {
              (is('object') && params !== null) ||
              (is('string') && params) ||
              Array.isArray(params) ||
-             params instanceof ArrayBuffer ) {
+             params instanceof Buffer ) {
       params = { body: JSON.stringify(params) }
     }
     // Not returning is actually valid now lolnothingmatters
@@ -42,7 +42,7 @@ export default function responseFormatter (req, params) {
 
   let isError = params instanceof Error // Doesn't really pertain to async
   let buffer
-  let bodyIsBuffer = params.body && params.body instanceof ArrayBuffer
+  let bodyIsBuffer = params.body && params.body instanceof Buffer
   if (bodyIsBuffer) buffer = params.body // Back up buffer
   if (!isError) params = JSON.parse(JSON.stringify(params)) // Deep copy to aid testing mutation
   if (bodyIsBuffer) params.body = buffer // Restore non-JSON-encoded buffer
@@ -170,7 +170,7 @@ export default function responseFormatter (req, params) {
   // Handle body encoding (if necessary)
   let isBinary = binaryTypes.some(t => res.headers['Content-Type'].includes(t))
   let bodyIsString = typeof res.body === 'string'
-  let b64enc = i => encoder.encode(i)
+  let b64enc = i => new Buffer.from(i).toString('base64')
   // Encode (and flag) outbound buffers
   if (bodyIsBuffer) {
     res.body = b64enc(res.body)

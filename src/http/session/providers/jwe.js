@@ -1,13 +1,14 @@
 import getIdx from './_get-idx.js'
 import cookie from 'https://cdn.skypack.dev/pin/cookie@v0.4.1-guhSEbcHMyyU68A3z2sB/mode=imports,min/optimized/cookie.js'
 import { create as djwtCreate, getNumericDate, verify } from 'https://deno.land/x/djwt@v2.2/mod.ts'
+import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
 // let alg = 'dir'
 let enc = 'HS256'
 
 const env = Deno.env.toObject()
 
 // 128bit key size
-let fallback = btoa('1234567890123456')
+let fallback = Buffer.from('1234567890123456').toString('base64')
 
 // need to STRONGLY encourage setting ARC_APP_SECRET in the docs
 let key = env.ARC_APP_SECRET || fallback

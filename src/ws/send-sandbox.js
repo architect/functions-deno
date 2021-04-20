@@ -1,7 +1,7 @@
 import { ServerRequest } from 'https://deno.land/std@0.93.0/http/server.ts'
+import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
 
 const env = Deno.env.toObject()
-const decoder = new TextDecoder()
 
 export default function send ({ id, payload }, callback) {
   let port = env.PORT || 3333
@@ -12,7 +12,7 @@ export default function send ({ id, payload }, callback) {
     path: '/__arc',
     headers: {
       'Content-Type': 'application/json',
-      'Content-Length': decoder.decode(body).length
+      'Content-Length': Buffer.byteLength(body)
     }
   })
   req.on('error', callback)
