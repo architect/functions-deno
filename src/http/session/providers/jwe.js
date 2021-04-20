@@ -15,7 +15,7 @@ let key = env.ARC_APP_SECRET || fallback
 let jwe = {
   async create (payload) {
     const WEEK = 604800
-    return await djwtCreate({ alg: enc, typ: 'JWT' }, { exp: getNumericDate(WEEK), ...payload }, key)
+    return await djwtCreate({ alg: enc, typ: 'JWT' }, { iat: getNumericDate(0), exp: getNumericDate(WEEK), ...payload }, key)
   },
   async parse (token) {
     return await verify(token, key, enc)
