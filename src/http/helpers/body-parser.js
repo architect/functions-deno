@@ -40,7 +40,7 @@ export default function parseBody (req) {
     }
 
     if (isFormURLEncoded) {
-      let data = new Buffer.from(request.body, 'base64').toString()
+      let data = Buffer.from(request.body, 'base64').toString()
       request.body = qs.parse(data)
     }
 

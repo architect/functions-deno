@@ -170,7 +170,7 @@ export default function responseFormatter (req, params) {
   // Handle body encoding (if necessary)
   let isBinary = binaryTypes.some(t => res.headers['Content-Type'].includes(t))
   let bodyIsString = typeof res.body === 'string'
-  let b64enc = i => new Buffer.from(i).toString('base64')
+  let b64enc = i => Buffer.from(i).toString('base64')
   // Encode (and flag) outbound buffers
   if (bodyIsBuffer) {
     res.body = b64enc(res.body)
