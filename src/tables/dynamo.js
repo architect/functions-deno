@@ -18,7 +18,7 @@ function getDynamo (type, callback) {
     region: env.AWS_REGION || 'us-west-2' // Do not assume region is set!
   }
   let DB = DynamoDB
-  let Doc = DynamoDB.DocumentClient
+  let Doc = DynamoDB
   let dynamo // Assigned below
 
   /**
@@ -30,7 +30,7 @@ function getDynamo (type, callback) {
    */
 
 
-  /* DENO - unsure how to refactor this? */
+  /* TODO:DENO - unsure how to refactor this? */
   if (!testing && !arcLocal) {
     /*
     let agent = new https.Agent({
@@ -51,12 +51,11 @@ function getDynamo (type, callback) {
       : new DB
   }
 
-  /* Deno - unsure of equivelant? in v3 */
-  /*  if (type === 'doc') {
+  if (type === 'doc') {
     dynamo = testing
       ? new Doc(local)
       : new Doc
-  } */
+  }
 
   if (type === 'session') {
     // if SESSION_TABLE_NAME isn't defined we mock the client and just pass session thru

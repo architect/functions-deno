@@ -5,7 +5,7 @@ export default function _find (name, _idx, callback) {
   dynamo.session(function _gotDB (err, db) {
     if (err) callback(err)
     else {
-      db.get({
+      db.GetItemCommand({
         TableName: name,
         ConsistentRead: true,
         Key: { _idx }
