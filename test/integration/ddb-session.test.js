@@ -9,6 +9,8 @@ import {
 } from "https://deno.land/std@0.93.0/testing/asserts.ts"
 import { readLines } from "https://deno.land/std@0.93.0/io/mod.ts";
 
+import { DenoSandbox } from '../deno-sandbox.js';
+
 const env = Deno.env.toObject()
 
 const join = path.join
@@ -53,29 +55,27 @@ async function read(stdout) {
   }
 }
 
-/*
+env.SESSION_TABLE_NAME = 'test-only-staging-arc-sessions'
+const sandbox = new DenoSandbox(false, mock, env);
+
 Deno.test({
   name: "Set up env", 
   fn: async () => {
-    env.SESSION_TABLE_NAME = 'test-only-staging-arc-sessions'
+    
     Deno.chdir(mock)
     //console.log(Deno.cwd())
     //console.log(mock)
     assertEquals(Deno.cwd(), mock, "Set working dir");
 
-    const cmd = Deno.run({
-      cmd: ["arc", "sandbox"], 
-      stdout: "piped",
-      stderr: "piped"
-    });
+    const cmd = sandbox.start();
   
     let result
     let checkComplete = false
     while(!checkComplete) {
       let line = await read(cmd.stdout)
+      console.log(line)
       if(line.indexOf('Local environment ready!') !== -1) {
           checkComplete = true
-          await Deno.close(cmd.rid)
           result = line
       }
     }
@@ -86,18 +86,18 @@ Deno.test({
 }); 
 
 //having to use the object syntax to pass in sanitizeResources: false,  sanitizeOps: false, as I can't figure out how to prevent "Make sure to close all open resource handles returned from Deno APIs before" error?
-*/
 
 
 Deno.test('Create an initial session', async t => {
   
   const response = await fetch(url('/http-session'))
   const result = await response.text()
+  console.log(response)
   cookie = response.headers.get('set-cookie')
   assertExists(cookie, `Got cookie to use in sessions: ${cookie.substr(0, 50)}...`)
 })
 
-/*
+
 Deno.test('Do session stuff (arc.http)', async t => {
   
   let session
@@ -113,7 +113,7 @@ Deno.test('Do session stuff (arc.http)', async t => {
   session = await getSession(url('/http-session?session=create'))
   assertEquals(Object.keys(session).length, 4, 'Got back a populated session')
   let unique = session.unique
-  t.ok(unique, `Got a unique data point created from session, ${unique}`)
+  assertExists(unique, `Got a unique data point created from session, ${unique}`)
   checkKeys(session, t)
 
   // Persist it across requests
@@ -137,7 +137,9 @@ Deno.test('Do session stuff (arc.http)', async t => {
   assertEquals(Object.keys(session).length, 3, 'Got back an unpopulated session')
   checkKeys(session, t)
 })
-*/
+
+
+
 
 /*
 test('Do session stuff (arc.http.async)', async t => {

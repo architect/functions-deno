@@ -15,9 +15,10 @@
     "test:unit": "cross-env PORT=3366 NODE_ENV=testing AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar AWS_REGION=us-west-1 deno test --allow-net --allow-run --allow-env --allow-read --unstable --coverage test/unit/ ",
     "test:integration": "cross-env PORT=3366 NODE_ENV=testing AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar AWS_REGION=us-west-1 deno test --allow-net --allow-run --allow-env --allow-read --unstable  test/integration/ ",
     "coverage": "npm run test:unit",
-    "mock:sandbox": "npm run --prefix ./test/mock/project start",
-    "test": "npm run lint && npm run mock:sandbox & npm run test:start",
-    "test:start": "wait-on tcp:3366 && npm run test:integration"
+    "old:mock:sandbox": "npm run --prefix ./test/mock/project start",
+    "old:test": "npm run lint && npm run old:mock:sandbox & npm run old:test:start",
+    "old:test:start": "wait-on tcp:3366 && npm run ",
+    "test": "npm run lint &&  npm run test:integration"
   },
   "engines": {
     "node": ">=10"

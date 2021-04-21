@@ -2,7 +2,7 @@
     "name": "mock-project",
     "version": "0.0.0",
     "scripts": {
-      "start": "cross-env PORT=3366 NODE_ENV=testing AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar AWS_REGION=us-west-1 arc sandbox --quiet"
+      "start": "SESSION_TABLE_NAME=test-only-staging-arc-sessions NODE_ENV=testing PORT=3366 arc sandbox "
     }
   }
   

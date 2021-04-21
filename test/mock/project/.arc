@@ -3,6 +3,7 @@ test-only
 
 @aws
 runtime deno
+timeout 30
 
 @http
 get /http-session
