@@ -16,7 +16,7 @@ const env = Deno.env.toObject()
 export default function _static (asset, options = {}) {
   let key = asset[0] === '/' ? asset.substring(1) : asset
   let isIndex = asset === '/'
-  let manifest = join(process.cwd(), 'node_modules', '@architect', 'shared', 'static.json')
+  let manifest = join(Deno.cwd(), 'node_modules', '@architect', 'shared', 'static.json')
   let exists = existsSync(manifest)
   let local = env.NODE_ENV === 'testing' || env.ARC_LOCAL
   let stagePath = options.stagePath && !local ? '/' + env.NODE_ENV : ''
