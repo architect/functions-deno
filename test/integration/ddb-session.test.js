@@ -29,13 +29,16 @@ async function getSession (url) {
     credentials: 'include',
     headers: headers
   })
-  return JSON.parse(await response.json())
+  const json = await response.json()
+
+  return JSON.parse(json)
   
 }
 
-function checkKeys (session, t) {
+function checkKeys (session) {
   let { _idx, _secret, _ttl } = session
-  
+  let validKeys
+
   if (!_idx || !_secret || !_ttl) validKeys = false
   else validKeys = true 
 
@@ -63,8 +66,7 @@ Deno.test({
   fn: async () => {
     
     Deno.chdir(mock)
-    //console.log(Deno.cwd())
-    //console.log(mock)
+  
     assertEquals(Deno.cwd(), mock, "Set working dir");
 
     const cmd = sandbox.start();
@@ -79,6 +81,7 @@ Deno.test({
           result = line
       }
     }
+
     assertEquals(result, '❤︎ Local environment ready!', result)
   },
   sanitizeResources: false,
@@ -92,7 +95,7 @@ Deno.test('Create an initial session', async t => {
   
   const response = await fetch(url('/http-session'))
   const result = await response.text()
-  console.log(response)
+  //console.log(response)
   cookie = response.headers.get('set-cookie')
   assertExists(cookie, `Got cookie to use in sessions: ${cookie.substr(0, 50)}...`)
 })
@@ -104,29 +107,27 @@ Deno.test('Do session stuff (arc.http)', async t => {
 
   // Unpopulated session
   session = await getSession(url('/http-session'))
-  console.log(Object.keys(session).length)
-  console.log(JSON.stringify(session, null, 2))
   assertEquals(Object.keys(session).length, 3, 'Got back an unpopulated session')
-  checkKeys(session, t)
+  checkKeys(session)
 
   // Add a data point
   session = await getSession(url('/http-session?session=create'))
   assertEquals(Object.keys(session).length, 4, 'Got back a populated session')
   let unique = session.unique
   assertExists(unique, `Got a unique data point created from session, ${unique}`)
-  checkKeys(session, t)
+  checkKeys(session)
 
   // Persist it across requests
   session = await getSession(url('/http-session'))
   assertEquals(Object.keys(session).length, 4, 'Got back a populated session')
   assertEquals(session.unique, unique, `Unique data point persisted in session across requests`)
-  checkKeys(session, t)
+  checkKeys(session)
 
   // Update the session
   session = await getSession(url('/http-session?session=update'))
   assertEquals(Object.keys(session).length, 5, 'Got back a populated session')
-  assert(session.another, `Got an updated data data point from session, ${session.another}`)
-  checkKeys(session, t)
+  assertExists(session.another, `Got an updated data data point from session, ${session.another}`)
+  checkKeys(session)
 
   // Destroy the session
   session = await getSession(url('/http-session?session=destroy'))
@@ -135,47 +136,43 @@ Deno.test('Do session stuff (arc.http)', async t => {
   // Unpopulated session again!
   session = await getSession(url('/http-session'))
   assertEquals(Object.keys(session).length, 3, 'Got back an unpopulated session')
-  checkKeys(session, t)
+  checkKeys(session)
 })
 
-
-
-
-/*
-test('Do session stuff (arc.http.async)', async t => {
-  t.plan(14)
+Deno.test('Do session stuff (arc.http.async)', async t => {
+  //t.plan(14)
   let session
 
   // Unpopulated session
   session = await getSession(url('/http-async-session'))
   assertEquals(Object.keys(session).length, 3, 'Got back an unpopulated session')
-  checkKeys(session, t)
+  checkKeys(session)
 
   // Add a data point
   session = await getSession(url('/http-async-session?session=create'))
   assertEquals(Object.keys(session).length, 4, 'Got back a populated session')
   let unique = session.unique
-  t.ok(unique, `Got a unique data point created from session, ${unique}`)
-  checkKeys(session, t)
+  assertExists(unique, `Got a unique data point created from session, ${unique}`)
+  checkKeys(session)
 
   // Persist it across requests
   session = await getSession(url('/http-async-session'))
   assertEquals(Object.keys(session).length, 4, 'Got back a populated session')
   assertEquals(session.unique, unique, `Unique data point persisted in session across requests`)
-  checkKeys(session, t)
+  checkKeys(session)
 
   // Update the session
   session = await getSession(url('/http-async-session?session=update'))
   assertEquals(Object.keys(session).length, 5, 'Got back a populated session')
-  t.ok(session.another, `Got an updated data data point from session, ${session.another}`)
-  checkKeys(session, t)
+  assertExists(session.another, `Got an updated data data point from session, ${session.another}`)
+  checkKeys(session)
 
   // Destroy the session
   session = await getSession(url('/http-async-session?session=destroy'))
-  t.deepEqual(session, {}, 'Session destroyed')
+  equal(session, {}, 'Session destroyed')
 
   // Unpopulated session again!
   session = await getSession(url('/http-async-session'))
   assertEquals(Object.keys(session).length, 3, 'Got back an unpopulated session')
-  checkKeys(session, t)
-}) */
+  checkKeys(session)
+})
