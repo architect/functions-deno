@@ -2,7 +2,7 @@
     "name": "mock-project",
     "version": "0.0.0",
     "scripts": {
-      "start": "SESSION_TABLE_NAME=test-only-staging-arc-sessions NODE_ENV=testing PORT=3366 arc sandbox "
+      "start": "NODE_ENV=testing PORT=3366 arc sandbox "
     }
   }
   

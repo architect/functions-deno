@@ -1,4 +1,5 @@
 
+import { readLines } from "https://deno.land/std@0.93.0/io/mod.ts";
 
 export class DenoSandbox {
 
@@ -35,4 +36,12 @@ export class DenoSandbox {
     this.cmd.close()
   }
 
+}
+
+
+export async function read(stdout) {
+  
+  for await (const line of readLines(stdout)) {
+    return line;
+  }
 }
