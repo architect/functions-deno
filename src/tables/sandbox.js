@@ -1,12 +1,12 @@
 import dynamo from './dynamo.js'
 import promisify from './promisify-object.js'
-import * as parallel from 'https://deno.land/x/run_exclusive/mod.ts'
-
+import parallel from 'https://cdn.skypack.dev/pin/run-parallel@v1.2.0-k69TQdgU7luJsLHnLpnN/mode=imports/optimized/run-parallel.js'
+import { marshall, unmarshall } from 'https://deno.land/x/aws_sdk@v3.13.0.0/util-dynamodb/mod.ts'
 /**
  * returns a data client
  */
 export default function sandbox (callback) {
-  parallel.build([
+  parallel([
     dynamo.db,
     dynamo.doc
   ],
@@ -64,41 +64,62 @@ export default function sandbox (callback) {
           let name = nom => `${appname}-staging-${nom}`
           let TableName = name(tablename)
           let client = {
-            delete (key, callback) {
+            async delete (key, callback) {
               let params = {}
               params.TableName = TableName
-              params.Key = key
-              doc.delete(params, callback)
+              params.Key = marshall(key)
+              
+              try {
+                const { Item } = await doc.deleteItem(params)
+                callback(null)
+              } catch(err) {
+                callback(err)
+              }
             },
-            get (key, callback) {
+            async get (key, callback) {
               let params = {}
               params.TableName = TableName
-              params.Key = key
-              doc.get(params, function _get (err, result) {
-                if (err) callback(err)
-                else callback(null, result.Item)
-              })
+              params.Key = marshall(key)
+              try {
+                let _item
+                const { Item }  = await doc.getItem(params)
+                if(typeof Item !== 'undefined') {
+                  _item = unmarshall(Item)
+                } 
+                callback(null, _item)
+              } catch(err) {
+                callback(err)
+              }
             },
-            put (item, callback) {
+            async put (item, callback) {
+            
               let params = {}
               params.TableName = TableName
-              params.Item = item
-              doc.put(params, function _put (err) {
-                if (err) callback(err)
-                else callback(null, item)
-              })
+              params.Item = marshall(item)
+              
+              try {
+                await doc.putItem(params)
+                callback(null, item)
+              } catch(err) {
+                callback(err)
+              }
+
             },
-            query (params, callback) {
+            async query (params, callback) {
+              params.ExpressionAttributeValues = marshall(params.ExpressionAttributeValues)
               params.TableName = TableName
-              doc.query(params, callback)
+              await doc.query(params, callback)
             },
-            scan (params, callback) {
+            async scan (params, callback) {
+              params.ExpressionAttributeValues = marshall(params.ExpressionAttributeValues)
               params.TableName = TableName
-              doc.scan(params, callback)
+              await doc.scan(params, callback)
             },
-            update (params, callback) {
+            async update (params, callback) {
+              params.Key = marshall(params.Key)
+              params.ExpressionAttributeValues = marshall(params.ExpressionAttributeValues)
               params.TableName = TableName
-              doc.update(params, callback)
+              await doc.updateItem(params, callback)
             }
           }
           let result = {}
