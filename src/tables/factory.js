@@ -41,11 +41,12 @@ export default function reflectFactory (tables, callback) {
           async delete (key, callback) {
             let params = {}
             params.TableName = TableName
-            params.Key = marshall({key})
+            params.Key = marshall({ key })
             try {
-              const { Item } = await doc.deleteItem(params)
+              await doc.deleteItem(params)
               callback(null)
-            } catch(err) {
+            }
+            catch (err) {
               callback(err)
             }
           },
@@ -56,11 +57,12 @@ export default function reflectFactory (tables, callback) {
             try {
               let _item
               const { Item }  = await doc.getItem(params)
-              if(typeof Item !== 'undefined') {
+              if (typeof Item !== 'undefined') {
                 _item = unmarshall(Item)
-              } 
+              }
               callback(null, _item)
-            } catch(err) {
+            }
+            catch (err) {
               callback(err)
             }
           },
@@ -72,10 +74,11 @@ export default function reflectFactory (tables, callback) {
             try {
               await doc.putItem(params)
               callback(null, item)
-            } catch(err) {
+            }
+            catch (err) {
               callback(err)
             }
-  
+
           },
           async query (params, callback) {
             params.ExpressionAttributeValues = marshall(params.ExpressionAttributeValues)

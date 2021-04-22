@@ -6,7 +6,7 @@
 
 # WIP Notes
 
-- JWE - *_Session tokens incompatible with node/ruby/python_* - currently there's no availaility of a library that uses the A128GCM algorithm. Possible that if [webcrypto APIs are implemented in Deno](https://github.com/panva/jose) then [jose](https://github.com/panva/jose) would be available. 
+- JWE - *_Session tokens incompatible with node/ruby/python_* - currently there's no availaility of a library that uses the A128GCM algorithm. Possible that if [webcrypto APIs are implemented in Deno](https://github.com/denoland/deno/issues/1891) then [jose](https://github.com/panva/jose) would be available. 
 
 # Test
 
