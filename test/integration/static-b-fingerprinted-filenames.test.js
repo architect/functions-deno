@@ -13,23 +13,27 @@ const __dirname = path.dirname(path.fromFileUrl(import.meta.url))
 //let arc
 let mock = join(__dirname, '..', 'mock')
 let tmp = join(mock, 'tmp')
-let shared = join(tmp, 'node_modules', '@architect', 'shared')
+let shared = join(tmp, 'vendor', 'shared')
 
 let origRegion = env.AWS_REGION
 let origCwd = Deno.cwd()
 
 let _static
 
-Deno.test('Set up mocked arc', async () => {
-  //t.plan(2)
-  Deno.mkdir(shared, { recursive: true })
-  await Deno.mkdir(shared, { recursive: true })
-  await Deno.copyFile(join(mock, 'mock-arc-fingerprint'), join(shared, '.arc'))
-  await Deno.copyFile(join(mock, 'mock-arc-fingerprint'), join(tmp, '.arc'))
-  assertEquals(await exists(join(shared, '.arc')), true, 'Mock .arc (shared) file ready')
-  assertEquals(await exists(join(tmp, '.arc')), true,  'Mock .arc (root) file ready')
-  Deno.chdir(tmp)
-
+Deno.test({
+  name: 'Set up mocked files', 
+  fn: async () => {
+    //t.plan(2)
+    Deno.mkdir(shared, { recursive: true })
+    await Deno.mkdir(shared, { recursive: true })
+    await Deno.copyFile(join(mock, 'mock-arc-fingerprint'), join(shared, '.arc'))
+    await Deno.copyFile(join(mock, 'mock-arc-fingerprint'), join(tmp, '.arc'))
+    assertEquals(await exists(join(shared, '.arc')), true, 'Mock .arc (shared) file ready')
+    assertEquals(await exists(join(tmp, '.arc')), true,  'Mock .arc (root) file ready')
+    Deno.chdir(tmp)
+  },
+  sanitizeResources: false,
+  sanitizeOps: false
 })
 
 Deno.test('Fingerprinting only enabled if static manifest is found', () => {

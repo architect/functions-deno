@@ -19,7 +19,7 @@ const __dirname = path.dirname(path.fromFileUrl(import.meta.url))
 //let arc
 let mock = join(__dirname, '..', 'mock')
 let tmp = join(mock, 'tmp')
-let shared = join(tmp, 'node_modules', '@architect', 'shared')
+let shared = join(tmp, 'vendor', 'shared')
 
 let origRegion = env.AWS_REGION
 let origCwd = Deno.cwd()
