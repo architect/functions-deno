@@ -16,6 +16,8 @@ _NB until this [pull-request](https://github.com/architect/sandbox/pull/566) or 
 
 - `Deno.run` use to launch a sub process of `arc sandbox` within the mock path - not possible to directly call sandbox through JS 
 
+- Having to use `sanitizeResources: false,sanitizeOps: false` on `Deno.test` quite a bit - does this suggest a problem in the codebase / the tests / or is this safe?
+
 ## Example
 
 # Http async
