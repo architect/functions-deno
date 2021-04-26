@@ -15,7 +15,7 @@
     "test:unit": "cross-env ARC_TABLES_PORT=3368 PORT=3366 NODE_ENV=testing AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar AWS_REGION=us-west-1 deno test --allow-net --allow-run --allow-env --allow-read --unstable test/unit/ ",
     "test:integration": "cross-env ARC_TABLES_PORT=3368 PORT=3366 NODE_ENV=testing AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar AWS_REGION=us-west-1 deno test --allow-net --allow-write --allow-run --allow-env --allow-read --unstable  test/integration/ ",
     "coverage": "npm run test:unit",
-    "test": "npm run lint &&  npm run test:integration"
+    "test": "npm run lint &&  npm run test:integration && npm run coverage"
   },
   "engines": {
     "node": ">=10"
