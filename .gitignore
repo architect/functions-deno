@@ -7,3 +7,4 @@ dist.js
 node_modules/
 test/mock/*/src/*/*/vendor/
 yarn.lock
+.vscode/
