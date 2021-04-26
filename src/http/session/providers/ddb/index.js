@@ -118,6 +118,6 @@ function write (params, callback) {
 }
 
 function tableLogicalId (name) {
-  let env = env.NODE_ENV === 'production' ? 'production' : 'staging'
-  return `${env.ARC_APP_NAME}-${env}-${name}`
+  let _env = env.NODE_ENV === 'production' ? 'production' : 'staging'
+  return `${_env.ARC_APP_NAME}-${_env}-${name}`
 }
