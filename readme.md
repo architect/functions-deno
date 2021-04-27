@@ -8,6 +8,10 @@
 
 - JWE - *_Session tokens incompatible with node/ruby/python_* - currently there's no availaility of a library that uses the A128GCM algorithm. Possible that if [webcrypto APIs are implemented in Deno](https://github.com/denoland/deno/issues/1891) then [jose](https://github.com/panva/jose) would be available. 
 
+
+# Todo
+- Set / get/ delete Deno.env - use Deno methods, rather than the env.toObject()
+
 # Test
 
 - `npm run test`
