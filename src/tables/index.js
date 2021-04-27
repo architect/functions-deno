@@ -5,8 +5,6 @@ import factory from './factory.js'
 import sandbox from './sandbox.js'
 import dynamo from './dynamo.js'
 
-const env = Deno.env.toObject()
-
 // cheap client cache
 let client = false
 
@@ -33,7 +31,7 @@ function tables (callback) {
   /**
    * Read Architect manifest if local / sandbox, otherwise use service reflection
    */
-  let runningLocally = env.NODE_ENV === 'testing'
+  let runningLocally = Deno.env.get('NODE_ENV') === 'testing'
   if (runningLocally) {
     sandbox(callback)
   }

@@ -1,7 +1,6 @@
 import sandbox from './publish-sandbox.js'
 import topic from './publish-topic.js'
 
-const env = Deno.env.toObject()
 /**
  * invoke an event lambda by sns topic name
  */
@@ -22,7 +21,7 @@ export default function publish (params, callback) {
     })
   }
 
-  let isLocal = env.NODE_ENV === 'testing' || env.ARC_LOCAL
+  let isLocal = Deno.env.get('NODE_ENV') === 'testing' || Deno.env.get('ARC_LOCAL')
   let exec = isLocal ? sandbox : topic
   exec(params, callback)
   return promise

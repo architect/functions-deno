@@ -2,7 +2,6 @@ import { httpError } from './errors/index.js'
 import binaryTypes from './helpers/binary-types.js'
 import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
 
-const env = Deno.env.toObject()
 
 export default function responseFormatter (req, params) {
   // Handle HTTP API v2.0 payload scenarios, which have some very strange edges
@@ -138,8 +137,8 @@ export default function responseFormatter (req, params) {
    * - !ARC_CLOUDFORMATION
    * - !ARC_HTTP || ARC_HTTP === 'aws'
    */
-  let notArcSix = !env.ARC_CLOUDFORMATION
-  let notArcProxy = !env.ARC_HTTP || env.ARC_HTTP === 'aws'
+  let notArcSix = !Deno.env.get('ARC_CLOUDFORMATION')
+  let notArcProxy = !Deno.env.get('ARC_HTTP') || Deno.env.get('ARC_HTTP') === 'aws'
   let isArcFive = notArcSix && notArcProxy
   let notProxyReq = !req.resource || req.resource && req.resource !== '/{proxy+}'
   if (isArcFive && notProxyReq) {

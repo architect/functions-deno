@@ -1,13 +1,11 @@
 import { ApiGatewayManagementApi } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-apigatewaymanagementapi/mod.ts'
 
-const env = Deno.env.toObject()
-
 export default function send ({ id, payload }, callback) {
   let endpoint
-  let ARC_WSS_URL = env.ARC_WSS_URL
+  let ARC_WSS_URL = Deno.env.get('ARC_WSS_URL')
   if (!ARC_WSS_URL.startsWith('wss://')) {
     // This format of env was only alive for a few weeks, can prob safely retire by mid 2020
-    endpoint = `https://${ARC_WSS_URL}/${env.NODE_ENV}`
+    endpoint = `https://${ARC_WSS_URL}/${Deno.env.get('NODE_ENV')}`
   }
   else {
     endpoint = `https://${ARC_WSS_URL.replace('wss://', '')}`

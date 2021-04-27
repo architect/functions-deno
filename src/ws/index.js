@@ -1,8 +1,6 @@
 import sandbox from './send-sandbox.js'
 import run from './send.js'
 
-const env = Deno.env.toObject()
-
 /**
  * arc.ws.send
  *
@@ -26,7 +24,7 @@ export default function send ({ id, payload }, callback) {
     })
   }
 
-  let local = env.NODE_ENV === 'testing' || env.ARC_LOCAL
+  let local = Deno.env.get('NODE_ENV') === 'testing' || Deno.env.get('ARC_LOCAL')
   let exec = local ? sandbox : run
 
   exec({

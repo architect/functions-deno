@@ -1,10 +1,8 @@
 import { ServerRequest } from 'https://deno.land/std@0.93.0/http/server.ts'
 import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
 
-const env = Deno.env.toObject()
-
 export default function send ({ id, payload }, callback) {
-  let port = env.PORT || 3333
+  let port = Deno.env.get('PORT') || 3333
   let body = JSON.stringify({ id, payload })
   let req = new ServerRequest({
     method: 'POST',

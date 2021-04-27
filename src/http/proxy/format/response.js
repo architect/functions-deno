@@ -3,7 +3,6 @@ import * as path from 'https://deno.land/std@0.93.0/path/mod.ts'
 import { compress } from './compress.js'
 import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
 
-const env = Deno.env.toObject()
 /**
  * Normalizes response shape
  */
@@ -58,8 +57,8 @@ export default function normalizeResponse (params) {
     delete response.headers['cache-control']
   }
 
-  let notArcSix = !env.ARC_CLOUDFORMATION
-  let notArcProxy = !env.ARC_HTTP || env.ARC_HTTP === 'aws'
+  let notArcSix = !Deno.env.get('ARC_CLOUDFORMATION')
+  let notArcProxy = !Deno.env.get('ARC_HTTP') || Deno.env.get('ARC_HTTP') === 'aws'
   let isArcFive = notArcSix && notArcProxy
   let isHTML = response.headers['Content-Type'].includes('text/html')
   if (isArcFive && isHTML && !isProxy) {

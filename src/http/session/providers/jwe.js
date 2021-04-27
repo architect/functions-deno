@@ -5,13 +5,11 @@ import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
 // let alg = 'dir'
 let enc = 'HS256'
 
-const env = Deno.env.toObject()
-
 // 128bit key size
 let fallback = Buffer.from('1234567890123456').toString('base64')
 
 // need to STRONGLY encourage setting ARC_APP_SECRET in the docs
-let key = env.ARC_APP_SECRET || fallback
+let key = Deno.env.get('ARC_APP_SECRET') || fallback
 
 let jwe = {
   async create (payload) {
@@ -70,8 +68,8 @@ async function write (payload, callback) {
   }
   let key = '_idx'
   let val = await jwe.create(payload)
-  let maxAge = env.SESSION_TTL || 7.884e+8
-  let sameSite = env.ARC_SESSION_SAME_SITE || 'lax'
+  let maxAge = Deno.env.get('SESSION_TTL') || 7.884e+8
+  let sameSite = Deno.env.get('ARC_SESSION_SAME_SITE') || 'lax'
   let options = {
     maxAge,
     expires: new Date(Date.now() + maxAge * 1000),
@@ -80,10 +78,10 @@ async function write (payload, callback) {
     path: '/',
     sameSite,
   }
-  if (env.SESSION_DOMAIN) {
-    options.domain = env.SESSION_DOMAIN
+  if (Deno.env.get('SESSION_DOMAIN')) {
+    options.domain = Deno.env.get('SESSION_DOMAIN')
   }
-  if (env.NODE_ENV === 'testing') {
+  if (Deno.env.get('NODE_ENV') === 'testing') {
     delete options.secure
   }
   callback(null, cookie.serialize(key, val, options))

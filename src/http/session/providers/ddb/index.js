@@ -9,8 +9,6 @@ import find from './find.js'
 import create from './create.js'
 import update from './update.js'
 
-const env = Deno.env.toObject()
-
 export default { read, write }
 
 const sign = (val, secret) => {
@@ -48,8 +46,8 @@ function read (request, callback) {
   }
 
   // read dynamo session table
-  let name = env.SESSION_TABLE_NAME || tableLogicalId('arc-sessions')
-  let secret = env.ARC_APP_SECRET || env.ARC_APP_NAME || 'fallback'
+  let name = Deno.env.get('SESSION_TABLE_NAME') || tableLogicalId('arc-sessions')
+  let secret = Deno.env.get('ARC_APP_SECRET') || Deno.env.get('ARC_APP_NAME') || 'fallback'
   // TODO: uppercase 'Cookie' is not the header name on AWS Lambda; it's
   // lowercase 'cookie' on lambda...
   let rawCookie = request.headers && (request.headers.Cookie || request.headers.cookie)
@@ -87,15 +85,15 @@ function write (params, callback) {
   }
 
   // read dynamo session table
-  let name = env.SESSION_TABLE_NAME || tableLogicalId('arc-sessions')
-  let secret = env.ARC_APP_SECRET || env.ARC_APP_NAME || 'fallback'
+  let name = Deno.env.get('SESSION_TABLE_NAME') || tableLogicalId('arc-sessions')
+  let secret = Deno.env.get('ARC_APP_SECRET') || Deno.env.get('ARC_APP_NAME') || 'fallback'
 
   update(name, params, function _update (err) {
     if (err) {
       callback(err)
     }
     else {
-      let maxAge = env.SESSION_TTL || 7.884e+8
+      let maxAge = Deno.env.get('SESSION_TTL') || 7.884e+8
       let options = {
         maxAge,
         expires: new Date(Date.now() + maxAge * 1000),
@@ -104,10 +102,10 @@ function write (params, callback) {
         path: '/',
         sameSite: 'lax',
       }
-      if (env.SESSION_DOMAIN) {
-        options.domain = env.SESSION_DOMAIN
+      if (Deno.env.get('SESSION_DOMAIN')) {
+        options.domain = Deno.env.get('SESSION_DOMAIN')
       }
-      if (env.NODE_ENV === 'testing')
+      if (Deno.env.get('NODE_ENV') === 'testing')
         delete options.secure
       let result = cookie.serialize('_idx', sign(params._idx, secret), options)
       callback(null, result)
@@ -118,6 +116,6 @@ function write (params, callback) {
 }
 
 function tableLogicalId (name) {
-  let _env = env.NODE_ENV === 'production' ? 'production' : 'staging'
+  let _env = Deno.env.get('NODE_ENV') === 'production' ? 'production' : 'staging'
   return `${_env.ARC_APP_NAME}-${_env}-${name}`
 }

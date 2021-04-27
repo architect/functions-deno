@@ -1,8 +1,6 @@
 import sandbox from './publish-sandbox.js'
 import queue from './publish-queue.js'
 
-const env = Deno.env.toObject()
-
 /**
  * invoke a queue lambda by sqs queue name
  */
@@ -23,7 +21,7 @@ export default function publish (params, callback) {
     })
   }
 
-  let isLocal = env.NODE_ENV === 'testing' || env.ARC_LOCAL
+  let isLocal = Deno.env.get('NODE_ENV') === 'testing' || Deno.env.get('ARC_LOCAL')
   let exec = isLocal ? sandbox : queue
   exec(params, callback)
   return promise

@@ -4,7 +4,7 @@ import aws from 'https://cdn.skypack.dev/@vendia/serverless-express'
 const env = Deno.env.toObject()
 
 export default function unexpress (app) {
-  // Deno - struggled to refactor this - @vendia/serverless-express - caused Error: [Package Error] "punycode" does not exist. (Imported by "@vendia/serverless-express").
+  // TodoDeno - struggled to refactor this - @vendia/serverless-express - caused Error: [Package Error] "punycode" does not exist. (Imported by "@vendia/serverless-express").
 
   let server = aws.createServer(app)
   return function http (event, context, callback) {

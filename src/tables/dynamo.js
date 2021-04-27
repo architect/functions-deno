@@ -1,7 +1,5 @@
 import { DynamoDB } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-dynamodb/mod.ts'
 
-
-const env = Deno.env.toObject()
 /**
  * Instantiates Dynamo service interfaces
  * - Internal APIs should use `db` + `doc` to instantiate DynamoDB interfaces
@@ -10,12 +8,12 @@ const env = Deno.env.toObject()
 function getDynamo (type, callback) {
   if (!type) throw ReferenceError('Must supply Dynamo service interface type')
 
-  let testing = env.NODE_ENV === 'testing'
-  let arcLocal = env.ARC_LOCAL
-  let port = env.ARC_TABLES_PORT || 5000
+  let testing = Deno.env.get('NODE_ENV') === 'testing'
+  let arcLocal = Deno.env.get('ARC_LOCAL')
+  let port = Deno.env.get('ARC_TABLES_PORT') || 5000
   let local = {
     endpoint: `http://localhost:${port}`,
-    region: env.AWS_REGION || 'us-west-2' // Do not assume region is set!
+    region: Deno.env.get('AWS_REGION') || 'us-west-2' // Do not assume region is set!
   }
   let DB = DynamoDB
   let Doc = DynamoDB
@@ -59,7 +57,7 @@ function getDynamo (type, callback) {
 
   if (type === 'session') {
     // if SESSION_TABLE_NAME isn't defined we mock the client and just pass session thru
-    let passthru = !env.SESSION_TABLE_NAME
+    let passthru = !Deno.env.get('SESSION_TABLE_NAME')
     let mock = {
       get (params, callback) {
         callback()

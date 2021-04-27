@@ -1,9 +1,8 @@
 import { ServerRequest } from 'https://deno.land/std@0.93.0/http/server.ts'
 import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
-const env = Deno.env.toObject()
 
 export default function publishLocal (params, callback) {
-  let port = env.ARC_EVENTS_PORT || 3334
+  let port = Deno.env.get('ARC_EVENTS_PORT') || 3334
   let req = new ServerRequest({
     method: 'POST',
     port,

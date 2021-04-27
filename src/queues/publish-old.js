@@ -3,8 +3,6 @@ import waterfall from 'https://cdn.skypack.dev/pin/run-waterfall@v1.1.7-6lUADtad
 import { SQS } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-sqs/mod.ts'
 import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
 
-const env = Deno.env.toObject()
-
 /**
  * invoke an sqs lambda by name
  *
@@ -27,7 +25,7 @@ export default function _publish (params, callback) {
     throw ReferenceError('missing params.payload')
 
   // queue name normalized with appname and env
-  let name = `${env.ARC_APP_NAME}-${env.NODE_ENV}-${params.name}`
+  let name = `${Deno.env.get('ARC_APP_NAME')}-${Deno.env.get('NODE_ENV')}-${params.name}`
   let payload = params.payload
 
   let promise
@@ -40,9 +38,9 @@ export default function _publish (params, callback) {
   }
 
   // check if we're running locally
-  let local = env.NODE_ENV === 'testing' || env.ARC_LOCAL
+  let local = Deno.env.get('NODE_ENV') === 'testing' || Deno.env.get('ARC_LOCAL')
   if (local) {
-    let port = env.ARC_EVENTS_PORT || 3334
+    let port = Deno.env.get('ARC_EVENTS_PORT') || 3334
 
     // if so send the mock request
     let req = new ServerRequest({

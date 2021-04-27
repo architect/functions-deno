@@ -8,12 +8,11 @@
  * - /production if NODE_ENV === production
  */
 
-const env = Deno.env.toObject()
 
 export default function url (url) {
-  let staging = env.NODE_ENV === 'staging'
-  let production = env.NODE_ENV === 'production'
-  if (!env.ARC_LOCAL && (staging || production))
-    return `/${env.NODE_ENV}${url}`
+  let staging = Deno.env.get('NODE_ENV') === 'staging'
+  let production = Deno.env.get('NODE_ENV') === 'production'
+  if (!Deno.env.get('ARC_LOCAL') && (staging || production))
+    return `/${Deno.env.get('NODE_ENV')}${url}`
   return url // fallthru for NODE_ENV=testing
 }

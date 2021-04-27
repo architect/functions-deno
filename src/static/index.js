@@ -1,8 +1,6 @@
 import { existsSync } from 'https://deno.land/std@0.93.0/fs/mod.ts'
 import { join } from 'https://deno.land/std@0.93.0/path/mod.ts'
 
-const env = Deno.env.toObject()
-
 /**
  * Architect static asset helper
  * - Returns the live asset path and filename
@@ -18,8 +16,8 @@ export default function _static (asset, options = {}) {
   let isIndex = asset === '/'
   let manifest = join(Deno.cwd(), 'node_modules', '@architect', 'shared', 'static.json')
   let exists = existsSync(manifest)
-  let local = env.NODE_ENV === 'testing' || env.ARC_LOCAL
-  let stagePath = options.stagePath && !local ? '/' + env.NODE_ENV : ''
+  let local = Deno.env.get('NODE_ENV') === 'testing' || Deno.env.get('ARC_LOCAL')
+  let stagePath = options.stagePath && !local ? '/' + Deno.env.get('NODE_ENV') : ''
   let path = `${stagePath}/_static`
   if (!local && exists && !isIndex) {
     let read = p => Deno.readFileSync(p).toString()
