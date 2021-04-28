@@ -9,6 +9,14 @@
 - JWE - *_Session tokens incompatible with node/ruby/python_* - currently there's no availaility of a library that uses the A128GCM algorithm. Possible that if [webcrypto APIs are implemented in Deno](https://github.com/denoland/deno/issues/1891) then [jose](https://github.com/panva/jose) would be available. 
 - no zlib. `compress.js` uses `gzipDecode/ gzipEncode`, `deflate/inflate` and `compress/decompress` (brotli) instead
 
+No `mockfs` equivalant and can't use Skypack / jspm
+
+Following units tests can't be completed:
+- http/proxy/read/_local.test.js
+- http/proxy/read/_pretty.test.js
+- http/proxy/read/_s3.test.js
+
+Unless we can find an alternative to `mockfs`
 
 # Todo
 - ~~Set / get/ delete Deno.env - use Deno methods, rather than the env.toObject()~~ 
