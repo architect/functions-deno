@@ -21,7 +21,7 @@ export default function normalizeResponse (params) {
     response.headers['Content-Type'] || // Possibly get content-type passed via proxy plugins
     response.headers['content-type'] || // ...
     result && result.ContentType ||     // Fall back to what came down from S3's metadata
-    mime.contentType(path.extname(Key)) // Finally, fall back to the mime type database
+    mime.getType(path.extname(Key)) // Finally, fall back to the mime type database
 
   // Set Content-Type
   response.headers['Content-Type'] = contentType

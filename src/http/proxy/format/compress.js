@@ -12,7 +12,7 @@ import {
 
 
 function compressor (direction, type, data) {
-
+  const decoder = new TextDecoder()
   let compress = direction === 'compress'
 
   if(compress) {
@@ -26,8 +26,14 @@ function compressor (direction, type, data) {
     deflate: compress ? deflate : inflate
   }
   if (!exec[type]) throw ReferenceError('Invalid compression type specified, must be gzip, br, or deflate')
-
-  return exec[type](data)
+  
+  if(!compress) {
+    let buffer = exec[type](data)
+    return decoder.decode(buffer)
+  } else {
+    return exec[type](data)
+  }
+  
 }
 
 export const compress = compressor.bind({}, 'compress')

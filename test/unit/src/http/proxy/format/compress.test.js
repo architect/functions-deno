@@ -73,9 +73,9 @@ Deno.test({
     let gzip = decompress('gzip', gzipEncode(dataBuffer))
     let br = decompress('br', brotliCompress(dataBuffer))
     let deflated = decompress('deflate', deflate(dataBuffer))
-    assertEquals(Buffer.from(gzip).toString(), data, 'gzip returned correct data')
-    assertEquals(Buffer.from(br).toString(), data, 'br returned correct data')
-    assertEquals(Buffer.from(deflated).toString(), data, 'deflate returned correct data')
+    assertEquals((gzip).toString(), data, 'gzip returned correct data')
+    assertEquals((br).toString(), data, 'br returned correct data')
+    assertEquals((deflated).toString(), data, 'deflate returned correct data')
   },
   sanitizeResources: false,
   sanitizeOps: false
