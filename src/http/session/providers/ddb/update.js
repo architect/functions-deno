@@ -10,7 +10,7 @@ export default function _update (name, payload, callback) {
     else {
       db.putItem({
         TableName: name,
-        Item: marshall(session, {removeUndefinedValues: true})
+        Item: marshall(session, { removeUndefinedValues: true })
       },
       function _create (err) {
         if (err) callback(err)

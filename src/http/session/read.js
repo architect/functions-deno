@@ -2,7 +2,7 @@ import jwe from './providers/jwe.js'
 import ddb from './providers/ddb/index.js'
 
 export default function read (request, callback) {
- 
+
   if (Deno.env.get('SESSION_TABLE_NAME') === 'jwe')
     return jwe.read(request, callback)
 
