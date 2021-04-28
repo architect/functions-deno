@@ -9,8 +9,17 @@ import {
   inflate,
 } from 'https://deno.land/x/compress@v0.3.8/mod.ts'
 
+
+
 function compressor (direction, type, data) {
+
   let compress = direction === 'compress'
+
+  if(compress) {
+    const encoder = new TextEncoder()
+    data = encoder.encode(data)
+  }
+
   let exec = {
     gzip: compress ? gzipEncode : gzipDecode,
     br: compress ? brotliCompress : brotliDecompress,
