@@ -10,9 +10,6 @@ import * as path from "https://deno.land/std@0.93.0/path/mod.ts"
 import arcStatic from '../../src/static/index.js'
 import arcHttp from '../../src/http/index.js'
 
-
-const env = Deno.env.toObject()
-
 const join = path.join
 const __dirname = path.dirname(path.fromFileUrl(import.meta.url))
 
@@ -21,15 +18,15 @@ let mock = join(__dirname, '..', 'mock')
 let tmp = join(mock, 'tmp')
 let shared = join(tmp, 'vendor', 'shared')
 
-let origRegion = env.AWS_REGION
+let origRegion = Deno.env.get('AWS_REGION')
 let origCwd = Deno.cwd()
 
 let resetEnv = () => {
-  delete env.AWS_REGION
-  delete env.NODE_ENV
-  delete env.ARC_STATIC_PREFIX
-  delete env.ARC_STATIC_FOLDER
-  delete env.ARC_STATIC_BUCKET
+  Deno.env.delete('AWS_REGION')
+  Deno.env.delete('NODE_ENV')
+  Deno.env.delete('ARC_STATIC_PREFIX')
+  Deno.env.delete('ARC_STATIC_FOLDER')
+  Deno.env.delete('ARC_STATIC_BUCKET')
 }
 
 Deno.test({
@@ -52,32 +49,32 @@ Deno.test({
 
 
 
-Deno.test('Local URL tests', async () => {
+Deno.test('Local URL tests', () => {
   //t.plan(7)
   assertEquals(arcStatic('index.html'), '/_static/index.html', 'Basic local static path')
   assertEquals(arcStatic('/index.html'), '/_static/index.html', 'Basic local static path with leading slash')
   assertEquals(arcHttp.helpers.static('index.html'), '/_static/index.html', 'Basic local static path (legacy)')
 
-  env.NODE_ENV = 'testing'
+  Deno.env.set('NODE_ENV','testing')
   assertEquals(arcStatic('index.html'), '/_static/index.html', 'Basic local static path (env=testing)')
 
-  env.NODE_ENV = 'staging'
+  Deno.env.set('NODE_ENV','staging')
   assertEquals(arcStatic('index.html'), '/_static/index.html', 'Always use /_static')
 
-  delete env.NODE_ENV // Run it "locally"
-  env.ARC_STATIC_PREFIX = 'foo'
+  Deno.env.delete('NODE_ENV') // Run it "locally"
+  Deno.env.set('ARC_STATIC_PREFIX', 'foo')
   assertEquals(arcStatic('index.html'), '/_static/index.html', 'Basic local static path unaffected by ARC_STATIC_PREFIX env var')
-  delete env.ARC_STATIC_PREFIX
+  Deno.env.delete('ARC_STATIC_PREFIX')
 
-  env.ARC_STATIC_FOLDER = 'foo'
+  Deno.env.set('ARC_STATIC_FOLDER', 'foo')
   assertEquals(arcStatic('index.html'), '/_static/index.html', 'Basic local static path unaffected by ARC_STATIC_FOLDER env var')
   resetEnv()
 })
 
 Deno.test('Clean up env', async () => {
   //t.plan(1)
-  env.AWS_REGION = origRegion
-  env.NODE_ENV = 'testing'
+  Deno.env.set('AWS_REGION', origRegion)
+  Deno.env.set('NODE_ENV', 'testing')
   await Deno.chdir(origCwd)
   await Deno.remove(tmp, { recursive: true })
   assertEquals(await exists(tmp), false, 'Mocks cleaned up')

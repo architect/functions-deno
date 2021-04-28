@@ -4,10 +4,6 @@ import * as path from "https://deno.land/std@0.93.0/path/mod.ts"
 import arcTables from '../../src/tables/index.js'
 import { DenoSandbox, read } from '../deno-sandbox.js';
 
-const env = Deno.env.toObject()
-
-env.NODE_ENV = 'testing'
-
 const join = path.join
 const __dirname = path.dirname(path.fromFileUrl(import.meta.url))
 
@@ -18,7 +14,8 @@ let mock = join(__dirname, '..', 'mock')
 let tmp = join(mock, 'tmp')
 let shared = join(tmp, 'vendor', 'shared')
 
-const sandbox = new DenoSandbox(false, tmp, env);
+Deno.env.set('NODE_ENV', 'testing')
+const sandbox = new DenoSandbox(false, tmp, Deno.env.toObject());
 
 let origCwd = Deno.cwd()
 
@@ -174,7 +171,7 @@ Deno.test({
   fn: async () => {
       sandbox.stop();
 
-      env.NODE_ENV = 'testing'
+      Deno.env.set('NODE_ENV', 'testing')
     await Deno.chdir(origCwd)
     await Deno.remove(tmp, { recursive: true })
     assertEquals(await exists(tmp), false, 'Mocks cleaned up')

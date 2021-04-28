@@ -5,8 +5,6 @@ import arcStatic from '../../src/static/index.js'
 import { createRequire } from "https://deno.land/std@0.93.0/node/module.ts";
 const require = createRequire(import.meta.url);
 
-const env = Deno.env.toObject()
-
 const join = path.join
 const __dirname = path.dirname(path.fromFileUrl(import.meta.url))
 
@@ -15,7 +13,7 @@ let mock = join(__dirname, '..', 'mock')
 let tmp = join(mock, 'tmp')
 let shared = join(tmp, 'vendor', 'shared')
 
-let origRegion = env.AWS_REGION
+let origRegion = Deno.env.get('AWS_REGION')
 let origCwd = Deno.cwd()
 
 let _static
@@ -38,8 +36,8 @@ Deno.test({
 
 Deno.test('Fingerprinting only enabled if static manifest is found', () => {
   //t.plan(1)
-  env.AWS_REGION = 'us-west-1'
-  env.NODE_ENV = 'production'
+  Deno.env.set('AWS_REGION', 'us-west-1')
+  Deno.env.set('NODE_ENV', 'production')
   arcStatic('index.html', { reload: true })
   assertEquals(arcStatic('index.html'), '/_static/index.html')
 })
@@ -55,11 +53,11 @@ Deno.test('Set up mocked static manifest', async () => {
 
 Deno.test('Clean up env', async () => {
   //t.plan(1)
-  delete env.ARC_STATIC_BUCKET
-  delete env.ARC_STATIC_PREFIX
-  delete env.ARC_STATIC_FOLDER
-  env.AWS_REGION = origRegion
-  env.NODE_ENV = 'testing'
+  Deno.env.delete('ARC_STATIC_BUCKET')
+  Deno.env.delete('ARC_STATIC_PREFIX')
+  Deno.env.delete('ARC_STATIC_FOLDER')
+  Deno.env.set('AWS_REGION', origRegion)
+  Deno.env.set('NODE_ENV', 'testing')
   await Deno.chdir(origCwd)
   await Deno.remove(tmp, { recursive: true })
   assertEquals(await exists(tmp), false, 'Mocks cleaned up')

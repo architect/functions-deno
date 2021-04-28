@@ -8,12 +8,10 @@ import {
 } from "https://deno.land/std@0.93.0/testing/asserts.ts"
 import { DenoSandbox, read } from '../deno-sandbox.js';
 
-const env = Deno.env.toObject()
-
 const join = path.join
 const __dirname = path.dirname(path.fromFileUrl(import.meta.url))
 
-let port = env.PORT ? env.PORT : '3333'
+let port = Deno.env.get('PORT') ? Deno.env.get('PORT') : '3333'
 let url = s => `http://localhost:${port}${s ? s : ''}`
 
 async function getSession (url) {
@@ -49,7 +47,8 @@ let cookie // Assigned at setup
 let mock = join(__dirname, '..', 'mock', 'project')
 let origCwd = Deno.cwd()
 
-const sandbox = new DenoSandbox(false, mock, env);
+Deno.env.set('SESSION_TABLE_NAME', 'jwe')
+const sandbox = new DenoSandbox(false, mock, Deno.env.toObject());
 
 Deno.test({
     name: "Set up env", 
@@ -168,7 +167,7 @@ Deno.test({
     fn: async () => {
     
         sandbox.stop();
-        delete env.SESSION_TABLE_NAME
+        Deno.env.delete('SESSION_TABLE_NAME')
         Deno.chdir(origCwd)
         assertEquals(Deno.cwd(), origCwd, 'Reset working dir')
     },

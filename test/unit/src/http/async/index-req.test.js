@@ -11,7 +11,6 @@ import {
 } from "https://deno.land/std@0.93.0/testing/asserts.ts"
 
 Deno.env.set('SESSION_TABLE_NAME', 'jwe')
-const env = Deno.env.toObject()
 
 const arcHttpMiddleware = arcHttp.middleware
 
@@ -69,28 +68,6 @@ Deno.test({
   sanitizeResources: false,
   sanitizeOps: false
 })
-/* 
-Deno.test({
-  name: 'starts the db server', 
-  fn: async () => {
-    //t.plan(1)
-    const cmd = sandbox.start();
-    let result
-    let checkComplete = false
-    while(!checkComplete) {
-      let line = await read(cmd.stdout)
-      console.log(line)
-      if(line.indexOf('Local environment ready!') !== -1) {
-          checkComplete = true
-          result = line
-      }
-    }
-
-    assertEquals(result, '❤︎ Local environment ready!', result)
-  },
-  sanitizeResources: false,
-  sanitizeOps: false,
-}) */
 
 Deno.test({
   name: 'Architect v6 (HTTP): get /', 
@@ -711,7 +688,7 @@ Deno.test({
 Deno.test({
   name: "Teardown", 
   fn: () => {
-      delete env.SESSION_TABLE_NAME
+      Deno.env.delete('SESSION_TABLE_NAME')
       assert('Done')
   },
   sanitizeResources: false,
