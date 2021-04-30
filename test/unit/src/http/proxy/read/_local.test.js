@@ -136,7 +136,7 @@ Deno.test({
   sanitizeOps: false
 })
 
-test({
+Deno.test({
   name: 'Local proxy reader unsets ARC_STATIC_PREFIX and returns formatted response (200)', 
   fn: async () => {
     setup()
@@ -164,7 +164,7 @@ test({
   sanitizeOps: false
 })
 
-test({
+Deno.test({
   name: 'Local proxy reader unsets ARC_STATIC_FOLDER (deprecated) and returns formatted response (200)', 
   fn: async () => {
     setup()

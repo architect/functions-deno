@@ -186,7 +186,7 @@ Deno.test({
 })
 
 Deno.test({
-  'S3 proxy reader passes through ContentEncoding to response headers', 
+  name: 'S3 proxy reader passes through ContentEncoding to response headers', 
   fn: async () => {
     // ContentEncoding is metadata published on upload; since it's S3-specific, we don't have an equivalent local test yet
     setup()
