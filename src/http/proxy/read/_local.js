@@ -34,7 +34,7 @@ export default async function readLocal (params) {
   // Unlike S3, handle basePath and assets inside the function as Sandbox is long-lived
   let staticAssets
   // After 6.x we can rely on this env var in sandbox
-  let basePath = ARC_SANDBOX_PATH_TO_STATIC || join(process.cwd(), '..', '..', '..', 'public')
+  let basePath = ARC_SANDBOX_PATH_TO_STATIC || join(Deno.cwd(), '..', '..', '..', 'public')
   let staticManifest = join(basePath, 'static.json')
   if (existsSync(staticManifest)) {
     staticAssets = JSON.parse(Deno.readFileSync(staticManifest))
