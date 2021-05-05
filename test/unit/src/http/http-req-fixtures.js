@@ -1,4 +1,4 @@
-import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
+import { Buffer } from '../../../deps.ts'
 
 let b64enc = i => Buffer.from(i).toString('base64')
 

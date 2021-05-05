@@ -1,13 +1,7 @@
-import * as path from "https://deno.land/std@0.93.0/path/mod.ts"
+import { path } from '../../../../deps.ts'
 const join = path.join
-import { DenoSandbox, read as sandboxRead } from '../../../../deno-sandbox.js';
-import {
-  assert,
-  AssertionError,
-  assertEquals,
-  assertExists,
-  assertNotEquals
-} from "https://deno.land/std@0.93.0/testing/asserts.ts"
+import { DenoSandbox, read as sandboxRead } from '../../../../deps.ts';
+import { assert, assertEquals } from '../../../../deps.ts'
 
 let sandbox
 

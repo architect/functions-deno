@@ -1,22 +1,11 @@
 import * as sut from '../../../../../../src/http/proxy/format/compress.js'
-import { compress as brotliCompress } from 'https://deno.land/x/brotli/mod.ts'
-import { decompress as brotliDecompress } from 'https://deno.land/x/brotli/mod.ts'
-import {
-  gzipDecode,
-  gzipEncode,
-} from 'https://github.com/manyuanrong/wasm_gzip/raw/master/mod.ts'
-import {
-  deflate,
-  inflate,
-} from 'https://deno.land/x/compress@v0.3.8/mod.ts'
-import {
-  assert,
-  AssertionError,
-  assertEquals,
-  assertThrows,
-  assertNotEquals
-} from "https://deno.land/std@0.93.0/testing/asserts.ts"
-import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
+
+import { brotliCompress } from '../../../../../deps.ts'
+import { brotliDecompress } from '../../../../../deps.ts'
+import { gzipDecode, gzipEncode } from '../../../../../deps.ts'
+import { deflate, inflate } from '../../../../../deps.ts'
+import { assert, assertEquals, assertThrows } from '../../../../../deps.ts'
+import { Buffer } from '../../../../../deps.ts'
 
 let data = 'this is fine'
 

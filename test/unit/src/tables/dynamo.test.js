@@ -1,16 +1,10 @@
-import {
-  assert,
-  AssertionError,
-  assertEquals,
-  assertExists,
-  assertNotEquals
-} from "https://deno.land/std@0.93.0/testing/asserts.ts"
+import { assert, AssertionError, assertEquals } from "../../../deps.ts"
 
 let dynamo
 let env = Deno.env.get('NODE_ENV')
 Deno.env.set('ARC_TABLES_PORT', '5000')
 
-const DenoSandbox = (await import('../../../deno-sandbox.js')).DenoSandbox;
+const DenoSandbox = (await import('../../../deps.ts')).DenoSandbox;
 const sandbox = new DenoSandbox(false, Deno.cwd(), Deno.env.toObject())
 
 function reset () {

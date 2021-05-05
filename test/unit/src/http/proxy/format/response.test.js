@@ -1,15 +1,8 @@
 import normalize from '../../../../../../src/http/proxy/format/response.js'
-import {
-    gzipDecode
-} from 'https://github.com/manyuanrong/wasm_gzip/raw/master/mod.ts'
-import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
-import {
-  assert,
-  AssertionError,
-  assertEquals,
-  assertExists,
-  assertNotEquals,
-} from "https://deno.land/std@0.93.0/testing/asserts.ts"
+
+import { gzipDecode } from '../../../../../deps.ts'
+import { Buffer } from '../../../../../deps.ts'
+import { assert, assertEquals } from '../../../../../deps.ts'
 
 
 let ContentType = 'image/gif'

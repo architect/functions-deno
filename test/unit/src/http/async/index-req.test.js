@@ -2,13 +2,15 @@
 import arcHttpSync from '../../../../../src/http/async/index.js'
 import arcHttp from '../../../../../src/http/index.js'
 import interpolate from '../../../../../src/http/helpers/params.js'
+
 import reqs from '../http-req-fixtures.js'
+
 import {
   assert,
   AssertionError,
   assertEquals,
   assertExists
-} from "https://deno.land/std@0.93.0/testing/asserts.ts"
+} from "../../../../deps.ts"
 
 Deno.env.set('SESSION_TABLE_NAME', 'jwe')
 

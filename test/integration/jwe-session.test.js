@@ -1,12 +1,11 @@
-import * as path from "https://deno.land/std@0.93.0/path/mod.ts"
+import {path} from "../deps.ts"
 import {
   equal,
   assert,
   assertExists,
-  assertArrayIncludes,
   assertEquals,
-} from "https://deno.land/std@0.93.0/testing/asserts.ts"
-import { DenoSandbox, read } from '../deno-sandbox.js';
+} from "../deps.ts"
+import { DenoSandbox, read } from "../deps.ts"
 
 const join = path.join
 const __dirname = path.dirname(path.fromFileUrl(import.meta.url))

@@ -1,14 +1,15 @@
-import sinon from 'https://cdn.skypack.dev/sinon'
+
 import subscribe from '../../../../src/queues/subscribe.js'
 //import mockSqsEvent from '../../../mock/mock-sqs-event.json' -- https://github.com/denoland/deno/issues/7623
 const mockSqsEvent = JSON.parse(Deno.readTextFileSync('./test/mock/mock-sqs-event.json'));
+import { sinon } from "../../../deps.ts"
 import {
   assert,
   AssertionError,
   assertEquals,
   assertExists,
   assertNotEquals
-} from "https://deno.land/std@0.93.0/testing/asserts.ts"
+} from "../../../deps.ts"
 
 Deno.test({
   name: 'queues.subscribe calls handler', 

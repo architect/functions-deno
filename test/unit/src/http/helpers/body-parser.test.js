@@ -1,9 +1,7 @@
 import parseBody from '../../../../../src/http/helpers/body-parser.js'
-import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
-import {
-    assertThrows,
-    assertEquals,
-} from "https://deno.land/std@0.93.0/testing/asserts.ts"
+
+import { Buffer } from '../../../../deps.ts'
+import { assertThrows, assertEquals } from '../../../../deps.ts'
 
 let str = i => JSON.stringify(i)
 let b64encode = i => Buffer.from(i).toString('base64')

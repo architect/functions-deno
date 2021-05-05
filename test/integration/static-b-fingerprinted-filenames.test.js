@@ -1,8 +1,11 @@
-import { assert, assertEquals } from "https://deno.land/std@0.93.0/testing/asserts.ts"
-import { exists, existsSync} from 'https://deno.land/std@0.94.0/fs/mod.ts'
-import * as path from "https://deno.land/std@0.93.0/path/mod.ts"
 import arcStatic from '../../src/static/index.js'
-import { createRequire } from "https://deno.land/std@0.93.0/node/module.ts";
+
+import { createRequire } from "../deps.ts"
+import { exists } from "../deps.ts"
+import {path} from "../deps.ts"
+import {assert, assertEquals} from "../deps.ts"
+
+
 const require = createRequire(import.meta.url);
 
 const join = path.join

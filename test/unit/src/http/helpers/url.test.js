@@ -1,8 +1,5 @@
 import url from '../../../../../src/http/helpers/url.js'
-import {
-    assert,
-    assertEquals,
-} from "https://deno.land/std@0.93.0/testing/asserts.ts"
+import { assert, assertEquals } from '../../../../deps.ts'
 
 let env = Deno.env.get('NODE_ENV')
 

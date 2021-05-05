@@ -1,13 +1,7 @@
-import mockfs from 'https://dev.jspm.io/mock-fs'  //wont work process.binding not available
-import proxyquire from 'https://cdn.skypack.dev/pin/proxyquire@v2.1.3-gMYD4x5TS3L5tcpmiehI/mode=imports,min/optimized/proxyquire.js'
-import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
-import {
-  assert,
-  AssertionError,
-  assertEquals,
-  assertExists,
-  assertNotEquals
-} from "https://deno.land/std@0.93.0/testing/asserts.ts"
+import mockfs from '../../../../../deps.ts'  //wont work process.binding not available
+import proxyquire from '../../../../../deps.ts'
+import { Buffer } from '../../../../../deps.ts'
+import { assert, assertEquals } from '../../../../../deps.ts'
 
 let env = Deno.env.get('NODE_ENV')
 let pathToStatic = Deno.env.get('ARC_SANDBOX_PATH_TO_STATIC')

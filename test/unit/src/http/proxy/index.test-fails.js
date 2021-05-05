@@ -1,4 +1,4 @@
-import proxyquire from 'https://cdn.skypack.dev/pin/proxyquire@v2.1.3-gMYD4x5TS3L5tcpmiehI/mode=imports,min/optimized/proxyquire.js'
+import proxyquire from '../../../../deps.ts'
 let readStub = params => params
 let httpProxy = proxyquire('../../../../../src/http/proxy/index.js', {
   './read': readStub

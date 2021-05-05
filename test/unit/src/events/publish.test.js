@@ -1,6 +1,4 @@
-import {
-    assertThrowsAsync
-} from "https://deno.land/std@0.93.0/testing/asserts.ts"
+import { assertThrowsAsync } from "../../../deps.ts"
 import publish from '../../../../src/events/publish.js'
 
 Deno.test({

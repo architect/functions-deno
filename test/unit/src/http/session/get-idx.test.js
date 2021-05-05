@@ -1,8 +1,6 @@
 import getIdx from '../../../../../src/http/session/providers/_get-idx.js'
-import {
-  assert,
-  assertEquals,
-} from "https://deno.land/std@0.93.0/testing/asserts.ts"
+
+import { assert, assertEquals } from '../../../../deps.ts'
 
 Deno.test({
   name: 'Set up env', 

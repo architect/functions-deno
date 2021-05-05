@@ -1,9 +1,7 @@
 
-import sinon from 'https://cdn.skypack.dev/sinon'
-import {
-    assert,
-    AssertionError
-} from "https://deno.land/std@0.93.0/testing/asserts.ts"
+import { sinon } from '../../../deps.ts'
+import { assert, AssertionError } from '../../../deps.ts'
+
 import subscribe from '../../../../src/events/subscribe.js'
 
 Deno.test({

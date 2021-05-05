@@ -1,7 +1,7 @@
-import proxyquire from 'https://cdn.skypack.dev/pin/proxyquire@v2.1.3-gMYD4x5TS3L5tcpmiehI/mode=imports,min/optimized/proxyquire.js'
-import { gzipEncode } from 'https://github.com/manyuanrong/wasm_gzip/raw/master/mod.ts'
-import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
-import { assert, assertEquals,assertNotEquals } from "https://deno.land/std@0.93.0/testing/asserts.ts"
+import proxyquire from '../../../../../deps.ts'
+import { gzipEncode } from '../../../../../deps.ts'
+import { Buffer } from '../../../../../deps.ts'
+import { assert, assertEquals,assertNotEquals } from '../../../../../deps.ts'
 /**
  * We'll test for basic response formatting, templatization, and headers
  *

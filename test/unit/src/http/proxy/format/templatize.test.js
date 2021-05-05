@@ -1,12 +1,7 @@
-import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
 import sut from '../../../../../../src/http/proxy/format/templatize.js'
-import {
-  assert,
-  AssertionError,
-  assertEquals,
-  assertExists,
-  assertNotEquals
-} from "https://deno.land/std@0.93.0/testing/asserts.ts"
+
+import { Buffer } from '../../../../../deps.ts'
+import { assert, assertEquals } from '../../../../../deps.ts'
 
 let buf = b => Buffer.from(b)
 

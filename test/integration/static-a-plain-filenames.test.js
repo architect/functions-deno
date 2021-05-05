@@ -1,12 +1,7 @@
-import {
-  equal,
-  assert,
-  assertExists,
-  assertArrayIncludes,
-  assertEquals,
-} from "https://deno.land/std@0.93.0/testing/asserts.ts"
-import { exists, existsSync} from 'https://deno.land/std@0.94.0/fs/mod.ts'
-import * as path from "https://deno.land/std@0.93.0/path/mod.ts"
+import { exists } from "../deps.ts"
+import {path} from "../deps.ts"
+import {assertEquals} from "../deps.ts"
+
 import arcStatic from '../../src/static/index.js'
 import arcHttp from '../../src/http/index.js'
 

@@ -1,18 +1,18 @@
-/* eslint require-await: 0 */
-import sinon from 'https://cdn.skypack.dev/sinon'
 import arcHttpSync from '../../../../../src/http/async/index.js'
 import arcHttp from '../../../../../src/http/index.js'
 const arcHttpMiddleware = arcHttp.middleware
 import requests from '../http-req-fixtures.js'
 import responses from '../http-res-fixtures.js'
-import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
+
+import { sinon } from '../../../../deps.ts'
+import { Buffer } from '../../../../deps.ts'
 import {
     assert,
     AssertionError,
     assertEquals,
     assertExists,
     assertNotEquals
-  } from "https://deno.land/std@0.93.0/testing/asserts.ts"
+  } from '../../../../deps.ts'
 
 const b64dec = i => Buffer.from(i, 'base64').toString()
 const str = i => JSON.stringify(i)

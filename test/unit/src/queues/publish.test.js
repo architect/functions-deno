@@ -1,5 +1,5 @@
 import publish from '../../../../src/queues/publish.js'
-import { assertThrows } from "https://deno.land/std@0.93.0/testing/asserts.ts"
+import { assertThrows } from '../../../deps.ts'
 
 Deno.test({
   name: 'queues.publish should throw if there is no parameter name', 

@@ -1,8 +1,5 @@
 import transform from '../../../../../../src/http/proxy/format/transform.js'
-import {
-  assert,
-  assertEquals,
-} from "https://deno.land/std@0.93.0/testing/asserts.ts"
+import { assert, assertEquals } from '../../../../../deps.ts'
 
 Deno.test({
   name: 'transform returns early if there are no plugins', 

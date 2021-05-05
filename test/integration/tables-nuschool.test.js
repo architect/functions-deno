@@ -1,8 +1,12 @@
-import { assert, assertEquals } from "https://deno.land/std@0.93.0/testing/asserts.ts"
-import { exists, existsSync} from 'https://deno.land/std@0.94.0/fs/mod.ts'
-import * as path from "https://deno.land/std@0.93.0/path/mod.ts"
 import arcTables from '../../src/tables/index.js'
-import { DenoSandbox, read } from '../deno-sandbox.js';
+
+import {path} from "../deps.ts"
+import {
+  assert,
+  assertEquals,
+} from "../deps.ts"
+import { exists } from "../deps.ts"
+import { DenoSandbox, read } from "../deps.ts"
 
 const join = path.join
 const __dirname = path.dirname(path.fromFileUrl(import.meta.url))
