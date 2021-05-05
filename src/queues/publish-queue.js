@@ -1,4 +1,4 @@
-import { SQSClient } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-sqs/mod.ts'
+import { SQSClient } from '../deps.ts'
 import lookup from '../discovery/index.js'
 let ledger = {}
 

@@ -1,13 +1,8 @@
-import { compress as brotliCompress } from 'https://deno.land/x/brotli/mod.ts'
-import { decompress as brotliDecompress } from 'https://deno.land/x/brotli/mod.ts'
-import {
-  gzipDecode,
-  gzipEncode,
-} from 'https://github.com/manyuanrong/wasm_gzip/raw/master/mod.ts'
-import {
-  deflate,
-  inflate,
-} from 'https://deno.land/x/compress@v0.3.8/mod.ts'
+import { brotliCompress } from '../../../deps.ts'
+import { brotliDecompress } from '../../../deps.ts'
+import { gzipDecode, gzipEncode } from '../../../deps.ts'
+import { deflate, inflate } from '../../../deps.ts'
+import { Buffer } from '../../../deps.ts'
 
 
 
@@ -15,7 +10,7 @@ function compressor (direction, type, data) {
   const decoder = new TextDecoder()
   let compress = direction === 'compress'
 
-  if (compress) {
+  if (compress && ( !(data instanceof Uint8Array) && !(data instanceof Buffer))) {
     const encoder = new TextEncoder()
     data = encoder.encode(data)
   }
@@ -28,11 +23,10 @@ function compressor (direction, type, data) {
   if (!exec[type]) throw ReferenceError('Invalid compression type specified, must be gzip, br, or deflate')
 
   if (!compress) {
-    let buffer = exec[type](data)
-    return decoder.decode(buffer)
+    return decoder.decode(exec[type](data))
   }
   else {
-    return exec[type](data)
+    return Buffer.from(exec[type](data))
   }
 
 }

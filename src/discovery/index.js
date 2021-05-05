@@ -1,4 +1,4 @@
-import { SSM } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-ssm/mod.ts'
+import { SSM } from '../deps.ts'
 
 /**
  * @param {string} type - events, queues, or tables

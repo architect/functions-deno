@@ -1,7 +1,8 @@
-import { mime } from 'https://deno.land/x/mimetypes@v1.0.0/mod.ts'
-import * as path from 'https://deno.land/std@0.93.0/path/mod.ts'
+import { mime } from '../../../deps.ts'
+import { path } from '../../../deps.ts'
+import { Buffer } from '../../../deps.ts'
+
 import { compress } from './compress.js'
-import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
 
 /**
  * Normalizes response shape

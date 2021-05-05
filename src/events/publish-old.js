@@ -1,7 +1,6 @@
-/* eslint global-require: "off" */
-import { ServerRequest } from 'https://deno.land/std@0.93.0/http/server.ts'
-import { SNS } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-sns/mod.ts'
-import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
+import { ServerRequest } from '../deps.ts'
+import { SNS } from '../deps.ts'
+import { Buffer } from '../deps.ts'
 
 let snsClient = new SNS
 let ledger = {}

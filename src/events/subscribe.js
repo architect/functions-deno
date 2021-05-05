@@ -1,4 +1,4 @@
-import * as parallel from 'https://deno.land/x/run_exclusive/mod.ts'
+import { parallel } from '../deps.ts'
 
 let fallback = {
   Records: [
@@ -41,7 +41,7 @@ export default function _subscribe (fn) {
       // sns triggers send batches of records
       // so we're going to create a handler for each one
       // and execute them in parallel
-      parallel.build(event.Records.map(function _iterator (record) {
+      parallel(event.Records.map(function _iterator (record) {
         // for each record we construct a handler function
         return function _actualHandler (callback) {
           try {

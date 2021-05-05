@@ -1,7 +1,7 @@
-import { existsSync } from 'https://deno.land/std@0.93.0/fs/mod.ts'
-import { extname, join } from 'https://deno.land/std@0.93.0/path/mod.ts'
-import { mime } from 'https://deno.land/x/mimetypes@v1.0.0/mod.ts'
-import { S3 } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-s3/mod.ts'
+import { existsSync } from '../../../deps.ts'
+import { extname, join } from '../../../deps.ts'
+import { mime } from '../../../deps.ts'
+import { S3 } from '../../../deps.ts'
 
 import binaryTypes from '../../helpers/binary-types.js'
 import { httpError } from '../../errors/index.js'

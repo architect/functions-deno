@@ -1,4 +1,4 @@
-import * as parallel from 'https://deno.land/x/run_exclusive/mod.ts'
+import { parallel } from '../deps.ts'
 /**
  * // Exmaple usage:
  *
@@ -38,7 +38,7 @@ export default function _subscribe (fn) {
       // sqs triggers send batches of records
       // so we're going to create a handler for each one
       // and execute them in parallel
-      parallel.build(evt.Records.map(function _iterator (record) {
+      parallel(evt.Records.map(function _iterator (record) {
         // for each record we construct a handler function that assumes body is JSON
         return function _actualHandler (callback) {
           try {

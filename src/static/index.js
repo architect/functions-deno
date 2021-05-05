@@ -1,5 +1,5 @@
-import { existsSync } from 'https://deno.land/std@0.93.0/fs/mod.ts'
-import { join } from 'https://deno.land/std@0.93.0/path/mod.ts'
+import { existsSync } from '../deps.ts'
+import { join } from '../deps.ts'
 
 /**
  * Architect static asset helper

@@ -1,6 +1,7 @@
+import { marshall, unmarshall } from '../../../../deps.ts'
+
 import dynamo from '../../../../tables/dynamo.js'
 import create from './create.js'
-import { marshall, unmarshall } from 'https://deno.land/x/aws_sdk@v3.13.0.0/util-dynamodb/mod.ts'
 
 export default function _find (name, _idx, callback) {
   dynamo.session(function _gotDB (err, db) {

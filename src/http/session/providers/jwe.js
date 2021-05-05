@@ -1,7 +1,8 @@
+import { cookie } from '../../../deps.ts'
+import { djwtCreate, getNumericDate, verify } from '../../../deps.ts'
+import { Buffer } from '../../../deps.ts'
+
 import getIdx from './_get-idx.js'
-import cookie from 'https://cdn.skypack.dev/pin/cookie@v0.4.1-guhSEbcHMyyU68A3z2sB/mode=imports,min/optimized/cookie.js'
-import { create as djwtCreate, getNumericDate, verify } from 'https://deno.land/x/djwt@v2.2/mod.ts'
-import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
 // let alg = 'dir'
 let enc = 'HS256'
 

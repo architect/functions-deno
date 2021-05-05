@@ -1,4 +1,4 @@
-import { SNS } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-sns/mod.ts'
+import { SNS } from '../deps.ts'
 import lookup from '../discovery/index.js'
 let ledger = {}
 

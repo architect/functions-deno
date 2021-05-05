@@ -1,4 +1,4 @@
-import { ApiGatewayManagementApi } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-apigatewaymanagementapi/mod.ts'
+import { ApiGatewayManagementApi } from '../deps.ts'
 
 export default function send ({ id, payload }, callback) {
   let endpoint

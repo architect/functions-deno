@@ -1,7 +1,7 @@
-import { ServerRequest } from 'https://deno.land/std@0.93.0/http/server.ts'
-import waterfall from 'https://cdn.skypack.dev/pin/run-waterfall@v1.1.7-6lUADtad6KJAms9NUvQ5/mode=imports,min/optimized/run-waterfall.js'
-import { SQS } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-sqs/mod.ts'
-import { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
+import { ServerRequest } from '../deps.ts'
+import { waterfall } from '../deps.ts'
+import { SQS } from '../deps.ts'
+import { Buffer } from '../deps.ts'
 
 /**
  * invoke an sqs lambda by name

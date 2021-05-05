@@ -1,7 +1,8 @@
+import { parallel } from '../deps.ts'
+import { marshall, unmarshall } from '../deps.ts'
+
 import dynamo from './dynamo.js'
 import promisify from './promisify-object.js'
-import parallel from 'https://cdn.skypack.dev/pin/run-parallel@v1.2.0-k69TQdgU7luJsLHnLpnN/mode=imports/optimized/run-parallel.js'
-import { marshall, unmarshall } from 'https://deno.land/x/aws_sdk@v3.13.0.0/util-dynamodb/mod.ts'
 /**
  * returns a data client
  */

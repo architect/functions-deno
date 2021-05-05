@@ -1,4 +1,4 @@
-import { DynamoDB } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-dynamodb/mod.ts'
+import { DynamoDB } from '../deps.ts'
 
 /**
  * Instantiates Dynamo service interfaces

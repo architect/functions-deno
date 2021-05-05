@@ -1,4 +1,5 @@
-import waterfall from 'https://cdn.skypack.dev/pin/run-waterfall@v1.1.7-6lUADtad6KJAms9NUvQ5/mode=imports,min/optimized/run-waterfall.js'
+import { waterfall } from '../deps.ts'
+
 import old from './old.js'
 import lookup from '../discovery/index.js'
 import factory from './factory.js'
