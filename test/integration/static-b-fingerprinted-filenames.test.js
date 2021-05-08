@@ -1,10 +1,12 @@
-import arcStatic from '../../src/static/index.js'
+import {dotEnvConfig} from '../deps.ts'
+dotEnvConfig({ export: true })
 
 import { createRequire } from "../deps.ts"
 import { exists } from "../deps.ts"
 import {path} from "../deps.ts"
 import {assert, assertEquals} from "../deps.ts"
 
+import arcStatic from '../../src/static/index.js'
 
 const require = createRequire(import.meta.url);
 

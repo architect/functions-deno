@@ -1,3 +1,5 @@
+import {dotEnvConfig} from '../../../../deps.ts'
+dotEnvConfig({ export: true })
 import { path } from '../../../../deps.ts'
 const join = path.join
 import { DenoSandbox, read as sandboxRead } from '../../../../deps.ts';

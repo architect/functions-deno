@@ -1,3 +1,6 @@
+import {dotEnvConfig} from '../../../../../deps.ts'
+dotEnvConfig({ export: true })
+
 import mockfs from '../../../../../deps.ts' //wont work process.binding not available
 import path from '../../../../../deps.ts'
 const join = path.json

@@ -1,3 +1,6 @@
+import {dotEnvConfig} from '../../../deps.ts'
+dotEnvConfig({ export: true })
+
 import { assertThrowsAsync } from "../../../deps.ts"
 import publish from '../../../../src/events/publish.js'
 

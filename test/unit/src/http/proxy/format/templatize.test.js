@@ -1,7 +1,10 @@
-import sut from '../../../../../../src/http/proxy/format/templatize.js'
+import {dotEnvConfig} from '../../../../../deps.ts'
+dotEnvConfig({ export: true })
 
 import { Buffer } from '../../../../../deps.ts'
 import { assert, assertEquals } from '../../../../../deps.ts'
+
+import sut from '../../../../../../src/http/proxy/format/templatize.js'
 
 let buf = b => Buffer.from(b)
 

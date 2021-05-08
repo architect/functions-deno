@@ -1,4 +1,5 @@
-
+import {dotEnvConfig} from '../../../deps.ts'
+dotEnvConfig({ export: true })
 import subscribe from '../../../../src/queues/subscribe.js'
 //import mockSqsEvent from '../../../mock/mock-sqs-event.json' -- https://github.com/denoland/deno/issues/7623
 const mockSqsEvent = JSON.parse(Deno.readTextFileSync('./test/mock/mock-sqs-event.json'));

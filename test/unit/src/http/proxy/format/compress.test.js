@@ -1,4 +1,5 @@
-import * as sut from '../../../../../../src/http/proxy/format/compress.js'
+import {dotEnvConfig} from '../../../../../deps.ts'
+dotEnvConfig({ export: true })
 
 import { brotliCompress } from '../../../../../deps.ts'
 import { brotliDecompress } from '../../../../../deps.ts'
@@ -6,6 +7,10 @@ import { gzipDecode, gzipEncode } from '../../../../../deps.ts'
 import { deflate, inflate } from '../../../../../deps.ts'
 import { assert, assertEquals, assertThrows } from '../../../../../deps.ts'
 import { Buffer } from '../../../../../deps.ts'
+
+import * as sut from '../../../../../../src/http/proxy/format/compress.js'
+
+
 
 let data = 'this is fine'
 

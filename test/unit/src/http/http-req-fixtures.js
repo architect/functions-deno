@@ -1,3 +1,5 @@
+import {dotEnvConfig} from '../../../deps.ts'
+dotEnvConfig({ export: true })
 import { Buffer } from '../../../deps.ts'
 
 let b64enc = i => Buffer.from(i).toString('base64')

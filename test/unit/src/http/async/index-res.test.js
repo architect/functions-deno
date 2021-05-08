@@ -1,8 +1,5 @@
-import arcHttpSync from '../../../../../src/http/async/index.js'
-import arcHttp from '../../../../../src/http/index.js'
-const arcHttpMiddleware = arcHttp.middleware
-import requests from '../http-req-fixtures.js'
-import responses from '../http-res-fixtures.js'
+import {dotEnvConfig} from '../../../../deps.ts'
+dotEnvConfig({ export: true })
 
 import { sinon } from '../../../../deps.ts'
 import { Buffer } from '../../../../deps.ts'
@@ -12,7 +9,13 @@ import {
     assertEquals,
     assertExists,
     assertNotEquals
-  } from '../../../../deps.ts'
+} from '../../../../deps.ts'
+
+import arcHttpSync from '../../../../../src/http/async/index.js'
+import arcHttp from '../../../../../src/http/index.js'
+const arcHttpMiddleware = arcHttp.middleware
+import requests from '../http-req-fixtures.js'
+import responses from '../http-res-fixtures.js'
 
 const b64dec = i => Buffer.from(i, 'base64').toString()
 const str = i => JSON.stringify(i)

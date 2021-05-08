@@ -1,9 +1,11 @@
-import normalize from '../../../../../../src/http/proxy/format/response.js'
+import {dotEnvConfig} from '../../../../../deps.ts'
+dotEnvConfig({ export: true })
 
 import { gzipDecode } from '../../../../../deps.ts'
 import { Buffer } from '../../../../../deps.ts'
 import { assert, assertEquals } from '../../../../../deps.ts'
 
+import normalize from '../../../../../../src/http/proxy/format/response.js'
 
 let ContentType = 'image/gif'
 let ETag = 'etagvalue'

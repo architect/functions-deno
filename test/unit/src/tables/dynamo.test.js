@@ -1,3 +1,5 @@
+import {dotEnvConfig} from '../../../deps.ts'
+dotEnvConfig({ export: true })
 import { assert, AssertionError, assertEquals } from "../../../deps.ts"
 
 let dynamo

@@ -1,6 +1,7 @@
-import arcHttp from '../../../../../src/http/index.js'
-
+import {dotEnvConfig} from '../../../../deps.ts'
+dotEnvConfig({ export: true })
 import { assertEquals } from '../../../../deps.ts'
+import arcHttp from '../../../../../src/http/index.js'
 
 // Ensure compatibility with legacy proxy methods
 Deno.test({

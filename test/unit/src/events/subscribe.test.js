@@ -1,3 +1,5 @@
+import {dotEnvConfig} from '../../../deps.ts'
+dotEnvConfig({ export: true })
 
 import { sinon } from '../../../deps.ts'
 import { assert, AssertionError } from '../../../deps.ts'

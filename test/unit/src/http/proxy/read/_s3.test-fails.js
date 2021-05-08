@@ -1,3 +1,6 @@
+import {dotEnvConfig} from '../../../../../deps.ts'
+dotEnvConfig({ export: true })
+
 import proxyquire from '../../../../../deps.ts'
 import { gzipEncode } from '../../../../../deps.ts'
 import { Buffer } from '../../../../../deps.ts'

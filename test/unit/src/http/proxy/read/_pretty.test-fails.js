@@ -1,3 +1,6 @@
+import {dotEnvConfig} from '../../../../../deps.ts'
+dotEnvConfig({ export: true })
+
 import mockfs from '../../../../../deps.ts'  //wont work process.binding not available
 import proxyquire from '../../../../../deps.ts'
 import { Buffer } from '../../../../../deps.ts'

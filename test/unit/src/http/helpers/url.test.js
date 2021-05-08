@@ -1,3 +1,6 @@
+import {dotEnvConfig} from '../../../../deps.ts'
+dotEnvConfig({ export: true })
+
 import url from '../../../../../src/http/helpers/url.js'
 import { assert, assertEquals } from '../../../../deps.ts'
 

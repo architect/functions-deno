@@ -17,6 +17,7 @@ export { createRequire } from "https://deno.land/std@0.95.0/node/module.ts";
 export * as crypto from 'https://deno.land/std@0.95.0/node/crypto.ts'
 
 //3rd-party
+export { config as dotEnvConfig } from "https://deno.land/x/dotenv@v2.0.0/mod.ts"
 export * as sinon from 'https://cdn.skypack.dev/sinon'
 export { compress as brotliCompress } from 'https://deno.land/x/brotli/mod.ts'
 export { decompress as brotliDecompress } from 'https://deno.land/x/brotli/mod.ts'

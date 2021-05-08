@@ -1,4 +1,5 @@
-import arcTables from '../../src/tables/index.js'
+import {dotEnvConfig} from '../deps.ts'
+dotEnvConfig({ export: true })
 
 import {path} from "../deps.ts"
 import {
@@ -7,6 +8,10 @@ import {
 } from "../deps.ts"
 import { exists } from "../deps.ts"
 import { DenoSandbox, read } from "../deps.ts"
+
+import arcTables from '../../src/tables/index.js'
+
+
 
 const join = path.join
 const __dirname = path.dirname(path.fromFileUrl(import.meta.url))

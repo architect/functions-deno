@@ -1,9 +1,14 @@
+import {dotEnvConfig} from '../deps.ts'
+dotEnvConfig({ export: true })
+
 import { exists } from "../deps.ts"
 import {path} from "../deps.ts"
 import {assertEquals} from "../deps.ts"
 
 import arcStatic from '../../src/static/index.js'
 import arcHttp from '../../src/http/index.js'
+
+
 
 const join = path.join
 const __dirname = path.dirname(path.fromFileUrl(import.meta.url))

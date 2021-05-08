@@ -1,9 +1,5 @@
-// Set env var to keep from stalling on db reads in CI
-import arcHttpSync from '../../../../../src/http/async/index.js'
-import arcHttp from '../../../../../src/http/index.js'
-import interpolate from '../../../../../src/http/helpers/params.js'
-
-import reqs from '../http-req-fixtures.js'
+import {dotEnvConfig} from '../../../../deps.ts'
+dotEnvConfig({ export: true })
 
 import {
   assert,
@@ -11,6 +7,11 @@ import {
   assertEquals,
   assertExists
 } from "../../../../deps.ts"
+
+import arcHttpSync from '../../../../../src/http/async/index.js'
+import arcHttp from '../../../../../src/http/index.js'
+import interpolate from '../../../../../src/http/helpers/params.js'
+import reqs from '../http-req-fixtures.js'
 
 Deno.env.set('SESSION_TABLE_NAME', 'jwe')
 

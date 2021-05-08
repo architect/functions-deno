@@ -1,3 +1,6 @@
+import {dotEnvConfig} from '../deps.ts'
+dotEnvConfig({ export: true })
+
 import {path} from "../deps.ts"
 import {
   equal,

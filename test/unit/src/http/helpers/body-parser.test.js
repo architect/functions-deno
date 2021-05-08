@@ -1,7 +1,10 @@
-import parseBody from '../../../../../src/http/helpers/body-parser.js'
+import {dotEnvConfig} from '../../../../deps.ts'
+dotEnvConfig({ export: true })
 
 import { Buffer } from '../../../../deps.ts'
 import { assertThrows, assertEquals } from '../../../../deps.ts'
+
+import parseBody from '../../../../../src/http/helpers/body-parser.js'
 
 let str = i => JSON.stringify(i)
 let b64encode = i => Buffer.from(i).toString('base64')

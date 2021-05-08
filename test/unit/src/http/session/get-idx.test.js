@@ -1,6 +1,7 @@
-import getIdx from '../../../../../src/http/session/providers/_get-idx.js'
-
+import {dotEnvConfig} from '../../../../deps.ts'
+dotEnvConfig({ export: true })
 import { assert, assertEquals } from '../../../../deps.ts'
+import getIdx from '../../../../../src/http/session/providers/_get-idx.js'
 
 Deno.test({
   name: 'Set up env', 

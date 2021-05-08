@@ -1,5 +1,7 @@
-import publish from '../../../../src/queues/publish.js'
+import {dotEnvConfig} from '../../../deps.ts'
+dotEnvConfig({ export: true })
 import { assertThrows } from '../../../deps.ts'
+import publish from '../../../../src/queues/publish.js'
 
 Deno.test({
   name: 'queues.publish should throw if there is no parameter name', 

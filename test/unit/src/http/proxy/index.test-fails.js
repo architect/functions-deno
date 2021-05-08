@@ -1,3 +1,5 @@
+import {dotEnvConfig} from '../../../../deps.ts'
+dotEnvConfig({ export: true })
 import proxyquire from '../../../../deps.ts'
 let readStub = params => params
 let httpProxy = proxyquire('../../../../../src/http/proxy/index.js', {
