@@ -1,5 +1,9 @@
-import transform from '../../../../../../src/http/proxy/format/transform.js'
+import {dotEnvConfig} from '../../../../../deps.ts'
+dotEnvConfig({ export: true })
+
 import { assert, assertEquals } from '../../../../../deps.ts'
+
+import transform from '../../../../../../src/http/proxy/format/transform.js'
 
 Deno.test({
   name: 'transform returns early if there are no plugins', 
