@@ -1,10 +1,10 @@
 // deno_std
-export { ServerRequest } from 'https://deno.land/std@0.93.0/http/server.ts'
-export { Buffer } from 'https://deno.land/std@0.93.0/node/buffer.ts'
-export { existsSync } from 'https://deno.land/std@0.93.0/fs/mod.ts'
-export { extname, join, sep } from 'https://deno.land/std@0.93.0/path/mod.ts'
-export * as crypto from 'https://deno.land/std@0.93.0/node/crypto.ts'
-export * as path from 'https://deno.land/std@0.93.0/path/mod.ts'
+export { ServerRequest } from 'https://deno.land/std@0.97.0/http/server.ts'
+export { Buffer } from 'https://deno.land/std@0.97.0/node/buffer.ts'
+export { existsSync } from 'https://deno.land/std@0.97.0/fs/mod.ts'
+export { extname, join, sep } from 'https://deno.land/std@0.97.0/path/mod.ts'
+export * as crypto from 'https://deno.land/std@0.97.0/node/crypto.ts'
+export * as path from 'https://deno.land/std@0.97.0/path/mod.ts'
 
 // 3rd-party
 export { SSM } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-ssm/mod.ts'
@@ -15,7 +15,7 @@ export { DynamoDB } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-dynamodb/
 export { marshall, unmarshall } from 'https://deno.land/x/aws_sdk@v3.13.0.0/util-dynamodb/mod.ts'
 export { ApiGatewayManagementApi } from 'https://deno.land/x/aws_sdk@v3.13.0.0/client-apigatewaymanagementapi/mod.ts'
 export { default as parallel } from 'https://cdn.skypack.dev/pin/run-parallel@v1.2.0-k69TQdgU7luJsLHnLpnN/mode=imports/optimized/run-parallel.js'
-export * as qs from 'https://deno.land/std@0.93.0/node/querystring.ts'
+export * as qs from 'https://deno.land/std@0.97.0/node/querystring.ts'
 export { compress as brotliCompress } from 'https://deno.land/x/brotli/mod.ts'
 export { decompress as brotliDecompress } from 'https://deno.land/x/brotli/mod.ts'
 export { gzipDecode, gzipEncode } from 'https://github.com/manyuanrong/wasm_gzip/raw/master/mod.ts'

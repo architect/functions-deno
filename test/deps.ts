@@ -1,5 +1,5 @@
 //std lib
-export * as path from "https://deno.land/std@0.95.0/path/mod.ts"
+export * as path from "https://deno.land/std@0.97.0/path/mod.ts"
 export {
   equal,
   assert,
@@ -10,11 +10,11 @@ export {
   assertThrowsAsync,
   AssertionError,
   assertThrows
-} from "https://deno.land/std@0.95.0/testing/asserts.ts"
-export { Buffer } from 'https://deno.land/std@0.95.0/node/buffer.ts'
-export { exists, existsSync} from 'https://deno.land/std@0.95.0/fs/mod.ts'
-export { createRequire } from "https://deno.land/std@0.95.0/node/module.ts";
-export * as crypto from 'https://deno.land/std@0.95.0/node/crypto.ts'
+} from "https://deno.land/std@0.97.0/testing/asserts.ts"
+export { Buffer } from 'https://deno.land/std@0.97.0/node/buffer.ts'
+export { exists, existsSync} from 'https://deno.land/std@0.97.0/fs/mod.ts'
+export { createRequire } from "https://deno.land/std@0.97.0/node/module.ts";
+export * as crypto from 'https://deno.land/std@0.97.0/node/crypto.ts'
 
 //3rd-party
 export { config as dotEnvConfig } from "https://deno.land/x/dotenv@v2.0.0/mod.ts"
