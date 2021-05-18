@@ -1,5 +1,5 @@
-import { qs } from '../../deps.ts'
-import { Buffer } from '../../deps.ts'
+import { qs } from './deps.ts'
+import { Buffer } from './deps.ts'
 
 /**
  * Arc 6 bodies are always base64 encoded strings with req.isBase64Encoded = true (or null, which we interpolate into `{}`)

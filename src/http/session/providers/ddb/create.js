@@ -1,7 +1,7 @@
-import { ShortUniqueId } from '../../../../deps.ts'
-import { parallel } from '../../../../deps.ts'
-import { marshall } from '../../../../deps.ts'
-import { CSRF } from '../../../../deps.ts'
+import { ShortUniqueId } from '../../deps.ts'
+import { parallel } from '../../deps.ts'
+import { marshall } from '../../deps.ts'
+import { CSRF } from '../../deps.ts'
 const csrf = CSRF()
 
 import week from './_week-from-now.js'

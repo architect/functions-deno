@@ -1,4 +1,4 @@
-import { SSM } from '../deps.ts'
+import { SSM } from './deps.ts'
 
 /**
  * @param {string} type - events, queues, or tables

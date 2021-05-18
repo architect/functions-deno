@@ -1,4 +1,4 @@
-import { parallel } from '../deps.ts'
+import { parallel } from './deps.ts'
 /**
  * // Exmaple usage:
  *

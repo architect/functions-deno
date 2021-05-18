@@ -1,5 +1,5 @@
-import { existsSync } from '../deps.ts'
-import { join } from '../deps.ts'
+import { existsSync } from './deps.ts'
+import { join } from './deps.ts'
 
 /**
  * Architect static asset helper

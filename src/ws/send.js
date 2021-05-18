@@ -1,4 +1,4 @@
-import { ApiGatewayManagementApi } from '../deps.ts'
+import { ApiGatewayManagementApi } from './deps.ts'
 
 export default function send ({ id, payload }, callback) {
   let endpoint

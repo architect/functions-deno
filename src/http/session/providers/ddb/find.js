@@ -1,4 +1,4 @@
-import { marshall, unmarshall } from '../../../../deps.ts'
+import { marshall, unmarshall } from '../../deps.ts'
 
 import dynamo from '../../../../tables/dynamo.js'
 import create from './create.js'

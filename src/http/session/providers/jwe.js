@@ -1,6 +1,6 @@
-import { cookie } from '../../../deps.ts'
-import { djwtCreate, getNumericDate, verify } from '../../../deps.ts'
-import { Buffer } from '../../../deps.ts'
+import { cookie } from '../deps.ts'
+import { djwtCreate, getNumericDate, verify } from '../deps.ts'
+import { Buffer } from '../deps.ts'
 
 import getIdx from './_get-idx.js'
 // let alg = 'dir'

@@ -1,6 +1,6 @@
-import { mime } from '../../../deps.ts'
-import { path } from '../../../deps.ts'
-import { Buffer } from '../../../deps.ts'
+import { mime } from './deps.ts'
+import { path } from './deps.ts'
+import { Buffer } from './deps.ts'
 
 import { compress } from './compress.js'
 

@@ -1,7 +1,7 @@
-import { cookie } from '../../../../deps.ts'
-import { hmac } from '../../../../deps.ts'
-import { Buffer } from '../../../../deps.ts'
-import { secureCompare } from '../../../../deps.ts'
+import { cookie } from '../../deps.ts'
+import { hmac } from '../../deps.ts'
+import { Buffer } from '../../deps.ts'
+import { secureCompare } from '../../deps.ts'
 
 import getIdx from '../_get-idx.js'
 import find from './find.js'

@@ -1,6 +1,6 @@
-import { ServerRequest } from '../deps.ts'
-import { SNS } from '../deps.ts'
-import { Buffer } from '../deps.ts'
+import { ServerRequest } from './deps.ts'
+import { SNS } from './deps.ts'
+import { Buffer } from './deps.ts'
 
 let snsClient = new SNS
 let ledger = {}

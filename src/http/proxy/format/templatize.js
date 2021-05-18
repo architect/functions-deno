@@ -1,4 +1,4 @@
-import { Buffer } from '../../../deps.ts'
+import { Buffer } from './deps.ts'
 
 export default function templatizeResponse (params) {
   let { isBinary, assets, response, isLocal = false } = params

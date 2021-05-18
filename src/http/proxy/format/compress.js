@@ -1,8 +1,8 @@
-import { brotliCompress } from '../../../deps.ts'
-import { brotliDecompress } from '../../../deps.ts'
-import { gzipDecode, gzipEncode } from '../../../deps.ts'
-import { deflate, inflate } from '../../../deps.ts'
-import { Buffer } from '../../../deps.ts'
+import { brotliCompress } from './deps.ts'
+import { brotliDecompress } from './deps.ts'
+import { gzipDecode, gzipEncode } from './deps.ts'
+import { deflate, inflate } from './deps.ts'
+import { Buffer } from './deps.ts'
 
 
 

@@ -1,7 +1,7 @@
-import { ServerRequest } from '../deps.ts'
-import { waterfall } from '../deps.ts'
-import { SQS } from '../deps.ts'
-import { Buffer } from '../deps.ts'
+import { ServerRequest } from './deps.ts'
+import { waterfall } from './deps.ts'
+import { SQS } from './deps.ts'
+import { Buffer } from './deps.ts'
 
 /**
  * invoke an sqs lambda by name

@@ -1,4 +1,4 @@
-import { Buffer } from '../deps.ts'
+import { Buffer } from './deps.ts'
 
 import { httpError } from './errors/index.js'
 import binaryTypes from './helpers/binary-types.js'

@@ -1,4 +1,4 @@
-import { DynamoDB } from '../deps.ts'
+import { DynamoDB } from './deps.ts'
 
 /**
  * Instantiates Dynamo service interfaces

@@ -1,4 +1,4 @@
-import { SQSClient } from '../deps.ts'
+import { SQSClient } from './deps.ts'
 import lookup from '../discovery/index.js'
 let ledger = {}
 

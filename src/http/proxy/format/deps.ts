@@ -1,0 +1,7 @@
+export { Buffer } from 'https://deno.land/std@0.97.0/node/buffer.ts'
+export * as path from 'https://deno.land/std@0.97.0/path/mod.ts'
+export { compress as brotliCompress } from 'https://deno.land/x/brotli/mod.ts'
+export { decompress as brotliDecompress } from 'https://deno.land/x/brotli/mod.ts'
+export { gzipDecode, gzipEncode } from 'https://github.com/manyuanrong/wasm_gzip/raw/master/mod.ts'
+export { deflate, inflate } from 'https://deno.land/x/compress@v0.3.8/mod.ts'
+export { mime } from 'https://deno.land/x/mimetypes@v1.0.0/mod.ts'

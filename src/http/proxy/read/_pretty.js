@@ -1,6 +1,6 @@
-import { S3 } from '../../../deps.ts'
-import { existsSync } from '../../../deps.ts'
-import { join } from '../../../deps.ts'
+import { S3 } from '../deps.ts'
+import { existsSync } from '../deps.ts'
+import { join } from '../deps.ts'
 
 import { httpError } from '../../errors/index.js'
 

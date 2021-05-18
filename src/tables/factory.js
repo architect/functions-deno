@@ -1,5 +1,5 @@
-import { parallel } from '../deps.ts'
-import { marshall, unmarshall } from '../deps.ts'
+import { parallel } from './deps.ts'
+import { marshall, unmarshall } from './deps.ts'
 
 import dynamo from './dynamo.js'
 import promisify from './promisify-object.js'

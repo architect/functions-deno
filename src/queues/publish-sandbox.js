@@ -1,5 +1,5 @@
-import { ServerRequest } from '../deps.ts'
-import { Buffer } from '../deps.ts'
+import { ServerRequest } from './deps.ts'
+import { Buffer } from './deps.ts'
 
 export default function sandbox (params, callback) {
   let port = Deno.env.get('ARC_EVENTS_PORT') || 3334

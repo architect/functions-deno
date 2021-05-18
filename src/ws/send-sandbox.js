@@ -1,5 +1,5 @@
-import { ServerRequest } from '../deps.ts'
-import { Buffer } from '../deps.ts'
+import { ServerRequest } from './deps.ts'
+import { Buffer } from './deps.ts'
 
 export default function send ({ id, payload }, callback) {
   let port = Deno.env.get('PORT') || 3333

@@ -1,4 +1,4 @@
-import { SNS } from '../deps.ts'
+import { SNS } from './deps.ts'
 import lookup from '../discovery/index.js'
 let ledger = {}
 

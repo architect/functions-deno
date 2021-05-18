@@ -1,4 +1,4 @@
-import { parallel } from '../deps.ts'
+import { parallel } from './deps.ts'
 /**
  * var trigger = require('aws-dynamodb-lambda-trigger/lambda')
  *

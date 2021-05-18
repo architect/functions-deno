@@ -1,4 +1,4 @@
-import { waterfall } from '../deps.ts'
+import { waterfall } from './deps.ts'
 
 import old from './old.js'
 import lookup from '../discovery/index.js'

@@ -1,4 +1,4 @@
-import { marshall } from '../../../../deps.ts'
+import { marshall } from '../../deps.ts'
 
 import dynamo from '../../../../tables/dynamo.js'
 import week from './_week-from-now.js'

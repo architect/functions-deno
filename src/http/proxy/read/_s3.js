@@ -1,7 +1,7 @@
-import { existsSync } from '../../../deps.ts'
-import { extname, join } from '../../../deps.ts'
-import { mime } from '../../../deps.ts'
-import { S3 } from '../../../deps.ts'
+import { existsSync } from '../deps.ts'
+import { extname, join } from '../deps.ts'
+import { mime } from '../deps.ts'
+import { S3 } from '../deps.ts'
 
 import binaryTypes from '../../helpers/binary-types.js'
 import { httpError } from '../../errors/index.js'
