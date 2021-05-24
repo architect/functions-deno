@@ -9,7 +9,7 @@ import {
 import { exists } from "../deps.ts"
 import { DenoSandbox, read } from "../deps.ts"
 
-import arcTables from '../../src/tables/index.js'
+import arc from '../../src/index.js'
 
 
 
@@ -72,7 +72,7 @@ Deno.test({
 
 Deno.test('tables() returns table object', async () => {
   //t.plan(2)
-  data = await arcTables()
+  data = await arc.tables()
   //console.log(data)
   assert(data.accounts, 'accounts table object exists')
   assert(data.messages, 'messages table object exists')

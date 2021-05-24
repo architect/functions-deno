@@ -1,6 +1,6 @@
 import {dotEnvConfig} from '../../../deps.ts'
 dotEnvConfig({ export: true })
-import subscribe from '../../../../src/queues/subscribe.js'
+import arc from '../../../../src/index.js'
 //import mockSqsEvent from '../../../mock/mock-sqs-event.json' -- https://github.com/denoland/deno/issues/7623
 const mockSqsEvent = JSON.parse(Deno.readTextFileSync('./test/mock/mock-sqs-event.json'));
 import { sinon } from "../../../deps.ts"
@@ -20,7 +20,7 @@ Deno.test({
     let eventHandler = sinon.fake.yields()
 
     // get a lambda signature from the handler
-    let handler = subscribe(eventHandler)
+    let handler = arc.queues.subscribe(eventHandler)
 
     // invoke the lambda handler with mock payloads
     let mockContext = {}
@@ -46,7 +46,7 @@ Deno.test({
 
     // get a lambda signature from the handler
     // eslint-disable-next-line
-    let handler = subscribe(async function (json) {
+    let handler = arc.queues.subscribe(async function (json) {
       fake(json)
     })
 

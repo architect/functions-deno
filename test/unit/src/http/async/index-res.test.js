@@ -11,9 +11,8 @@ import {
     assertNotEquals
 } from '../../../../deps.ts'
 
-import arcHttpSync from '../../../../../src/http/async/index.js'
-import arcHttp from '../../../../../src/http/index.js'
-const arcHttpMiddleware = arcHttp.middleware
+
+import arc from '../../../../../src/index.js'
 import requests from '../http-req-fixtures.js'
 import responses from '../http-res-fixtures.js'
 
@@ -44,7 +43,7 @@ const arc6EnvVars = {
 
 const run = async (response, request) => {
   const fn = () => response
-  const handler = arcHttpSync(fn)
+  const handler = arc.http.async(fn)
   return handler(request)
 }
 
@@ -52,8 +51,8 @@ Deno.test({
     name: 'Set up env', 
     fn: () => {
         //t.plan(4)
-        assertExists(arcHttpSync, 'Loaded HTTP async')
-        assertExists(arcHttpMiddleware, 'Loaded HTTP middleware alias')
+        assertExists(arc.http.async, 'Loaded HTTP async')
+        assertExists(arc.http.middleware, 'Loaded HTTP middleware alias')
         assertExists(requests, 'Loaded request fixtures')
         assertExists(responses, 'Loaded response fixtures')
         // Init env var to keep from stalling on db reads in CI
@@ -280,7 +279,7 @@ Deno.test({
 Deno.test({
   name: 'Architect v5 (REST) + Functions', 
   fn: async () => {
-    // Arc 5 `arc.http()` functionality backported to `arc.http.arcHttpSync()`
+    // Arc 5 `arc.http()` functionality backported to `arc.http.arc.http.async()`
     //t.plan(15)
     let request = requests.arc5.getIndex
 
@@ -459,7 +458,7 @@ Deno.test({
     let request = requests.arc5.getIndex
     function one () { return { statusCode: 200 } }
     let two = sinon.fake()
-    let handler = arcHttpSync(one, two)
+    let handler = arc.http.async(one, two)
     handler(request)
     assertNotEquals(two.callCount, true, 'second middleware not called')
   },
@@ -474,7 +473,7 @@ Deno.test({
     let request = requests.arc5.getIndex
     function one (req) { return req }
     function two (req) { return req }
-    let handler = arcHttpSync(one, two)
+    let handler = arc.http.async(one, two)
     try {
       await handler(request)
     }

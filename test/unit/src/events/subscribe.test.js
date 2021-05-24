@@ -4,14 +4,14 @@ dotEnvConfig({ export: true })
 import { sinon } from '../../../deps.ts'
 import { assert, AssertionError } from '../../../deps.ts'
 
-import subscribe from '../../../../src/events/subscribe.js'
+import arc from '../../../../src/index.js'
 
 Deno.test({
   name: 'events.subscribe should invoke provided handler for each SNS event Record', 
   fn: () => {
     //t.plan(2)
     const fake = sinon.fake.yields()
-    const handler = subscribe(fake)
+    const handler = arc.events.subscribe(fake)
     handler({
       Records: [ { Sns: { Message: '{"hey":"there"}' } }, { Sns: { Message: '{"sup":"bud"}' } } ]
     }, {}, function (err) {
@@ -31,7 +31,7 @@ Deno.test({
   fn: async () => {
     //t.plan(2)
     const fake = sinon.fake()
-    const handler = subscribe(async function (json) {
+    const handler = arc.events.subscribe(async function (json) {
       await fake(json)
     })
     await handler({
@@ -49,7 +49,7 @@ Deno.test({
   fn: () => {
     //t.plan(1)
     const fake = sinon.fake.yields()
-    const handler = subscribe(fake)
+    const handler = arc.events.subscribe(fake)
     handler(null, {}, function (err) {
       if (err) throw new AssertionError(err)
       else {
@@ -65,7 +65,7 @@ Deno.test({
   name: 'events.subscribe should fall back to an empty event if one is not provided (async)', 
   fn: async () => {
     const fake = sinon.fake()
-    const handler = subscribe(async function (json) {
+    const handler = arc.events.subscribe(async function (json) {
       await fake(json)
     })
     await handler()

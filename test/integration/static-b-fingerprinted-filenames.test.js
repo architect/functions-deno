@@ -6,7 +6,7 @@ import { exists } from "../deps.ts"
 import {path} from "../deps.ts"
 import {assert, assertEquals} from "../deps.ts"
 
-import arcStatic from '../../src/static/index.js'
+import arc from '../../src/index.js'
 
 const require = createRequire(import.meta.url);
 
@@ -43,8 +43,8 @@ Deno.test('Fingerprinting only enabled if static manifest is found', () => {
   //t.plan(1)
   Deno.env.set('AWS_REGION', 'us-west-1')
   Deno.env.set('NODE_ENV', 'production')
-  arcStatic('index.html', { reload: true })
-  assertEquals(arcStatic('index.html'), '/_static/index.html')
+  arc.static('index.html', { reload: true })
+  assertEquals(arc.static('index.html'), '/_static/index.html')
 })
 
 Deno.test('Set up mocked static manifest', async () => {

@@ -8,14 +8,13 @@ import {
   assertExists
 } from "../../../../deps.ts"
 
-import arcHttpSync from '../../../../../src/http/async/index.js'
-import arcHttp from '../../../../../src/http/index.js'
+import arc from '../../../../../src/index.js'
 import interpolate from '../../../../../src/http/helpers/params.js'
 import reqs from '../http-req-fixtures.js'
 
 Deno.env.set('SESSION_TABLE_NAME', 'jwe')
 
-const arcHttpMiddleware = arcHttp.middleware
+const arc.httpMiddleware = arc.http.middleware
 
 const str = i => JSON.stringify(i)
 const isObject = t => typeof t === 'object' && !!(t)
@@ -63,8 +62,8 @@ Deno.test({
   name: 'Set up env', 
   fn: () => {
     //t.plan(3)
-    assertExists(arcHttpSync, 'Loaded HTTP async')
-    assertExists(arcHttpMiddleware, 'Loaded HTTP middleware alias')
+    assertExists(arc.http.async, 'Loaded HTTP async')
+    assertExists(arc.httpMiddleware, 'Loaded HTTP middleware alias')
     assertExists(reqs, 'Loaded request fixtures')
     
   },
@@ -78,11 +77,12 @@ Deno.test({
     //t.plan(22)
     const request = reqs.arc6.http.getIndex
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -96,11 +96,12 @@ Deno.test({
     //t.plan(22)
     const request = reqs.arc6.http.getWithQueryString
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -114,11 +115,12 @@ Deno.test({
     //t.plan(22)
     const request = reqs.arc6.http.getWithQueryStringDuplicateKey
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -132,11 +134,12 @@ Deno.test({
     //t.plan(22)
     const request = reqs.arc6.http.getWithParam
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -150,11 +153,12 @@ Deno.test({
     //t.plan(22)
     const request = reqs.arc6.http.get$default
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -168,11 +172,12 @@ Deno.test({
     //t.plan(22)
     const request = reqs.arc6.http.postJson
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -186,11 +191,12 @@ Deno.test({
     //t.plan(22)
     const request = reqs.arc6.http.postFormURL
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -204,11 +210,12 @@ Deno.test({
     //t.plan(22)
     const request = reqs.arc6.http.postMultiPartFormData
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -222,11 +229,12 @@ Deno.test({
     //t.plan(22)
     const request = reqs.arc6.http.postOctetStream
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -240,11 +248,12 @@ Deno.test({
     //t.plan(22)
     const request = reqs.arc6.http.putJson
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -258,11 +267,12 @@ Deno.test({
     //t.plan(22)
     const request = reqs.arc6.http.patchJson
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -281,11 +291,12 @@ Deno.test({
     //t.plan(18)
     const request =reqs.arc6.rest.getIndex
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -299,11 +310,12 @@ Deno.test({
     //t.plan(18)
     const request =reqs.arc6.rest.getWithQueryString
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -317,11 +329,12 @@ Deno.test({
     //t.plan(18)
     const request =reqs.arc6.rest.getWithQueryStringDuplicateKey
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -335,11 +348,12 @@ Deno.test({
     //t.plan(18)
     const request =reqs.arc6.rest.getWithParam
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -353,11 +367,12 @@ Deno.test({
     //t.plan(18)
     const request =reqs.arc6.rest.getProxyPlus
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -371,11 +386,12 @@ Deno.test({
     //t.plan(18)
     const request =reqs.arc6.rest.postJson
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -389,11 +405,12 @@ Deno.test({
     //t.plan(18)
     const request =reqs.arc6.rest.postFormURL
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -407,11 +424,12 @@ Deno.test({
     //t.plan(18)
     const request =reqs.arc6.rest.postMultiPartFormData
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -425,11 +443,12 @@ Deno.test({
     //t.plan(18)
     const request =reqs.arc6.rest.postOctetStream
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -443,11 +462,12 @@ Deno.test({
     //t.plan(18)
     const request =reqs.arc6.rest.putJson
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -461,11 +481,12 @@ Deno.test({
     //t.plan(18)
     const request =reqs.arc6.rest.patchJson
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -479,11 +500,12 @@ Deno.test({
     //t.plan(18)
     const request =reqs.arc6.rest.deleteJson
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request})
   },
@@ -503,11 +525,12 @@ Deno.test({
     //t.plan(10)
     const request =reqs.arc5.getIndex
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request, deprecated: true })
   },
@@ -521,11 +544,12 @@ Deno.test({
     //t.plan(10)
     const request =reqs.arc5.getWithQueryString
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request, deprecated: true })
   },
@@ -540,11 +564,12 @@ Deno.test({
     const request =reqs.arc5.getWithParam
     interpolate(request)
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request, deprecated: true })
   },
@@ -558,11 +583,12 @@ Deno.test({
     //t.plan(10)
     const request =reqs.arc5.post
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request, deprecated: true })
   },
@@ -576,11 +602,12 @@ Deno.test({
     //t.plan(10)
     const request =reqs.arc5.postBinary
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request, deprecated: true })
   },
@@ -594,11 +621,12 @@ Deno.test({
     //t.plan(10)
     const request =reqs.arc5.put
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request, deprecated: true })
   },
@@ -612,11 +640,12 @@ Deno.test({
     //t.plan(10)
     const request =reqs.arc5.patch
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request, deprecated: true })
   },
@@ -630,11 +659,12 @@ Deno.test({
     //t.plan(10)
     const request =reqs.arc5.delete
     let req
+    // deno-lint-ignore require-await
     const fn = async request => {
       req = request
       return basicResponse
     }
-    const handler = arcHttpSync(fn)
+    const handler = arc.http.async(fn)
     await handler(request)
     check({ req, request, deprecated: true })
   },
@@ -657,7 +687,7 @@ Deno.test({
       assert(req.body.munge, 'request object was mutated in middleware')
       return { statusCode: 200, body: req.body }
     }
-    const handler = arcHttpSync(one, two)
+    const handler = arc.http.async(one, two)
     handler(req)
   },
   sanitizeResources: false,
@@ -670,17 +700,19 @@ Deno.test({
     //t.plan(1)
     const request =reqs.arc5.getIndex
     let gotOne
+    // deno-lint-ignore require-await
     async function one (req) {
       gotOne = req
       return
     }
     let gotTwo
+    // deno-lint-ignore require-await
     async function two (req) {
       gotTwo = req
       return { statusCode: 200 }
     }
     let req = JSON.parse(str(request))
-    const handler = arcHttpSync(one, two)
+    const handler = arc.http.async(one, two)
     await handler(req)
     assertEquals(str(gotOne), str(gotTwo), match('second function request', `${str(gotTwo).substr(0, 50)}...`))
   },

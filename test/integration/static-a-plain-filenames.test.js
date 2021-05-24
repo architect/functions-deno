@@ -5,8 +5,7 @@ import { exists } from "../deps.ts"
 import {path} from "../deps.ts"
 import {assertEquals} from "../deps.ts"
 
-import arcStatic from '../../src/static/index.js'
-import arcHttp from '../../src/http/index.js'
+import arc from '../../src/index.js'
 
 
 
@@ -51,23 +50,23 @@ Deno.test({
 
 Deno.test('Local URL tests', () => {
   //t.plan(7)
-  assertEquals(arcStatic('index.html'), '/_static/index.html', 'Basic local static path')
-  assertEquals(arcStatic('/index.html'), '/_static/index.html', 'Basic local static path with leading slash')
-  assertEquals(arcHttp.helpers.static('index.html'), '/_static/index.html', 'Basic local static path (legacy)')
+  assertEquals(arc.static('index.html'), '/_static/index.html', 'Basic local static path')
+  assertEquals(arc.static('/index.html'), '/_static/index.html', 'Basic local static path with leading slash')
+  assertEquals(arc.http.helpers.static('index.html'), '/_static/index.html', 'Basic local static path (legacy)')
 
   Deno.env.set('NODE_ENV','testing')
-  assertEquals(arcStatic('index.html'), '/_static/index.html', 'Basic local static path (env=testing)')
+  assertEquals(arc.static('index.html'), '/_static/index.html', 'Basic local static path (env=testing)')
 
   Deno.env.set('NODE_ENV','staging')
-  assertEquals(arcStatic('index.html'), '/_static/index.html', 'Always use /_static')
+  assertEquals(arc.static('index.html'), '/_static/index.html', 'Always use /_static')
 
   Deno.env.delete('NODE_ENV') // Run it "locally"
   Deno.env.set('ARC_STATIC_PREFIX', 'foo')
-  assertEquals(arcStatic('index.html'), '/_static/index.html', 'Basic local static path unaffected by ARC_STATIC_PREFIX env var')
+  assertEquals(arc.static('index.html'), '/_static/index.html', 'Basic local static path unaffected by ARC_STATIC_PREFIX env var')
   Deno.env.delete('ARC_STATIC_PREFIX')
 
   Deno.env.set('ARC_STATIC_FOLDER', 'foo')
-  assertEquals(arcStatic('index.html'), '/_static/index.html', 'Basic local static path unaffected by ARC_STATIC_FOLDER env var')
+  assertEquals(arc.static('index.html'), '/_static/index.html', 'Basic local static path unaffected by ARC_STATIC_FOLDER env var')
   resetEnv()
 })
 

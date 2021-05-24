@@ -1,7 +1,8 @@
 import {dotEnvConfig} from '../../../../deps.ts'
 dotEnvConfig({ export: true })
 import { assertEquals } from '../../../../deps.ts'
-import arcHttp from '../../../../../src/http/index.js'
+
+import arc from '../../../../../src/index.js'
 
 // Ensure compatibility with legacy proxy methods
 Deno.test({
@@ -9,17 +10,20 @@ Deno.test({
   fn: () => {
     //t.plan(6)
     // Current
-    let httpProxy = arcHttp.proxy
-    assertEquals(typeof httpProxy, 'function', 'arcHttp.proxy is a function')
-    assertEquals(httpProxy.name, 'proxy', 'arcHttp.proxy is the proxy function')
+
+    console.log(arc.http)
+
+    let httpProxy = arc.http.proxy
+    assertEquals(typeof httpProxy, 'function', 'arc.http.proxy is a function')
+    assertEquals(httpProxy.name, 'proxy', 'arc.http.proxy is the proxy function')
 
     // Legacy
-    let httpProxyPublic = arcHttp.proxy.public
-    assertEquals(typeof httpProxyPublic, 'function', 'arcHttp.proxy.public is a function')
-    assertEquals(httpProxyPublic.name, 'proxy', 'arcHttp.proxy.public is the proxy function')
+    let httpProxyPublic = arc.http.proxy.public
+    assertEquals(typeof httpProxyPublic, 'function', 'arc.http.proxy.public is a function')
+    assertEquals(httpProxyPublic.name, 'proxy', 'arc.http.proxy.public is the proxy function')
 
     // Like, really legacy
-    /* let proxyPublic = arcHttp.proxy.public
+    /* let proxyPublic = arc.http.proxy.public
     t.equal(typeof proxyPublic, 'function', 'arc.proxy.public is a function')
     t.equal(proxyPublic.name, 'proxy', 'arc.proxy.public is the proxy function') */
   },
@@ -35,17 +39,17 @@ Deno.test({
     Deno.env.set('NODE_ENV', 'testing')
 
     // Current
-    let httpProxyRead = arcHttp.proxy.read
-    assertEquals(typeof httpProxyRead, 'function', 'arcHttp.proxy.read is a function')
-    assertEquals(httpProxyRead.name, 'readLocal', 'arcHttp.proxy.read is the readLocal function')
+    let httpProxyRead = arc.http.proxy.read
+    assertEquals(typeof httpProxyRead, 'function', 'arc.http.proxy.read is a function')
+    assertEquals(httpProxyRead.name, 'readLocal', 'arc.http.proxy.read is the readLocal function')
 
     // Legacy
-    let httpProxyPublicRead = arcHttp.proxy.public.read
-    assertEquals(typeof httpProxyPublicRead, 'function', 'arcHttp.proxy.public.read is a function')
-    assertEquals(httpProxyPublicRead.name, 'readLocal', 'arcHttp.proxy.public.read is the readLocal function')
+    let httpProxyPublicRead = arc.http.proxy.public.read
+    assertEquals(typeof httpProxyPublicRead, 'function', 'arc.http.proxy.public.read is a function')
+    assertEquals(httpProxyPublicRead.name, 'readLocal', 'arc.http.proxy.public.read is the readLocal function')
 
     // Like, really legacy
-    let proxyPublicRead = arcHttp.proxy.public.read
+    let proxyPublicRead = arc.http.proxy.public.read
     assertEquals(typeof proxyPublicRead, 'function', 'arc.proxy.public.read is a function')
     assertEquals(proxyPublicRead.name, 'readLocal', 'arc.proxy.public.read is the readLocal function')
 
@@ -67,8 +71,8 @@ Deno.test({
 
     const httpProxyRead = (await import(`../../../../../src/http/proxy/read/index.js?v=${Math.random()}`)).default
 
-    assertEquals(typeof httpProxyRead, 'function', 'arcHttp.proxy.read is a function')
-    assertEquals(httpProxyRead.name, 'readS3', 'arcHttp.proxy.read is the readS3 function')
+    assertEquals(typeof httpProxyRead, 'function', 'arc.http.proxy.read is a function')
+    assertEquals(httpProxyRead.name, 'readS3', 'arc.http.proxy.read is the readS3 function')
 
     Deno.env.set('NODE_ENV', env)
 

@@ -16,23 +16,25 @@ import _async from './async/index.js'
 import express from './express/index.js'
 
 // Proxy
-import proxy from './proxy/index.js'
+import proxy, {read as proxyRead, public as proxyPublic} from './proxy/index.js'
 
-
-http.helpers = {
-  bodyParser,
-  interpolate,
-  static: _static,
-  url
+const arcHttp = {
+  http,
+  helpers: {
+    bodyParser,
+    interpolate,
+    static: _static,
+    url
+  },
+  session: { read, write },
+  async: _async,
+  express,
+  proxy: {
+    proxy,
+    public: proxyRead,
+    read: proxyPublic
+  },
+  middleware: _async
 }
-http.session = { read, write }
-http.async = _async
-http.express = express
-http.proxy = proxy.proxy
 
-// Legacy methods
-http.proxy.public = proxy.proxy
-http.proxy.read = proxy.read
-http.middleware = _async
-
-export default http
+export default arcHttp
