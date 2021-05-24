@@ -10,9 +10,6 @@ Deno.test({
   fn: () => {
     //t.plan(6)
     // Current
-
-    console.log(arc.http)
-
     let httpProxy = arc.http.proxy
     assertEquals(typeof httpProxy, 'function', 'arc.http.proxy is a function')
     assertEquals(httpProxy.name, 'proxy', 'arc.http.proxy is the proxy function')
@@ -23,9 +20,9 @@ Deno.test({
     assertEquals(httpProxyPublic.name, 'proxy', 'arc.http.proxy.public is the proxy function')
 
     // Like, really legacy
-    /* let proxyPublic = arc.http.proxy.public
-    t.equal(typeof proxyPublic, 'function', 'arc.proxy.public is a function')
-    t.equal(proxyPublic.name, 'proxy', 'arc.proxy.public is the proxy function') */
+    let proxyPublic = arc.http.proxy.public
+    assertEquals(typeof proxyPublic, 'function', 'arc.proxy.public is a function')
+    assertEquals(proxyPublic.name, 'proxy', 'arc.proxy.public is the proxy function')
   },
   sanitizeResources: false,
   sanitizeOps: false

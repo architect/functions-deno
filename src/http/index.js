@@ -16,7 +16,7 @@ import _async from './async/index.js'
 import express from './express/index.js'
 
 // Proxy
-import proxy, {read as proxyRead, public as proxyPublic} from './proxy/index.js'
+import proxy from './proxy/index.js'
 
 const arcHttp = {
   http,
@@ -27,14 +27,13 @@ const arcHttp = {
     url
   },
   session: { read, write },
+  proxy: proxy.proxy,
   async: _async,
   express,
-  proxy: {
-    proxy,
-    public: proxyRead,
-    read: proxyPublic
-  },
   middleware: _async
 }
+
+arcHttp.proxy.public = proxy.proxy
+arcHttp.proxy.read = proxy.read
 
 export default arcHttp

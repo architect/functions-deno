@@ -105,6 +105,4 @@ function proxy (config = {}) {
   }
 }
 
-
-export default proxy
-export {read, proxy}
+export default {read, proxy}
