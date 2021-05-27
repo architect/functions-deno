@@ -9,9 +9,9 @@
 # Http async
 
 ```javascript
-import arcHttpAsync from 'https://raw.githubusercontent.com/hicksy/functions/architect-functions-deno/src/http/async/index.js'
+import arc from 'https://raw.githubusercontent.com/hicksy/functions/architect-functions-deno/src/index.js'
 
-export const handler = arcHttpAsync( (event: Record<string, unknown>) => {
+export const handler = arc.http.async( (event: Record<string, unknown>) => {
     console.log(JSON.stringify(event, null, 2));
 
     return {
