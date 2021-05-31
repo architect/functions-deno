@@ -9,7 +9,7 @@
 # Http async
 
 ```javascript
-import arc from 'https://raw.githubusercontent.com/hicksy/functions/architect-functions-deno/src/index.js'
+import arc from 'https://raw.githubusercontent.com/architect/functions-deno/main/src/index.js'
 
 export const handler = arc.http.async( (event: Record<string, unknown>) => {
     console.log(JSON.stringify(event, null, 2));
@@ -21,9 +21,8 @@ export const handler = arc.http.async( (event: Record<string, unknown>) => {
 
 ```
 # Auth
-- I've updated the arc-example-login-flow example to the Deno runtime, making use of this WIP module. 
-- Provides example demonstrating `jwt` tokens etc
-https://github.com/hicksy/functions/tree/architect-functions-deno
+- I've updated the arc-example-login-flow example to the Deno runtime 
+https://github.com/hicksy/deno-arc-example-login-flow
 
 
 # Test
